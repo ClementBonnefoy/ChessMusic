@@ -41,12 +41,12 @@ public enum EnumSide implements Side {
 			army.set(army.indexOf(oldSquare), newSquare);
 	}
 	
-	public void setKingSideCastlingInvalid() {
-		canKingSideCastle = false;
+	public void setKingSideCastling(boolean possible) {
+		canKingSideCastle = possible;
 	}
 
-	public void setQueenSideCastlingInvalid() {
-		canQueenSideCastle = false;
+	public void setQueenSideCastling(boolean possible) {
+		canQueenSideCastle = possible;
 	}
 
 	public Square getKing() {

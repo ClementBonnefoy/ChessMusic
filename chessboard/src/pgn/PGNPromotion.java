@@ -31,7 +31,8 @@ public class PGNPromotion extends PGNMove {
 
 		if (eaten != null)
 			from = Square.getSquare(fromFile, from.getRank());
-		return new Promotion(promotionType, from, to, color, eaten, check, checkMate);
+		return new Promotion(promotionType, from, to, color, eaten, check, checkMate,
+				board.getLimit50moves(), board.getEnPassant());
 	}
 
 	@Override

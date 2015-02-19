@@ -13,13 +13,18 @@ public class Promotion extends Move {
 
 	private final Type promotionType;
 	private final Type eaten;
+	private final int limit50movesBefore;
+
 	
 	public Promotion(Type type, Square from, Square to, Color movingColor, 
-			Type eaten, boolean check, boolean checkMate) {
-		super(from, to, movingColor, Pawn, check, checkMate);
+			Type eaten, boolean check, boolean checkMate,
+			int limit50movesBefore, Square enPassantBefore) {
+		super(from, to, movingColor, Pawn, check, checkMate,
+				enPassantBefore);
 		
 		this.promotionType = type;
 		this.eaten = eaten;
+		this.limit50movesBefore = limit50movesBefore;
 	}
 
 	@Override
@@ -31,6 +36,18 @@ public class Promotion extends Move {
 			board.opponentSide().remove(to);
 		board.setLimit50moves(0);
 		
+	}
+	
+	@Override
+	public void specificUndo(Board board) {
+		super.specificUndo(board);
+		board.putOnSquare(Piece.get(Pawn, movingColor), from);
+		
+		if (eaten != null) {
+			board.opponentSide().add(to);
+			board.putOnSquare(Piece.get(promotionType, movingColor.getOpponent()), to);
+		}
+		board.setLimit50moves(limit50movesBefore);
 	}
 	
 	@Override

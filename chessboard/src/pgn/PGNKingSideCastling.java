@@ -16,7 +16,7 @@ public class PGNKingSideCastling extends PGNMove {
 
 	@Override
 	public Move makeMove(Board board) {
-		return new KingSideCastling(color, check, checkMate);
+		return new KingSideCastling(color, check, checkMate, board.getEnPassant());
 	}
 
 	

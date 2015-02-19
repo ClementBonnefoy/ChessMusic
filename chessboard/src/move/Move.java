@@ -1,17 +1,9 @@
 package move;
 
 import static board.Color.*;
-import static board.Type.*;
-import static board.File.*;
 
 import pgn.PGNMove;
-import board.Board;
-import board.File;
-import board.Piece;
-import board.Rank;
-import board.Square;
-import board.Color;
-import board.Type;
+import board.*;
 
 public class Move {
 
@@ -19,9 +11,10 @@ public class Move {
 	protected final Color movingColor;
 	protected final Type movingType;
 	protected final boolean check, checkMate;
+	protected final Square enPassantBefore;
 
 	public Move(Square from, Square to, Color movingColor, Type movingType,
-			boolean check, boolean checkMate) {
+			boolean check, boolean checkMate, Square enPassantBefore) {
 		super();
 		this.from = from;
 		this.to = to;
@@ -29,6 +22,7 @@ public class Move {
 		this.movingType = movingType;
 		this.check = check;
 		this.checkMate = checkMate;
+		this.enPassantBefore = enPassantBefore;
 	}
 
 	public Square getFrom() {
@@ -55,8 +49,8 @@ public class Move {
 		return checkMate;
 	}
 
-	public void applyTo (Board board) {
-		checkValidity(board);
+	public final void applyTo (Board board) {
+		checkApplyValidity(board);
 		
 		specificApply(board);
 		
@@ -66,8 +60,8 @@ public class Move {
 		board.setCurrentPlayer(movingColor.getOpponent());
 	}
 
-	protected void checkValidity(Board board) {
-
+	protected void checkApplyValidity(Board board) {
+		// TODO checkValidity
 	}
 
 	protected static void simpleMove(Board board, Square from, Square to) {
@@ -87,27 +81,40 @@ public class Move {
 		if (board.getCurrentPlayer() == Black)
 			board.setMoveNumber(board.getMoveNumber()+1);
 
-		if (movingType == King) {
-			board.currentSide().setKingSideCastlingInvalid();
-			board.currentSide().setQueenSideCastlingInvalid();
-		}
-		else if (movingType == Rook) {
-			if (from.getFile() == FileH)
-				board.currentSide().setKingSideCastlingInvalid();
-			else if (from.getFile() == FileA)
-				board.currentSide().setQueenSideCastlingInvalid();
-		}
-
 		if (board.getEnPassant() != null)
 			board.setEnPassant(null);
 		
 	}
 	
-	// TODO Implementer undo et dans les sous-classes aussi
-
-	
-	public void undo(Board board) {
+	public void checkUndoValidity(Board board) {
+		//TODO checkUndoValidity
 		
+		if (board.getMoveNumber() == 0)
+			throw new InvalidUndoMoveException("This is the starting position : "+board);
+	}
+	
+	public final void undo(Board board) {
+		
+		board.setCurrentPlayer(movingColor);
+		
+		checkUndoValidity(board);
+		
+		specificUndo(board);
+		
+
+		
+	}
+	
+	public void specificUndo(Board board) {
+		
+		simpleMove(board,to,from);
+		
+		board.setLimit50moves(board.getLimit50moves()-1);
+
+		if (board.getCurrentPlayer() == Black)
+			board.setMoveNumber(board.getMoveNumber()-1);
+		
+		board.setEnPassant(enPassantBefore);
 	}
 
 	public PGNMove makePGNMove(Board board) {

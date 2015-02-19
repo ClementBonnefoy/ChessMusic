@@ -11,6 +11,7 @@ import move.Move;
 
 import board.BoardTools;
 import board.EnumBoard;
+import board.InstanceBoard;
 import board.InvalidFenException;
 
 public class PGNParser {
@@ -94,6 +95,7 @@ public class PGNParser {
 		try (Scanner sc = new Scanner(System.in)) {
 
 			for (File f : new File("games").listFiles()) {
+//				File f = new File("games/Game1.pgn");
 				System.out.println("------ "+f.getName()+" -------");
 
 				PGNParser pgn = new PGNParser(f);
@@ -101,22 +103,33 @@ public class PGNParser {
 				PGNGame game = pgn.makePgnGame();
 				BoardTools.initBoard(EnumBoard.TheBoard, pgn.fen);
 //				System.out.println(EnumBoard.TheBoard);
-				Move move;
 				
-				PGNMove pm1, pm2;
+				Move[] tab = new Move[game.size()];
+				InstanceBoard[] boards = new InstanceBoard[game.size()+1];
+				
+				boards[0] = EnumBoard.TheBoard.store();
 				
 				for (int i = 0; i < game.size(); i++) {
-					pm1 = game.get(i);
-					move = pm1.makeMove(EnumBoard.TheBoard);
-					pm2 = move.makePGNMove(EnumBoard.TheBoard);
-					if (!pm1.equals(pm2))
-						throw new RuntimeException(pm1+" "+pm2);
-					
-					move.applyTo(EnumBoard.TheBoard);
-
+//					System.out.println(game.get(i));
+					tab[i] = game.get(i).makeMove(EnumBoard.TheBoard);
+					tab[i].applyTo(EnumBoard.TheBoard);
+					boards[i+1] = EnumBoard.TheBoard.store();
 
 //					System.out.println(EnumBoard.TheBoard);
+//					System.out.println();
 				}
+				
+				for (int i = game.size() - 1; i >= 0; i--) {
+//					System.out.println(EnumBoard.TheBoard);
+					System.out.println();
+					System.out.println(game.get(i));
+					System.out.println();
+					tab[i].undo(EnumBoard.TheBoard);
+					if (!boards[i].equals(EnumBoard.TheBoard.store()))
+						throw new RuntimeException(boards[i]+"\n\n"+EnumBoard.TheBoard);
+				}
+				
+				
 				sc.nextLine();
 
 				//				System.out.println(game);

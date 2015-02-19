@@ -37,12 +37,12 @@ public class InstanceSide implements Side {
 			army.set(army.indexOf(oldSquare), newSquare);
 	}
 	
-	public void setKingSideCastlingInvalid() {
-		canKingSideCastle = false;
+	public void setKingSideCastling(boolean possible) {
+		canKingSideCastle = possible;
 	}
 
-	public void setQueenSideCastlingInvalid() {
-		canQueenSideCastle = false;
+	public void setQueenSideCastling(boolean possible) {
+		canQueenSideCastle = possible;
 	}
 
 	public Square getKing() {
@@ -72,6 +72,43 @@ public class InstanceSide implements Side {
 		
 	}
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((army == null) ? 0 : army.hashCode());
+		result = prime * result + (canKingSideCastle ? 1231 : 1237);
+		result = prime * result + (canQueenSideCastle ? 1231 : 1237);
+		result = prime * result + ((color == null) ? 0 : color.hashCode());
+		result = prime * result + ((king == null) ? 0 : king.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		InstanceSide other = (InstanceSide) obj;
+		if (army == null) {
+			if (other.army != null)
+				return false;
+		} else if (!army.containsAll(other.army) || !other.army.containsAll(army))
+			return false;
+		if (canKingSideCastle != other.canKingSideCastle)
+			return false;
+		if (canQueenSideCastle != other.canQueenSideCastle)
+			return false;
+		if (color != other.color)
+			return false;
+		if (king != other.king)
+			return false;
+		return true;
+	}
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		

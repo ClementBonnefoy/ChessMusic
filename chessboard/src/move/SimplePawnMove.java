@@ -7,10 +7,16 @@ import board.Color;
 import static board.Type.*;
 
 public class SimplePawnMove extends Move {
+	private final int limit50movesBefore;
 
-	public SimplePawnMove(Square from, Color movingColor, boolean check, boolean checkMate) {
+
+	public SimplePawnMove(Square from, Color movingColor,
+			boolean check, boolean checkMate,
+			int limit50movesBefore, Square enPassantBefore) {
 		super(from, from.nextSquare(movingColor.forwards()), movingColor, Pawn,
-				check, checkMate);
+				check, checkMate,
+				enPassantBefore);
+		this.limit50movesBefore = limit50movesBefore;
 	}
 
 	@Override
@@ -18,6 +24,13 @@ public class SimplePawnMove extends Move {
 		super.specificApply(board);
 		
 		board.setLimit50moves(0);
+	}
+	
+	@Override
+	public void specificUndo(Board board) {
+		super.specificUndo(board);
+		
+		board.setLimit50moves(limit50movesBefore);
 	}
 	
 	@Override

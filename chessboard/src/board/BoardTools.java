@@ -156,13 +156,13 @@ public class BoardTools {
 			throw new InvalidFenException(fen,"There is no black king");
 
 		if (!elems[2].contains("K"))
-			board.currentSide().setKingSideCastlingInvalid();
+			board.currentSide().setKingSideCastling(false);
 		if (!elems[2].contains("Q"))
-			board.currentSide().setQueenSideCastlingInvalid();
+			board.currentSide().setQueenSideCastling(false);
 		if (!elems[2].contains("k"))
-			board.opponentSide().setKingSideCastlingInvalid();
+			board.opponentSide().setKingSideCastling(false);
 		if (!elems[2].contains("q"))
-			board.opponentSide().setQueenSideCastlingInvalid();
+			board.opponentSide().setQueenSideCastling(false);
 
 		if (elems[1].charAt(0) == 'w')
 			board.setCurrentPlayer(White);

@@ -10,9 +10,9 @@ public interface Side {
 	
 	public void replace(Square oldSquare, Square newSquare);
 	
-	public void setKingSideCastlingInvalid();
+	public void setKingSideCastling(boolean possible);
 
-	public void setQueenSideCastlingInvalid();
+	public void setQueenSideCastling(boolean possible);
 
 	public Square getKing();
 
