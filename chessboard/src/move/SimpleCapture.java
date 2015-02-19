@@ -1,9 +1,12 @@
 package move;
 
+import pgn.PGNMove;
 import board.Board;
+import board.File;
 import board.Square;
 import board.Color;
 import board.Type;
+import static board.Type.Pawn;
 
 public class SimpleCapture extends Move {
 	
@@ -24,6 +27,15 @@ public class SimpleCapture extends Move {
 		board.setLimit50moves(0);
 	}
 
-	
+	@Override
+	public PGNMove makePGNMove(Board board) {
+		PGNMove pm = super.makePGNMove(board);
+		File file = pm.getFromFile();
+		if (movingType == Pawn)
+			file = this.from.getFile();
+		return new PGNMove(movingType, movingColor, to, pm.getFromRank(), file,
+				true, check, checkMate,
+				board.getMoveNumber());
+	}
 	
 }

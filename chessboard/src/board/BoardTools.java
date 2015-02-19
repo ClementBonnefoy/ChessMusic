@@ -170,9 +170,9 @@ public class BoardTools {
 			board.setCurrentPlayer(Black);
 
 		if (!elems[3].equals("-")) {
-			if (Square.getCSquare(elems[3]).getRank() != Rank3 && Square.getCSquare(elems[3]).getRank() != Rank6)
-				throw new InvalidFenException(fen,"enPassant can't be on Rank "+Square.getCSquare(elems[3]).getRank());
-			board.setEnPassant(Square.getCSquare(elems[3]));
+			if (Square.getSquare(elems[3]).getRank() != Rank3 && Square.getSquare(elems[3]).getRank() != Rank6)
+				throw new InvalidFenException(fen,"enPassant can't be on Rank "+Square.getSquare(elems[3]).getRank());
+			board.setEnPassant(Square.getSquare(elems[3]));
 		}
 
 		board.setLimit50moves(Integer.valueOf(elems[4]));

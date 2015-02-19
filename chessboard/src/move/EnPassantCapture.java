@@ -1,5 +1,6 @@
 package move;
 
+import pgn.PGNMove;
 import board.Board;
 import board.Square;
 import board.Color;
@@ -19,6 +20,14 @@ public class EnPassantCapture extends Move {
 		super.specificApply(board);
 		board.opponentSide().remove(captured);
 		board.putOnSquare(null, captured);
+	}
+
+	@Override
+	public PGNMove makePGNMove(Board board) {
+		return new PGNMove(movingType, movingColor, to, null, from.getFile(),
+				true, check, checkMate,
+				board.getMoveNumber());
+		
 	}
 
 }

@@ -2,11 +2,6 @@ package move;
 
 import java.util.ArrayList;
 
-import static board.Square.G1;
-import static board.Square.G8;
-import static board.Square.C1;
-import static board.Square.C8;
-import static board.Color.White;
 import board.Board;
 import board.Square;
 import board.Color;
@@ -36,9 +31,9 @@ public enum Movement {
 			friendCaptureFilter(realDests, board);
 			
 			if (board.currentSide().canKingSideCastle())
-				realDests.add(board.getCurrentPlayer() == White ? G1 : G8);
+				realDests.add(board.getCurrentPlayer().kingSideSquare());
 			if (board.currentSide().canQueenSideCastle())
-				realDests.add(board.getCurrentPlayer() == White ? C1 : C8);
+				realDests.add(board.getCurrentPlayer().queenSideSquare());
 			
 			checkFilter(realDests,board);
 			
@@ -156,7 +151,8 @@ public enum Movement {
 				
 			}
 			
-			if (board.getEnPassant().getRank() == from.nextSquare(dir).getRank())
+			if (board.getEnPassant() != null
+					&& board.getEnPassant().getRank() == from.nextSquare(dir).getRank())
 				basicDests.add(board.getEnPassant());
 
 			dir = color.eastPawnThreat();

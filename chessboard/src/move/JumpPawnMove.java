@@ -1,5 +1,6 @@
 package move;
 
+import pgn.PGNMove;
 import board.Board;
 import board.Square;
 import board.Color;
@@ -18,6 +19,13 @@ public class JumpPawnMove extends Move {
 		
 		board.setLimit50moves(0);
 		board.setEnPassant(from.nextSquare(movingColor.forwards()));
+	}
+	
+	@Override
+	public PGNMove makePGNMove(Board board) {
+		return new PGNMove(movingType, movingColor, to, null, null,
+				false, check, checkMate,
+				board.getMoveNumber());
 	}
 	
 }

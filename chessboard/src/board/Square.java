@@ -38,7 +38,7 @@ public enum Square {
 		return Square.values()[(rank.ordinal() << 3) + file.ordinal()];
 	}
 
-	public static Square getCSquare(String notation) {
+	public static Square getSquare(String notation) {
 		if (notation.length() != 2)
 			throw new IllegalArgumentException("This notation don't fit with any square : "+notation);
 

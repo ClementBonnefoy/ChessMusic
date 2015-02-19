@@ -1,9 +1,5 @@
 package pgn;
 
-import static board.Square.C1;
-import static board.Square.C8;
-import static board.Square.G1;
-import static board.Square.G8;
 import static board.Color.*;
 import static board.Type.*;
 
@@ -15,6 +11,7 @@ import board.Color;
 import board.File;
 import board.Rank;
 import board.Type;
+
 
 public class PGNGame implements Iterable<PGNMove>{
 	private final String fen;
@@ -42,8 +39,8 @@ public class PGNGame implements Iterable<PGNMove>{
 		Rank rank;
 		File file;
 		boolean capture;
-		boolean checkmate;
 		boolean check;
+		boolean checkmate;
 		String current;
 
 		for (int i = 0; i < strings.length; i++, moveNumber += color == White ? 0 : 1,
@@ -65,17 +62,11 @@ public class PGNGame implements Iterable<PGNMove>{
 			}
 
 			if (current.equals("O-O")) {
-				to = (color == White) ? G1 : G8;
-				moves[i] = new PGNMove(King,color,to,null,null,
-						null,false,checkmate,check,false,true,
-						moveNumber);
+				moves[i] = new PGNKingSideCastling(color,check,checkmate,moveNumber);
 				continue;
 			}
 			else if (current.equals("O-O-O")) {
-				to = (color == White) ? C1 : C8;
-				moves[i] = new PGNMove(King, color,to,null,null,
-						null,false,checkmate,check,true,false,
-						moveNumber);
+				moves[i] = new PGNQueenSideCastling(color,check,checkmate,moveNumber);
 				continue;
 			}
 			
@@ -107,11 +98,14 @@ public class PGNGame implements Iterable<PGNMove>{
 				current = current.substring(0, 2);
 			}
 			
-			to = Square.getCSquare(current);
+			to = Square.getSquare(current);
 
-
-			moves[i] = new PGNMove(type, color, to, null, file,
-					promotion, capture, checkmate, check, false, false,
+			if (promotion != null)
+				moves[i] = new PGNPromotion(promotion, color, to, file,
+						capture, check, checkmate, moveNumber);
+			else
+				moves[i] = new PGNMove(type, color, to, null, file,
+					capture, check, checkmate,
 					moveNumber);
 			continue;
 			}
@@ -152,11 +146,19 @@ public class PGNGame implements Iterable<PGNMove>{
 			}
 
 			moves[i] = new PGNMove(type, color, to, rank, file,
-					null, capture, checkmate, check, false, false,
+					capture, check, checkmate,
 					moveNumber);
 
 		}
 
+	}
+	
+	public PGNMove get(int i) {
+		return moves[i];
+	}
+	
+	public int size() {
+		return moves.length;
 	}
 
 	@Override
@@ -170,6 +172,8 @@ public class PGNGame implements Iterable<PGNMove>{
 			sb.append("[FEN \""+fen+"\"]\n");
 		if (result != null)
 			sb.append("[Result \""+result+"\"]\n");
+		if (sb.length() != 0)
+			sb.append('\n');
 
 		PGNMove pm;
 		for (int i = 0; i < moves.length; i++) {

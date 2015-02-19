@@ -16,7 +16,7 @@ import board.InvalidFenException;
 public class PGNParser {
 
 
-	private String game = "";
+	private String string = "";
 	private String[] moves;
 	private String event;
 	private String result;
@@ -49,7 +49,7 @@ public class PGNParser {
 				line = br.readLine();
 			}
 
-			game = sb.toString();
+			string = sb.toString();
 
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
@@ -62,15 +62,15 @@ public class PGNParser {
 	public void parse() throws InvalidPGNMoveException {
 
 		// suppression commentaires et variations
-		game = game.replaceAll("\\{[^}]*\\}|\\([^)]*\\)","");
+		string = string.replaceAll("\\{[^}]*\\}|\\([^)]*\\)","");
 		// suppression des espaces et points en double
-		game = game.replaceAll("\\s+", " ").replaceAll("\\.\\.+", ".");
+		string = string.replaceAll("\\s+", " ").replaceAll("\\.\\.+", ".");
 		// insertion d'un espace après le numéro de coup s'il manque
-		game = game.replaceAll("\\.([^ ])","\\. $1");
+		string = string.replaceAll("\\.([^ ])","\\. $1");
 		// on ne garde que les coups, séparés par des espaces (plus de "e.p.")
-		game = game.replaceFirst("\\d+\\.(\\.\\.)? ","").replaceAll(" ([^KQRNBa-hO][^ ]* )+"," ");
+		string = string.replaceFirst("\\d+\\.(\\.\\.)? ","").replaceAll(" ([^KQRNBa-hO][^ ]* )+"," ");
 
-		moves = game.split(" ");
+		moves = string.split(" ");
 
 		String moveRegex =
 				"([KQRNB][a-h]?[1-8]?x?[a-h][1-8]|"+
@@ -100,14 +100,22 @@ public class PGNParser {
 				pgn.parse();
 				PGNGame game = pgn.makePgnGame();
 				BoardTools.initBoard(EnumBoard.TheBoard, pgn.fen);
-				System.out.println(EnumBoard.TheBoard);
+//				System.out.println(EnumBoard.TheBoard);
 				Move move;
-				for (PGNMove pgnMove : game) {
-					move = pgnMove.makeMove(EnumBoard.TheBoard);
+				
+				PGNMove pm1, pm2;
+				
+				for (int i = 0; i < game.size(); i++) {
+					pm1 = game.get(i);
+					move = pm1.makeMove(EnumBoard.TheBoard);
+					pm2 = move.makePGNMove(EnumBoard.TheBoard);
+					if (!pm1.equals(pm2))
+						throw new RuntimeException(pm1+" "+pm2);
+					
 					move.applyTo(EnumBoard.TheBoard);
-					System.out.println(pgnMove);
 
-					System.out.println(EnumBoard.TheBoard);
+
+//					System.out.println(EnumBoard.TheBoard);
 				}
 				sc.nextLine();
 
@@ -118,6 +126,7 @@ public class PGNParser {
 		} catch (InvalidPGNMoveException e) {
 			e.printStackTrace();
 		} catch (InvalidFenException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

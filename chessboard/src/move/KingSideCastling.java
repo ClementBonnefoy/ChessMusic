@@ -1,5 +1,7 @@
 package move;
 
+import pgn.PGNKingSideCastling;
+import pgn.PGNMove;
 import board.Board;
 import static board.Square.*;
 import board.Color;
@@ -10,7 +12,7 @@ public class KingSideCastling extends Move {
 	
 	public KingSideCastling(Color movingColor, boolean check, boolean checkMate) {
 		
-		super(movingColor == White ? E1 : E8, movingColor == White ? G1 : G8,
+		super(movingColor == White ? E1 : E8, movingColor.kingSideSquare(),
 				movingColor, King, check, checkMate);
 	}
 
@@ -25,6 +27,9 @@ public class KingSideCastling extends Move {
 		
 	}
 
-	
+	@Override
+	public PGNMove makePGNMove(Board board) {
+		return new PGNKingSideCastling(movingColor, check, checkMate, board.getMoveNumber());
+	}
 	
 }
