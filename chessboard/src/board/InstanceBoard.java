@@ -116,7 +116,6 @@ public class InstanceBoard extends EnumMap<Square, Piece> implements Board {
 
 	@Override
 	public boolean equals(Object obj) {
-		// TODO remplacer par un test sur les FEN
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
