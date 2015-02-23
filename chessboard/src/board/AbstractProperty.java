@@ -1,7 +1,7 @@
 package board;
 
 
-public class Property {
+public abstract class AbstractProperty {
 
 	protected Piece piece;
 	
@@ -17,29 +17,13 @@ public class Property {
 		piece = null;
 	}
 	
-	public void onMoveFrom(Board board, Square from) {
-		
-	}
+	public abstract void onMoveFrom(Board board, Square from) ;
 	
-	public void onMoveTo(Board board, Square to) {
-		
-	}
+	public abstract void onMoveTo(Board board, Square to) ;
 
-	public void onUndoFrom(Board board, Square from) {
-		
-	}
+	public abstract void onUndoFrom(Board board, Square from) ;
 	
-	public void onUndoTo(Board board, Square to) {
-		
-	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((piece == null) ? 0 : piece.hashCode());
-		return result;
-	}
+	public abstract void onUndoTo(Board board, Square to) ;
 
 	@Override
 	public boolean equals(Object obj) {
@@ -49,7 +33,7 @@ public class Property {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Property other = (Property) obj;
+		AbstractProperty other = (AbstractProperty) obj;
 		if (piece != other.piece)
 			return false;
 		return true;

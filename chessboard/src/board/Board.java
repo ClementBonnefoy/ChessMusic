@@ -8,7 +8,7 @@ public interface Board {
 	
 	public Piece getPiece(Square sq);
 	
-	public Property getProperty(Square sq);
+	public AbstractProperty getProperty(Square sq);
 	
 	public boolean isEmpty(Square sq);
 	

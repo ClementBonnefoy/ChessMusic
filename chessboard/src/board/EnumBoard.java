@@ -98,10 +98,10 @@ public enum EnumBoard implements Board {
 	}
 	
 	public void initializeProperty(Square sq) {
-		sq.initProperty(new Property());
+		sq.initProperty(new BasicProperty());
 	}
 	
-	public Property getProperty(Square sq) {
+	public AbstractProperty getProperty(Square sq) {
 		return sq.getProperty();
 	}
 	

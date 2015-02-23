@@ -4,7 +4,7 @@ import java.util.EnumMap;
 
 import static board.Color.*;
 
-public class InstanceBoard extends EnumMap<Square, Property> implements Board {
+public class InstanceBoard extends EnumMap<Square, AbstractProperty> implements Board {
 
 	/**
 	 * 
@@ -89,11 +89,11 @@ public class InstanceBoard extends EnumMap<Square, Property> implements Board {
 	public void initializeProperty(Square sq) {
 		if (get(sq) != null)
 			get(sq).clear();
-		put(sq,new Property());
+		put(sq,new BasicProperty());
 	}
 	
 	@Override
-	public Property getProperty(Square sq) {
+	public AbstractProperty getProperty(Square sq) {
 		return get(sq);
 	}
 	
