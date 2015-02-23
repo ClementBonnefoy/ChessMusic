@@ -52,6 +52,9 @@ public class Move {
 	public final void applyTo (Board board) {
 		checkApplyValidity(board);
 		
+		board.getProperty(from).onMoveTo(board, to);
+		board.getProperty(to).onMoveFrom(board, from);
+		
 		specificApply(board);
 		
 		if (checkMate)
@@ -98,6 +101,9 @@ public class Move {
 		board.setCurrentPlayer(movingColor);
 		
 		checkUndoValidity(board);
+		
+		board.getProperty(from).onUndoTo(board, to);
+		board.getProperty(to).onUndoFrom(board, from);
 		
 		specificUndo(board);
 		

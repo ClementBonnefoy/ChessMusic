@@ -152,7 +152,19 @@ public class PGNGame implements Iterable<PGNMove>{
 		}
 
 	}
-	
+
+	public String getFen() {
+		return fen;
+	}
+
+	public String getEvent() {
+		return event;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
 	public PGNMove get(int i) {
 		return moves[i];
 	}

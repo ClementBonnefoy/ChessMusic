@@ -1,14 +1,18 @@
 package board;
 
 public interface Board {
+	
+	public void initializeProperty(Square sq);
 
-	public void putOnSquare(Piece p, Square c);
+	public void putOnSquare(Piece p, Square sq);
 	
-	public Piece getPiece(Square c);
+	public Piece getPiece(Square sq);
 	
-	public boolean isEmpty(Square c);
+	public Property getProperty(Square sq);
 	
-	public boolean isEnemy(Square c);
+	public boolean isEmpty(Square sq);
+	
+	public boolean isEnemy(Square sq);
 	
 	public Side currentSide();
 	
