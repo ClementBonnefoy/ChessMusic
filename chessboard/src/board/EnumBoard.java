@@ -97,26 +97,18 @@ public enum EnumBoard implements Board {
 		return board;
 	}
 	
+	public void initializeProperty(Square sq) {
+		sq.initProperty(new BasicProperty());
+	}
+	
+	public AbstractProperty getProperty(Square sq) {
+		return sq.getProperty();
+	}
+	
 	@Override
 	public String toString() {
 		return BoardTools.toString(this);
 		
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		EnumBoard b = TheBoard;
-		try {
-			BoardTools.initBoard(b,"8/6KP/5kP1/8/3b4/3B4/8/8 b - e6 0 1");
-		} catch (InvalidFenException e) {
-			e.printStackTrace();
-		}
-		System.out.println(BoardTools.toFEN(b));
-		
-	}
-
-	
 
 }

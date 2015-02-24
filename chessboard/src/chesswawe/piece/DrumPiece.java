@@ -1,15 +1,14 @@
-package chesswave.piece;
+package chesswawe.piece;
 
-import board.Square;
 import board.Piece;
 import board.Rank;
 
-public class DrumMusicalPiece extends AbstractChessWavePiece {
+public abstract class DrumPiece extends ChessWavePiece {
 
 	private static int[] scale = 
-		{ 1 , 2 , 3 , 4 , 5 , 6 , 7 , 8 };
+		{ 0 , 0 , 35 , 43 , 47 , 52 , 59 , 0 };
 	
-	public DrumMusicalPiece(Piece piece) {
+	public DrumPiece(Piece piece) {
 		super(piece);
 	}
 

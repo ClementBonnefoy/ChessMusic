@@ -16,8 +16,10 @@ public class BoardTools {
     */
 	
 	public static void clear(Board board) {
-		for (Square c : Square.values())
-			board.putOnSquare(null, c);
+		for (Square sq : Square.values()) {
+			board.initializeProperty(sq);
+			board.putOnSquare(null, sq);
+		}
 		board.setEnPassant(null);
 		board.setCurrentPlayer(null);
 		

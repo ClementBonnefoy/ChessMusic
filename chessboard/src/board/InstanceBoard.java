@@ -4,7 +4,7 @@ import java.util.EnumMap;
 
 import static board.Color.*;
 
-public class InstanceBoard extends EnumMap<Square, Piece> implements Board {
+public class InstanceBoard extends EnumMap<Square, AbstractProperty> implements Board {
 
 	/**
 	 * 
@@ -22,8 +22,8 @@ public class InstanceBoard extends EnumMap<Square, Piece> implements Board {
 	private int moveNumber;
 	
 	@Override
-	public void putOnSquare(Piece p, Square c) {
-		put(c,p);
+	public void putOnSquare(Piece p, Square sq) {
+		get(sq).setPiece(p);
 	}
 
 	
@@ -82,9 +82,21 @@ public class InstanceBoard extends EnumMap<Square, Piece> implements Board {
 	}
 	
 	public Piece getPiece(Square c) {
-		return get(c);
+		return get(c).getPiece();
 	}
 
+	@Override
+	public void initializeProperty(Square sq) {
+		if (get(sq) != null)
+			get(sq).clear();
+		put(sq,new BasicProperty());
+	}
+	
+	@Override
+	public AbstractProperty getProperty(Square sq) {
+		return get(sq);
+	}
+	
 	@Override
 	public boolean isEmpty(Square c) {
 		return getPiece(c) == null;
@@ -116,6 +128,7 @@ public class InstanceBoard extends EnumMap<Square, Piece> implements Board {
 
 	@Override
 	public boolean equals(Object obj) {
+		// TODO remplacer par un test sur les FEN
 		if (this == obj)
 			return true;
 		if (!super.equals(obj))
@@ -148,20 +161,6 @@ public class InstanceBoard extends EnumMap<Square, Piece> implements Board {
 	@Override
 	public String toString() {
 		return BoardTools.toString(this);
-	}
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		InstanceBoard b = new InstanceBoard();
-		try {
-			BoardTools.initBoard(b,"8/6KP/5kP1/8/3b4/3B4/8/8 b - e6 0 1");
-			
-		} catch (InvalidFenException e) {
-			e.printStackTrace();
-		}
-		System.out.println(BoardTools.toFEN(b));
-		
 	}
 
 }

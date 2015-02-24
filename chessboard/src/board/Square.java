@@ -12,14 +12,24 @@ public enum Square {
 	A7, B7, C7, D7, E7, F7, G7, H7, 
 	A8, B8, C8, D8, E8, F8, G8, H8;
 
-	Piece piece;
+	private AbstractProperty property;
+	
+	public AbstractProperty getProperty() {
+		return property;
+	}
+	
+	public void initProperty(AbstractProperty newProperty) {
+		if (this.property != null)
+			property.clear();			
+		this.property = newProperty;
+	}
 
 	Piece getPiece() {
-		return piece;
+		return property.getPiece();
 	}
 
 	public void setPiece(Piece piece) {
-		this.piece = piece;
+		property.setPiece(piece);
 	}
 
 	public File getFile() {
@@ -53,7 +63,6 @@ public enum Square {
 	public Square nextSquare(Direction dir) {
 		return dir.nextSquare(this);
 	}
-
 
 
 }

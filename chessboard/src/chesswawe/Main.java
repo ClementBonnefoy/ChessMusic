@@ -1,4 +1,4 @@
-package chesswave;
+package chesswawe;
 
 public class Main {
 

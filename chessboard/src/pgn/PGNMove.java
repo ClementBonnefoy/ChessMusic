@@ -96,20 +96,12 @@ public class PGNMove {
 
 		if (fromFile != null && fromRank != null) {
 			Square fromSquare = Square.getSquare(fromFile, fromRank);
-			if (type == Rook) {
-				if (board.currentSide().canKingSideCastle()
-					&& fromFile == FileH)
-					return new DisablingCastlingMove(fromSquare, to,
-							color, Rook, eaten, check, checkMate,
-							true, board.currentSide().canQueenSideCastle(),
-							board.getLimit50moves(), board.getEnPassant());
-				else if (board.currentSide().canQueenSideCastle()
-						&& fromFile == FileA)
-					return new DisablingCastlingMove(fromSquare, to,
-							color, Rook, eaten, check, checkMate,
-							board.currentSide().canKingSideCastle(), true,
-							board.getLimit50moves(), board.getEnPassant());
-			}
+			if (isDisablingCastlingMove(board))
+				return new DisablingCastlingMove(fromSquare, to,
+						color, type, eaten, check, checkMate,
+						board.currentSide().canKingSideCastle(),
+						board.currentSide().canQueenSideCastle(),
+						board.getLimit50moves(), board.getEnPassant());
 			if (capture)
 				return new SimpleCapture(fromSquare, to,
 						color, type, eaten, check, checkMate,
@@ -127,33 +119,13 @@ public class PGNMove {
 					continue;
 				if (fromRank != null && c.getRank() != fromRank)
 					continue;
-				if (type == Rook) {
-					if (board.currentSide().canKingSideCastle()
-						&& fromFile == FileH)
-						return new DisablingCastlingMove(c, to,
-								color, Rook, eaten, check, checkMate,
-								true, board.currentSide().canQueenSideCastle(),
-								board.getLimit50moves(), board.getEnPassant());
-					else if (board.currentSide().canQueenSideCastle()
-							&& fromFile == FileA)
-						return new DisablingCastlingMove(c, to,
-								color, Rook, eaten, check, checkMate,
-								board.currentSide().canKingSideCastle(), true,
-								board.getLimit50moves(), board.getEnPassant());
-				}
-				if (type == King) {
-					if (board.currentSide().canKingSideCastle())
-							return new DisablingCastlingMove(c, to,
-									color, King, eaten, check, checkMate,
-									true, board.currentSide().canQueenSideCastle(),
-									board.getLimit50moves(), board.getEnPassant());
-						else if (board.currentSide().canQueenSideCastle())
-							return new DisablingCastlingMove(c, to,
-									color, King, eaten, check, checkMate,
-									board.currentSide().canKingSideCastle(), true,
-									board.getLimit50moves(), board.getEnPassant());
-				}
-					
+				if (isDisablingCastlingMove(board))
+					return new DisablingCastlingMove(c, to,
+							color, type, eaten, check, checkMate,
+							board.currentSide().canKingSideCastle(),
+							board.currentSide().canQueenSideCastle(),
+							board.getLimit50moves(), board.getEnPassant());
+
 				if (capture)
 					return new SimpleCapture(c, to, color, type, eaten,
 							check, checkMate,
@@ -167,8 +139,24 @@ public class PGNMove {
 
 	}
 
-	
-	
+	public boolean isDisablingCastlingMove(Board board) {
+		if (type == Rook) {
+			if (board.currentSide().canKingSideCastle()
+					&& fromFile == FileH)
+				return true;
+			if (board.currentSide().canQueenSideCastle()
+					&& fromFile == FileA)
+				return true;
+		}
+		else if (type == King) {
+			if (board.currentSide().canKingSideCastle()
+					|| board.currentSide().canQueenSideCastle())
+				return true;
+		}
+
+		return false;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -197,14 +185,14 @@ public class PGNMove {
 			return false;
 		PGNMove other = (PGNMove) obj;
 		if (capture != other.capture
-			|| check != other.check
-			|| checkMate != other.checkMate
-			|| color != other.color
-			|| fromFile != other.fromFile
-			|| fromRank != other.fromRank
-			|| moveNumber != other.moveNumber
-			|| to != other.to
-			|| type != other.type)
+				|| check != other.check
+				|| checkMate != other.checkMate
+				|| color != other.color
+				|| fromFile != other.fromFile
+				|| fromRank != other.fromRank
+				|| moveNumber != other.moveNumber
+				|| to != other.to
+				|| type != other.type)
 			return false;
 		return true;
 	}
@@ -212,22 +200,14 @@ public class PGNMove {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		if (type == Pawn) {
-			if (fromFile != null)
-				sb.append(fromFile.toString().toLowerCase()+'x');
-			sb.append(to.toString().toLowerCase());
-
-		}
-		else {
-			sb.append(type.toString().toUpperCase());
-			if (fromFile != null)
-				sb.append(fromFile.toString().toLowerCase());
-			if (fromRank != null)
-				sb.append(fromRank.toString());
-			if (capture)
-				sb.append('x');
-			sb.append(to.toString().toLowerCase());
-		}
+		sb.append(type.toString().toUpperCase());
+		if (fromFile != null)
+			sb.append(fromFile.toString().toLowerCase());
+		if (fromRank != null)
+			sb.append(fromRank.toString());
+		if (capture)
+			sb.append('x');
+		sb.append(to.toString().toLowerCase());
 
 
 		if (check)

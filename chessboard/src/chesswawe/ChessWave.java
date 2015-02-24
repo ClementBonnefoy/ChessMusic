@@ -1,13 +1,13 @@
-package chesswave;
+package chesswawe;
 
 import move.InvalidMoveException;
 import move.Move;
-import chesswave.piece.AbstractChessWavePiece;
+import chesswawe.piece.ChessWavePiece;
+import board.BasicProperty;
 import board.Board;
 import board.BoardTools;
-import board.Square;
-import board.EnumBoard;
 import board.InstanceBoard;
+import board.Square;
 import static board.Square.*;
 import pgn.InvalidPGNMoveException;
 import pgn.PGNGame;
@@ -26,8 +26,16 @@ public class ChessWave {
 	private Board board;
 
 	public ChessWave(){
-		board = EnumBoard.TheBoard;
+		board = new InstanceBoard(){
+			@Override
+			public void initializeProperty(Square sq) {
+				if (get(sq) != null)
+					get(sq).clear();
+				put(sq,new ChessWaveProperty());
+			}
+		};
 		BoardTools.initBoard(board);
+
 	}
 
 
@@ -46,38 +54,28 @@ public class ChessWave {
 		try {
 			parser.parse();
 			pgnGame = parser.makePgnGame();
-		} catch (InvalidMoveException e) {
+		} catch (InvalidMoveException | InvalidPGNMoveException e) {
 			e.printStackTrace();
 			System.exit(0);
-		} catch (InvalidPGNMoveException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 
 		int time=0;
 
-		LoopSequence ls = new LoopSequence();
-		
 		for(PGNMove pm : pgnGame){
 
 			playAMove(pm.makeMove(board));
-			
-			ls.add(new Loop(board));
 
+			for(int j=0;j<plage.length;j++){
+				for(Square c: plage[j]){
+					if(!board.isEmpty(c)){
+						if(((ChessWaveProperty)board.getProperty(c)).hasAlreadyMoved())
+							md.addKey(time, ChessWavePiece.fromPiece(board.getPiece(c)), c);
+					}
+				}
 
-//			for(int j=0;j<plage.length;j++){
-//				for(Square c: plage[j]){
-//					if(!board.isEmpty(c)){
-//						System.out.println(c);
-//						md.addKey(time, AbstractChessWavePiece.fromPiece(board.getPiece(c)), c);
-//					}
-//				}
-//
-//				time++;
-//			}
+				time++;
+			}
 		}
-		
-		System.out.println(ls);
 
 		md.saveMidi(midiFileName);
 	}
