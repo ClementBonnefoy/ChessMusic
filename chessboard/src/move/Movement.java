@@ -1,19 +1,27 @@
 package move;
 
+import static move.Direction.East;
+import static move.Direction.North;
+import static move.Direction.NorthEast;
+import static move.Direction.NorthWest;
+import static move.Direction.South;
+import static move.Direction.SouthEast;
+import static move.Direction.SouthWest;
+import static move.Direction.West;
+
 import java.util.ArrayList;
 
 import board.Board;
-import board.Square;
 import board.Color;
+import board.ESquare;
 import board.Type;
-import static move.Direction.*;
 
 public enum Movement {
 	
 	KingMovement {
 		@Override
-		public ArrayList<Square> basicDestinations(Board board, Square from) {
-			ArrayList<Square> basicDests = new ArrayList<>();
+		public ArrayList<ESquare> basicDestinations(Board board, ESquare from) {
+			ArrayList<ESquare> basicDests = new ArrayList<>();
 			for (Direction dir : Direction.values()) {
 				if (!from.hasNextSquare(dir))
 					continue;
@@ -24,9 +32,9 @@ public enum Movement {
 		}
 		
 		@Override
-		public ArrayList<Square> realDestinations(Board board, Square from) {
+		public ArrayList<ESquare> realDestinations(Board board, ESquare from) {
 			//TODO implementer echec...
-			ArrayList<Square> realDests = basicDestinations(board, from);
+			ArrayList<ESquare> realDests = basicDestinations(board, from);
 
 			friendCaptureFilter(realDests, board);
 			
@@ -43,13 +51,13 @@ public enum Movement {
 		
 	}, QueenMovement {
 		@Override
-		public ArrayList<Square> basicDestinations(Board board, Square from) {
+		public ArrayList<ESquare> basicDestinations(Board board, ESquare from) {
 			return basicLineMovements(Direction.values(), board, from);
 		}
 
 		@Override
-		public ArrayList<Square> realDestinations(Board board, Square from) {
-			ArrayList<Square> realDests = basicDestinations(board, from);
+		public ArrayList<ESquare> realDestinations(Board board, ESquare from) {
+			ArrayList<ESquare> realDests = basicDestinations(board, from);
 			
 			friendCaptureFilter(realDests, board);
 			
@@ -61,13 +69,13 @@ public enum Movement {
 		Direction[] dirs = {North, East, South, West};
 		
 		@Override
-		public ArrayList<Square> basicDestinations(Board board, Square from) {
+		public ArrayList<ESquare> basicDestinations(Board board, ESquare from) {
 			return basicLineMovements(dirs, board, from);
 		}
 
 		@Override
-		public ArrayList<Square> realDestinations(Board board, Square from) {
-			ArrayList<Square> realDests = basicDestinations(board, from);
+		public ArrayList<ESquare> realDestinations(Board board, ESquare from) {
+			ArrayList<ESquare> realDests = basicDestinations(board, from);
 			
 			friendCaptureFilter(realDests, board);
 			
@@ -86,12 +94,12 @@ public enum Movement {
 				West, SouthWest,
 				West, NorthWest};
 		@Override
-		public ArrayList<Square> basicDestinations(Board board, Square from) {
+		public ArrayList<ESquare> basicDestinations(Board board, ESquare from) {
 			
-			ArrayList<Square> basicDests = new ArrayList<>();
+			ArrayList<ESquare> basicDests = new ArrayList<>();
 			
 			for (int i = 0; i < 8; i++) {
-				Square c;
+				ESquare c;
 				if (!from.hasNextSquare(dirs[2*i]))
 					continue;
 				c = from.nextSquare(dirs[2*i]);
@@ -105,8 +113,8 @@ public enum Movement {
 			return basicDests;
 		}
 		@Override
-		public ArrayList<Square> realDestinations(Board board, Square from) {
-			ArrayList<Square> realDests = basicDestinations(board, from);
+		public ArrayList<ESquare> realDestinations(Board board, ESquare from) {
+			ArrayList<ESquare> realDests = basicDestinations(board, from);
 			
 			friendCaptureFilter(realDests, board);
 			
@@ -119,13 +127,13 @@ public enum Movement {
 		Direction[] dirs = {NorthEast, SouthEast, SouthWest, NorthWest};
 
 		@Override
-		public ArrayList<Square> basicDestinations(Board board, Square from) {
+		public ArrayList<ESquare> basicDestinations(Board board, ESquare from) {
 			return basicLineMovements(dirs, board, from);
 		}
 
 		@Override
-		public ArrayList<Square> realDestinations(Board board, Square from) {
-			ArrayList<Square> realDests = basicDestinations(board, from);
+		public ArrayList<ESquare> realDestinations(Board board, ESquare from) {
+			ArrayList<ESquare> realDests = basicDestinations(board, from);
 			
 			friendCaptureFilter(realDests, board);
 			
@@ -135,16 +143,16 @@ public enum Movement {
 		}
 	}, PawnMovement {
 		@Override
-		public ArrayList<Square> basicDestinations(Board board, Square from) {
-			ArrayList<Square> basicDests = new ArrayList<>();
+		public ArrayList<ESquare> basicDestinations(Board board, ESquare from) {
+			ArrayList<ESquare> basicDests = new ArrayList<>();
 			Color color = board.getCurrentPlayer();
 			Direction dir = color.forwards();
-			Square next = from.nextSquare(dir);
+			ESquare next = from.nextSquare(dir);
 			
 			if (board.isEmpty(next)) {
 				basicDests.add(next);
 				if (from.getRank() == color.pawnStartingRank()) {
-					Square jump = next.nextSquare(dir);
+					ESquare jump = next.nextSquare(dir);
 					if (board.isEmpty(jump))
 						basicDests.add(jump);
 				}
@@ -173,9 +181,9 @@ public enum Movement {
 		}
 
 		@Override
-		public ArrayList<Square> realDestinations(Board board, Square from) {
+		public ArrayList<ESquare> realDestinations(Board board, ESquare from) {
 
-			ArrayList<Square> realDests = basicDestinations(board, from);
+			ArrayList<ESquare> realDests = basicDestinations(board, from);
 			
 			checkFilter(realDests,board);
 			
@@ -184,8 +192,8 @@ public enum Movement {
 		
 	};
 	
-	public abstract ArrayList<Square> basicDestinations(Board board, Square from);
-	public abstract ArrayList<Square> realDestinations(Board board, Square from);
+	public abstract ArrayList<ESquare> basicDestinations(Board board, ESquare from);
+	public abstract ArrayList<ESquare> realDestinations(Board board, ESquare from);
 	
 	public static Movement get(Type type) {
 		switch (type) {
@@ -206,9 +214,9 @@ public enum Movement {
 		}
 	}
 	
-	private static ArrayList<Square> basicLineMovements(Direction[] dirs, Board board, Square from) {
-		ArrayList<Square> basicDests = new ArrayList<>();
-		Square tmp;
+	private static ArrayList<ESquare> basicLineMovements(Direction[] dirs, Board board, ESquare from) {
+		ArrayList<ESquare> basicDests = new ArrayList<>();
+		ESquare tmp;
 		
 		for (Direction dir : dirs) {
 			tmp = from;
@@ -226,8 +234,8 @@ public enum Movement {
 		return basicDests;
 	}
 	
-	private static void friendCaptureFilter(ArrayList<Square> dests, Board board)  {
-		Square c;
+	private static void friendCaptureFilter(ArrayList<ESquare> dests, Board board)  {
+		ESquare c;
 		for (int i = 0; i < dests.size();) {
 			c = dests.get(i);
 			if (!board.isEmpty(c) && !board.isEnemy(c))
@@ -239,7 +247,7 @@ public enum Movement {
 	}
 	
 	//TODO checkFilter
-	private static void checkFilter(ArrayList<Square> dests, Board board) {
+	private static void checkFilter(ArrayList<ESquare> dests, Board board) {
 		
 	}
 	

@@ -11,14 +11,14 @@ public class PGNMove {
 
 	protected final Type type;
 	protected final Color color;
-	protected final Square to;
+	protected final ESquare to;
 	protected final Rank fromRank;
 	protected final File fromFile;
 	protected final boolean capture;
 	protected final boolean check, checkMate;
 	protected final int moveNumber;
 
-	public PGNMove(Type type, Color color, Square to, Rank fromRank, File fromFile,
+	public PGNMove(Type type, Color color, ESquare to, Rank fromRank, File fromFile,
 			boolean capture, boolean check, boolean checkmate,
 			int moveNumber) {
 		super();
@@ -39,7 +39,7 @@ public class PGNMove {
 	public Color getColor() {
 		return color;
 	}
-	public Square getTo() {
+	public ESquare getTo() {
 		return to;
 	}
 	public Rank getFromRank() {
@@ -62,75 +62,83 @@ public class PGNMove {
 	}
 
 	public Move makeMove(Board board) {
-		Square from;
-		Piece p = board.getPiece(to);
-		Type eaten = p == null ? null : p.getType();
+		ESquare from;
+		Piece piece;
+		Piece eaten = board.getPiece(to);
 
 
 		if (type == Pawn) {
 
-			Square beforeTo = to.nextSquare(color.backwards());
+			ESquare beforeTo = to.nextSquare(color.backwards());
 
 			if (board.getEnPassant() == to) {
-				from = Square.getSquare(fromFile, beforeTo.getRank());
-				return new EnPassantCapture(from, to, color, check, checkMate,
+				from = ESquare.getSquare(fromFile, beforeTo.getRank());
+				piece = board.getPiece(from);
+				return new EnPassantCapture(from, to, piece, eaten, check, checkMate,
 						board.getLimit50moves());
 			}
 
 			if (capture) {
-				from = Square.getSquare(fromFile, beforeTo.getRank());
-				return new SimpleCapture(from, to, color, Pawn, 
+				from = ESquare.getSquare(fromFile, beforeTo.getRank());
+				piece = board.getPiece(from);
+				return new SimpleCapture(from, to, piece, 
 						eaten, check, checkMate,
 						board.getLimit50moves(), board.getEnPassant());
 			}
 
 
-			if (board.isEmpty(beforeTo))
-				return new JumpPawnMove(beforeTo.nextSquare(color.backwards()), color,
+			if (board.isEmpty(beforeTo)) {
+				from = beforeTo.nextSquare(color.backwards());
+				return new JumpPawnMove(from,to,
+						board.getPiece(from),
 						check, checkMate,
 						board.getLimit50moves(), board.getEnPassant());
-
-			return new SimplePawnMove(beforeTo, color, check, checkMate,
+			}
+			
+			return new SimplePawnMove(beforeTo, to,
+					board.getPiece(beforeTo),
+					check, checkMate,
 					board.getLimit50moves(), board.getEnPassant());
 		}
 
 		if (fromFile != null && fromRank != null) {
-			Square fromSquare = Square.getSquare(fromFile, fromRank);
+			ESquare fromSquare = ESquare.getSquare(fromFile, fromRank);
 			if (isDisablingCastlingMove(board))
 				return new DisablingCastlingMove(fromSquare, to,
-						color, type, eaten, check, checkMate,
+						board.getPiece(fromSquare), eaten, check, checkMate,
 						board.currentSide().canKingSideCastle(),
 						board.currentSide().canQueenSideCastle(),
 						board.getLimit50moves(), board.getEnPassant());
 			if (capture)
 				return new SimpleCapture(fromSquare, to,
-						color, type, eaten, check, checkMate,
+						board.getPiece(fromSquare), eaten, check, checkMate,
 						board.getLimit50moves(), board.getEnPassant());
 			else
-				return new Move(fromSquare, to, color, type,
+				return new Move(fromSquare, to, board.getPiece(fromSquare),
 						check, checkMate, board.getEnPassant());
 		}
 
 		Movement mvmt = Movement.get(type);
-		Piece piece = Piece.get(type, color);
-		for (Square c : mvmt.basicDestinations(board, to)) {
-			if (board.getPiece(c) == piece) {
+		EPiece ePiece = EPiece.get(type, color);
+		for (ESquare c : mvmt.basicDestinations(board, to)) {
+			if (board.getPiece(c) != null && 
+					board.getPiece(c).getEPiece() == ePiece) {
 				if (fromFile != null && c.getFile() != fromFile)
 					continue;
 				if (fromRank != null && c.getRank() != fromRank)
 					continue;
 				if (isDisablingCastlingMove(board))
 					return new DisablingCastlingMove(c, to,
-							color, type, eaten, check, checkMate,
+							board.getPiece(c), eaten, check, checkMate,
 							board.currentSide().canKingSideCastle(),
 							board.currentSide().canQueenSideCastle(),
 							board.getLimit50moves(), board.getEnPassant());
 
 				if (capture)
-					return new SimpleCapture(c, to, color, type, eaten,
+					return new SimpleCapture(c, to, board.getPiece(c), eaten,
 							check, checkMate,
 							board.getLimit50moves(), board.getEnPassant());
-				return new Move(c, to, color, type, check, checkMate,
+				return new Move(c, to, board.getPiece(c), check, checkMate,
 						board.getEnPassant());
 			}
 		}

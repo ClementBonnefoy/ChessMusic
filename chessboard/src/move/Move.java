@@ -7,38 +7,32 @@ import board.*;
 
 public class Move {
 
-	protected final Square from, to;
-	protected final Color movingColor;
-	protected final Type movingType;
+	protected final ESquare from, to;
+	protected final Piece movingPiece;
 	protected final boolean check, checkMate;
-	protected final Square enPassantBefore;
+	protected final ESquare enPassantBefore;
 
-	public Move(Square from, Square to, Color movingColor, Type movingType,
-			boolean check, boolean checkMate, Square enPassantBefore) {
+	public Move(ESquare from, ESquare to, Piece movingPiece,
+			boolean check, boolean checkMate, ESquare enPassantBefore) {
 		super();
 		this.from = from;
 		this.to = to;
-		this.movingColor = movingColor;
-		this.movingType = movingType;
+		this.movingPiece = movingPiece;
 		this.check = check;
 		this.checkMate = checkMate;
 		this.enPassantBefore = enPassantBefore;
 	}
 
-	public Square getFrom() {
+	public ESquare getFrom() {
 		return from;
 	}
 
-	public Square getTo() {
+	public ESquare getTo() {
 		return to;
 	}
 
-	public Color getMovingColor() {
-		return movingColor;
-	}
-
-	public Type getMovingType() {
-		return movingType;
+	public Piece getMovingPiece() {
+		return movingPiece;
 	}
 
 	public boolean isCheck() {
@@ -52,23 +46,25 @@ public class Move {
 	public final void applyTo (Board board) {
 		checkApplyValidity(board);
 		
-		board.getProperty(from).onMoveTo(board, to);
-		board.getProperty(to).onMoveFrom(board, from);
+		movingPiece.onMove(board, this);
+
+		board.get(from).onMove(board, this);
+		board.get(to).onMove(board, this);
 		
 		specificApply(board);
 		
 		if (checkMate)
 			return;
 		
-		board.setCurrentPlayer(movingColor.getOpponent());
+		board.setCurrentPlayer(movingPiece.getColor().getOpponent());
 	}
 
 	protected void checkApplyValidity(Board board) {
 		// TODO checkValidity
 	}
 
-	protected static void simpleMove(Board board, Square from, Square to) {
-		board.currentSide().replace(from, to);
+	protected static void simpleMove(Board board, ESquare from, ESquare to) {
+		board.currentSide().replace(board.get(from), board.get(to));
 
 		board.putOnSquare(board.getPiece(from), to);
 		board.putOnSquare(null, from);
@@ -98,12 +94,14 @@ public class Move {
 	
 	public final void undo(Board board) {
 		
-		board.setCurrentPlayer(movingColor);
+		board.setCurrentPlayer(movingPiece.getColor());
 		
 		checkUndoValidity(board);
 		
-		board.getProperty(from).onUndoTo(board, to);
-		board.getProperty(to).onUndoFrom(board, from);
+		movingPiece.onUndoMove(board, this);
+
+		board.get(from).onUndoMove(board, this);
+		board.get(to).onUndoMove(board, this);
 		
 		specificUndo(board);
 		
@@ -125,14 +123,15 @@ public class Move {
 
 	public PGNMove makePGNMove(Board board) {
 		
-		Piece piece = Piece.get(movingType, movingColor);
-		Movement mvmt = Movement.get(movingType);
+		EPiece ePiece = movingPiece.getEPiece();
+		Movement mvmt = Movement.get(ePiece.getType());
 		File fromFile = from.getFile();
 		Rank fromRank = from.getRank();
 		boolean concurrency = false, sameFile = false, sameRank = false;
 		
-		for (Square sq : mvmt.basicDestinations(board, to))
-			if (sq != from && board.getPiece(sq) == piece) {
+		for (ESquare sq : mvmt.basicDestinations(board, to))
+			if (sq != from && board.getPiece(sq) != null
+				&& board.getPiece(sq).getEPiece() == ePiece) {
 				concurrency = true;
 				if (fromFile == sq.getFile())
 					sameFile = true;
@@ -157,7 +156,7 @@ public class Move {
 		}
 		
 		
-		return new PGNMove(movingType, movingColor,
+		return new PGNMove(movingPiece.getType(), movingPiece.getColor(),
 				to, pgnRank, pgnFile,
 				false, check, checkMate,
 				board.getMoveNumber());

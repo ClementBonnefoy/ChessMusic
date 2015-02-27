@@ -3,7 +3,7 @@ package board;
 import java.util.EnumSet;
 import java.util.Iterator;
 
-public enum Rank implements Iterable<Square>{
+public enum Rank implements Iterable<ESquare>{
 	Rank1, Rank2, Rank3, Rank4, Rank5, Rank6, Rank7, Rank8;
 
 	public int getNum() {
@@ -18,8 +18,8 @@ public enum Rank implements Iterable<Square>{
 		return Rank.values()[c - '1'];
 	}
 	
-	public Square getSquare(int num) {
-		return Square.values()[(getNum() << 3) + num];
+	public ESquare getSquare(int num) {
+		return ESquare.values()[(getNum() << 3) + num];
 	}
 	
 	public Rank nextRank() {
@@ -35,7 +35,7 @@ public enum Rank implements Iterable<Square>{
 	}
 
 	@Override
-	public Iterator<Square> iterator() {
+	public Iterator<ESquare> iterator() {
 		return EnumSet.range(getSquare(0), getSquare(7)).iterator();
 	}
 

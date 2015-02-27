@@ -1,10 +1,13 @@
 package pgn;
 
+import static board.File.FileA;
+import static board.Type.King;
 import move.Move;
 import move.QueenSideCastling;
 import board.Board;
 import board.Color;
-import static board.Type.King;
+import board.ESquare;
+import board.Piece;
 
 public class PGNQueenSideCastling extends PGNMove {
 
@@ -16,7 +19,10 @@ public class PGNQueenSideCastling extends PGNMove {
 
 	@Override
 	public Move makeMove(Board board) {
-		return new QueenSideCastling(color, check, checkMate, board.getEnPassant());
+		Piece king = board.currentSide().getKing().getPiece();
+		Piece rook = board.getPiece(ESquare.getSquare(FileA, to.getRank()));
+		return new QueenSideCastling(king, rook,
+				check, checkMate, board.getEnPassant());
 	}
 
 	@Override

@@ -6,7 +6,7 @@ import static board.Type.*;
 import java.util.Arrays;
 import java.util.Iterator;
 
-import board.Square;
+import board.ESquare;
 import board.Color;
 import board.File;
 import board.Rank;
@@ -35,7 +35,7 @@ public class PGNGame implements Iterable<PGNMove>{
 			moveNumber = Integer.valueOf(elems[5]);
 		}
 		Type type;
-		Square to;
+		ESquare to;
 		Rank rank;
 		File file;
 		boolean capture;
@@ -98,7 +98,7 @@ public class PGNGame implements Iterable<PGNMove>{
 				current = current.substring(0, 2);
 			}
 			
-			to = Square.getSquare(current);
+			to = ESquare.getSquare(current);
 
 			if (promotion != null)
 				moves[i] = new PGNPromotion(promotion, color, to, file,
@@ -112,7 +112,7 @@ public class PGNGame implements Iterable<PGNMove>{
 
 			char fileChar = current.charAt(current.length()-2);
 			char rankChar = current.charAt(current.length()-1);
-			to = Square.getSquare(File.getFile(fileChar), Rank.getRank(rankChar));
+			to = ESquare.getSquare(File.getFile(fileChar), Rank.getRank(rankChar));
 
 			current = current.substring(1, current.length() - 2);
 

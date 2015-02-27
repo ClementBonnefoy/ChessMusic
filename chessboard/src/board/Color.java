@@ -3,10 +3,10 @@ package board;
 import static board.Rank.*;
 import move.Direction;
 import static move.Direction.*;
-import static board.Square.G1;
-import static board.Square.G8;
-import static board.Square.C1;
-import static board.Square.C8;
+import static board.ESquare.G1;
+import static board.ESquare.G8;
+import static board.ESquare.C1;
+import static board.ESquare.C8;
 
 public enum Color {
 	Black, White;
@@ -23,11 +23,11 @@ public enum Color {
 		return this == White ? Rank2 : Rank7;
 	}
 	
-	public Square kingSideSquare() {
+	public ESquare kingSideSquare() {
 		return this == White ? G1 : G8;
 	}
 	
-	public Square queenSideSquare() {
+	public ESquare queenSideSquare() {
 		return this == White ? C1 : C8;
 	}
 	

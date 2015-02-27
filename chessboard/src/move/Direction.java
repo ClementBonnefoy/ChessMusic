@@ -1,6 +1,6 @@
 package move;
 
-import board.Square;
+import board.ESquare;
 import board.File;
 import board.Rank;
 import static board.Rank.*;
@@ -18,20 +18,18 @@ public enum Direction {
 	
 	private final File limitFile;
 	private final Rank limitRank;
-
-	
 	
 	private Direction(File limitFile, Rank limitRank) {
 		this.limitRank = limitRank;
 		this.limitFile = limitFile;
 	}
 	
-	public boolean hasNextSquare(Square c) {
+	public boolean hasNextSquare(ESquare c) {
 		return c.getFile() != limitFile && c.getRank() != limitRank;
 		
 	}
 	
-	public Square nextSquare(Square c) {
+	public ESquare nextSquare(ESquare c) {
 
 		File file = c.getFile();
 		Rank rank = c.getRank();
@@ -67,7 +65,7 @@ public enum Direction {
 			break;
 		}
 		
-		return Square.getSquare(file,rank);
+		return ESquare.getSquare(file,rank);
 	}
 	
 	

@@ -3,7 +3,7 @@ package board;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public enum File implements Iterable<Square> {	
+public enum File implements Iterable<ESquare> {	
 	FileA, FileB, FileC, FileD, FileE, FileF, FileG, FileH;
 
 	public int getNum() {
@@ -20,8 +20,8 @@ public enum File implements Iterable<Square> {
 		return File.values()[c - 'a'];
 	}
 
-	public Square getSquare(int num) {
-		return Square.values()[(num << 3) + getNum()];
+	public ESquare getSquare(int num) {
+		return ESquare.values()[(num << 3) + getNum()];
 	}
 	
 	public File nextFile() {
@@ -37,9 +37,9 @@ public enum File implements Iterable<Square> {
 	}
 	
 	@Override
-	public Iterator<Square> iterator() {
+	public Iterator<ESquare> iterator() {
 		
-		ArrayList<Square> squares = new ArrayList<>(8);
+		ArrayList<ESquare> squares = new ArrayList<>(8);
 		
 		for (int i = 0; i < 8; i++)
 			squares.add(getSquare(i));

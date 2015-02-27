@@ -1,13 +1,13 @@
 package move;
 
+import static board.File.FileA;
+import static board.File.FileH;
+import static board.Type.King;
+import static board.Type.Rook;
 import pgn.PGNMove;
 import board.Board;
-import board.Color;
+import board.ESquare;
 import board.Piece;
-import board.Square;
-import board.Type;
-import static board.Type.*;
-import static board.File.*;
 
 /**
  * This move is useful for storing the previous castling state,
@@ -18,15 +18,14 @@ import static board.File.*;
 public class DisablingCastlingMove extends Move {
 	
 	private final boolean canKingSideCastle, canQueenSideCastle;
-	private final Type eaten;
+	private final Piece eaten;
 	private final int limit50movesBefore;
 
-	public DisablingCastlingMove(Square from, Square to, Color movingColor,
-			Type movingType,
-			Type eaten, boolean check, boolean checkMate,
+	public DisablingCastlingMove(ESquare from, ESquare to, Piece movingPiece,
+			Piece eaten, boolean check, boolean checkMate,
 			boolean canKingSideCastle, boolean canQueenSideCastle,
-			int limit50movesBefore, Square enPassantBefore) {
-		super(from, to, movingColor, movingType, check, checkMate, enPassantBefore);
+			int limit50movesBefore, ESquare enPassantBefore) {
+		super(from, to, movingPiece, check, checkMate, enPassantBefore);
 		this.canKingSideCastle = canKingSideCastle;
 		this.canQueenSideCastle = canQueenSideCastle;
 		this.eaten = eaten;
@@ -38,14 +37,14 @@ public class DisablingCastlingMove extends Move {
 		super.specificApply(board);
 
 		if (eaten != null) {
-			board.opponentSide().remove(to);
+			board.opponentSide().remove(board.get(to));
 			board.setLimit50moves(0);
 		}
 		if (canKingSideCastle &&
-				(movingType == King || from.getFile() == FileH))
+				(movingPiece.getType() == King || from.getFile() == FileH))
 			board.currentSide().setKingSideCastling(false);
 		if (canQueenSideCastle &&
-				(movingType == King || from.getFile() == FileA))
+				(movingPiece.getType() == King || from.getFile() == FileA))
 			board.currentSide().setQueenSideCastling(false);
 	}
 
@@ -54,8 +53,8 @@ public class DisablingCastlingMove extends Move {
 		super.specificUndo(board);
 		
 		if (eaten != null) {
-			board.opponentSide().add(to);
-			board.putOnSquare(Piece.get(eaten, movingColor.getOpponent()), to);
+			board.opponentSide().add(board.get(to));
+			board.putOnSquare(eaten, to);
 			board.setLimit50moves(limit50movesBefore);
 		}
 		
@@ -65,16 +64,16 @@ public class DisablingCastlingMove extends Move {
 
 	@Override
 	public PGNMove makePGNMove(Board board) {
-		if (movingType == Rook) {
+		if (movingPiece.getType() == Rook) {
 			PGNMove pm = super.makePGNMove(board);
-			return new PGNMove(Rook, movingColor, to,
+			return new PGNMove(Rook, movingPiece.getColor(), to,
 					pm.getFromRank(), pm.getFromFile(),
 					eaten != null, check, checkMate,
 					board.getMoveNumber());
 		}
 		
 		
-		return new PGNMove(King, movingColor, to, null, null,
+		return new PGNMove(King, movingPiece.getColor(), to, null, null,
 				eaten != null, check, checkMate,
 				board.getMoveNumber());
 	}

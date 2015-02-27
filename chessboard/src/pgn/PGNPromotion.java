@@ -5,8 +5,8 @@ import move.Promotion;
 import board.Board;
 import board.Color;
 import board.File;
+import board.ESquare;
 import board.Piece;
-import board.Square;
 import board.Type;
 import static board.Type.Pawn;
 
@@ -14,7 +14,7 @@ public class PGNPromotion extends PGNMove {
 	
 	private Type promotionType;
 	
-	public PGNPromotion(Type promotionType, Color color, Square to, File fromFile,
+	public PGNPromotion(Type promotionType, Color color, ESquare to, File fromFile,
 			boolean capture, boolean check, boolean checkmate,
 			int moveNumber) {
 		super(Pawn, color, to, null, fromFile, capture, check, checkmate,
@@ -25,13 +25,14 @@ public class PGNPromotion extends PGNMove {
 	
 	@Override
 	public Move makeMove(Board board) {
-		Square from = to.nextSquare(color.backwards());;
-		Piece p = board.getPiece(to);
-		Type eaten = p == null ? null : p.getType();
+		ESquare from = to.nextSquare(color.backwards());;
+		Piece eaten = board.getPiece(to);
 
 		if (eaten != null)
-			from = Square.getSquare(fromFile, from.getRank());
-		return new Promotion(promotionType, from, to, color, eaten, check, checkMate,
+			from = ESquare.getSquare(fromFile, from.getRank());
+		Piece pawn = board.getPiece(from);
+		return new Promotion(promotionType, from, to, pawn, eaten,
+				check, checkMate,
 				board.getLimit50moves(), board.getEnPassant());
 	}
 

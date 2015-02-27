@@ -1,65 +1,51 @@
 package board;
 
-import static board.Color.*;
-import static board.Type.*;
+import move.Move;
+import move.MoveAction;
+import move.Promotion;
+import static board.Type.Pawn;
 
-public enum Piece {
+public class Piece implements MoveAction {
 
-	WhiteKing (White, King, 'K'),
-	WhiteQueen (White, Queen, 'Q'),
-	WhiteRook (White, Rook, 'R'),
-	WhiteKnight (White, Knight, 'N'),
-	WhiteBishop (White, Bishop, 'B'),
-	WhitePawn (White, Pawn, 'P'),
-	BlackKing (Black, King, 'k'),
-	BlackQueen (Black, Queen, 'q'),
-	BlackRook (Black, Rook, 'r'),
-	BlackKnight (Black, Knight, 'n'),
-	BlackBishop (Black, Bishop, 'b'),
-	BlackPawn (Black, Pawn, 'p');
-
-	private final Color color;
-	private final Type type;
-	private final char symbol;
-
-	private Piece(Color color, Type type, char symbol) {
-		this.color = color;
-		this.type = type;
-		this.symbol = symbol;
+	protected EPiece ePiece;
+	
+	public Piece(EPiece ePiece) {
+		super();
+		this.ePiece = ePiece;
 	}
 
 	public Color getColor() {
-		return color;
+		return ePiece.getColor();
 	}
-
+	
 	public Type getType() {
-		return type;
+		return ePiece.getType();
 	}
-	
-	public static Piece get(Type type, Color color) {
-		Piece piece;
-		switch (type) {
-		case King: piece = color == White ? WhiteKing : BlackKing; break;
-		case Queen: piece = color == White ? WhiteQueen : BlackQueen; break;
-		case Rook: piece = color == White ? WhiteRook : BlackRook; break;
-		case Knight: piece = color == White ? WhiteKnight : BlackKnight; break;
-		case Bishop: piece = color == White ? WhiteBishop : BlackBishop; break;
-		case Pawn: piece = color == White ? WhitePawn : BlackPawn; break;
-		default: throw new IllegalArgumentException("Type is null");
-		}
-		
-		return piece;
-	}
-	
-	public static Piece getFromSymbol(char symbol) {
-		for (Piece p : values())
-			if (p.symbol == symbol)
-				return p;
-		throw new IllegalArgumentException("No piece for the symbol "+symbol);
-	}
-	
-	public String toString() {
-		return "" + symbol;
-	}	
-}
 
+	@Override
+	public void onMove(Board board, Move move) {
+		
+	}
+
+	@Override
+	public void onUndoMove(Board board, Move move) {
+		if (move instanceof Promotion)
+			ePiece = EPiece.get(Pawn, ePiece.getColor());
+	}
+	
+	public void setPromotion(EPiece promotionPiece) {
+		if (ePiece.getType() != Pawn)
+			throw new InvalidPromotionException();
+		this.ePiece = promotionPiece;
+	}
+	
+	public EPiece getEPiece() {
+		return ePiece;
+	}
+	
+	@Override
+	public String toString() {
+		return getEPiece().toString();
+	}
+	
+}

@@ -3,23 +3,22 @@ package move;
 import pgn.PGNMove;
 import pgn.PGNPromotion;
 import board.Board;
-import board.Square;
-import board.Color;
+import board.EPiece;
+import board.ESquare;
 import board.Piece;
 import board.Type;
-import static board.Type.*;
 
 public class Promotion extends Move {
 
 	private final Type promotionType;
-	private final Type eaten;
+	private final Piece eaten;
 	private final int limit50movesBefore;
 
 	
-	public Promotion(Type type, Square from, Square to, Color movingColor, 
-			Type eaten, boolean check, boolean checkMate,
-			int limit50movesBefore, Square enPassantBefore) {
-		super(from, to, movingColor, Pawn, check, checkMate,
+	public Promotion(Type type, ESquare from, ESquare to, Piece movingPiece,
+			Piece eaten, boolean check, boolean checkMate,
+			int limit50movesBefore, ESquare enPassantBefore) {
+		super(from, to, movingPiece, check, checkMate,
 				enPassantBefore);
 		
 		this.promotionType = type;
@@ -31,9 +30,11 @@ public class Promotion extends Move {
 	protected void specificApply(Board board) {
 		super.specificApply(board);
 		
-		board.putOnSquare(Piece.get(promotionType, movingColor), to);
+		board.putOnSquare(movingPiece, to);
+		movingPiece.setPromotion(
+					EPiece.get(promotionType, movingPiece.getColor()));
 		if (eaten != null)
-			board.opponentSide().remove(to);
+			board.opponentSide().remove(board.get(to));
 		board.setLimit50moves(0);
 		
 	}
@@ -41,11 +42,10 @@ public class Promotion extends Move {
 	@Override
 	public void specificUndo(Board board) {
 		super.specificUndo(board);
-		board.putOnSquare(Piece.get(Pawn, movingColor), from);
 		
 		if (eaten != null) {
-			board.opponentSide().add(to);
-			board.putOnSquare(Piece.get(promotionType, movingColor.getOpponent()), to);
+			board.opponentSide().add(board.get(to));
+			board.putOnSquare(eaten, to);
 		}
 		board.setLimit50moves(limit50movesBefore);
 	}
@@ -53,10 +53,11 @@ public class Promotion extends Move {
 	@Override
 	public PGNMove makePGNMove(Board board) {
 		if (eaten != null)
-			return new PGNPromotion(promotionType, movingColor, to, from.getFile(), true,
+			return new PGNPromotion(promotionType, movingPiece.getColor(),
+					to, from.getFile(), true,
 					check, checkMate,
 					board.getMoveNumber());
-		return new PGNPromotion(promotionType, movingColor, to, null, false,
+		return new PGNPromotion(promotionType, movingPiece.getColor(), to, null, false,
 				check, checkMate,
 				board.getMoveNumber());
 	}	

@@ -2,18 +2,18 @@ package move;
 
 import pgn.PGNMove;
 import board.Board;
-import board.Square;
-import board.Color;
-import static board.Type.*;
+import board.ESquare;
+import board.Piece;
 
 public class SimplePawnMove extends Move {
 	private final int limit50movesBefore;
 
 
-	public SimplePawnMove(Square from, Color movingColor,
+	public SimplePawnMove(ESquare from, ESquare to, Piece movingPiece,
 			boolean check, boolean checkMate,
-			int limit50movesBefore, Square enPassantBefore) {
-		super(from, from.nextSquare(movingColor.forwards()), movingColor, Pawn,
+			int limit50movesBefore, ESquare enPassantBefore) {
+		super(from, to,
+				movingPiece,
 				check, checkMate,
 				enPassantBefore);
 		this.limit50movesBefore = limit50movesBefore;
@@ -35,7 +35,8 @@ public class SimplePawnMove extends Move {
 	
 	@Override
 	public PGNMove makePGNMove(Board board) {
-		return new PGNMove(movingType, movingColor, to, null, null,
+		return new PGNMove(movingPiece.getType(), movingPiece.getColor(),
+				to, null, null,
 				false, check, checkMate,
 				board.getMoveNumber());
 	}
