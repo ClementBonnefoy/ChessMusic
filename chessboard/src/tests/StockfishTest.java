@@ -1,5 +1,6 @@
 package tests;
 
+import engine.NoEvaluationException;
 import engine.Stockfish;
 
 public class StockfishTest {
@@ -35,7 +36,7 @@ public class StockfishTest {
 		// get the evaluation score of current position
 		System.out.println("Evaluation score : " + client.getEvalScore(FEN, 2000));
 
-		// starting to evaluate a new position
+		// starting evaluate a new position
 		client.startEvalScore(FEN);
 		
 		try {
@@ -45,7 +46,11 @@ public class StockfishTest {
 		}
 		
 		//get the evaluation score 
-		System.out.println("Evaluation score : " + client.getEvalScore());
+		try {
+			System.out.println("Evaluation score : " + client.getEvalScore());
+		} catch (NoEvaluationException e) {
+			e.printStackTrace();
+		}
 		
 		
 

@@ -6,12 +6,14 @@ import board.Color;
 public class PositionEvaluatorProcess implements Runnable {
 
 	private Stockfish engine; //Stockfish est associe a un processus
-	private Board board;
+	private String fen;
+	private Color currentPlayer;
 	private double result=0;
 	public boolean isAlive=false;
 
 	public PositionEvaluatorProcess(Board b){
-		this.board=b;
+		this.fen=b.toFEN();
+		this.currentPlayer=b.getCurrentPlayer();
 		engine=new Stockfish();
 	}
 
@@ -20,18 +22,26 @@ public class PositionEvaluatorProcess implements Runnable {
 
 		engine.startEngine();
 		isAlive=true;
-		engine.startEvalScore(board.toFEN());
+		engine.startEvalScore(fen);
 
 	}
 
 	public double getScore(){
-
-		System.out.println(board);
 		
-		if(isAlive)
-			result=engine.getEvalScore();
+		while(isAlive){
+			try {
+				result=engine.getEvalScore();
+				break;
+			} catch (NoEvaluationException e) {
+				try {
+					Thread.sleep(50);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
+			}
+		}
 
-		if(board.getCurrentPlayer()==Color.Black)
+		if(currentPlayer==Color.Black)
 			return -result;
 		return result;
 	}

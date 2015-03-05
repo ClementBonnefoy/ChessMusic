@@ -33,21 +33,18 @@ public class MultiPositionEvaluatorProcessTest {
 		MultiPositionEvaluatorProcess mpep=new MultiPositionEvaluatorProcess(
 				board,pgnGame);
 		
+		System.out.println("Starting ...");
+		
 		mpep.startEvaluation();
 		
 		try {
-			Thread.sleep(2000);
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
 		for(int i=0;i<=pgnGame.size();i++){
 			System.out.println("Position "+i+" "+mpep.getEvaluation(i));
-			try {
-				Thread.sleep(300);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
 		
 		

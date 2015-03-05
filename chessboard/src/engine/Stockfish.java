@@ -184,12 +184,13 @@ public class Stockfish {
 	/**
 	 * Get the evaluation score of the currently evaluating position
 	 * @return
+	 * @throws NoEvaluationException 
 	 */
-	public double getEvalScore(){
+	public double getEvalScore() throws NoEvaluationException{
 		
 		//sendCommand("stop"); 
 		
-		double evalScore = 0.0f;
+		double evalScore=Double.NaN;
 		String[] dump = getOutput(0).split("\n");
 		for (int i = dump.length - 1; i >= 0; i--) {
 			if (dump[i].startsWith("info depth ")) {
@@ -207,6 +208,9 @@ public class Stockfish {
 				}
 			}
 		}
+		
+		if(evalScore == Double.NaN)
+			throw new NoEvaluationException();
 		return evalScore/100;
 		
 	}
