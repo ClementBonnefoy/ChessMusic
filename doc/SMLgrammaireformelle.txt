@@ -1,0 +1,80 @@
+SML
+Grammaire Formelle
+
+
+<music>		::= <declarations> <body>
+
+<declarations>	::= ɛ
+			| let [identifiant] = <declaration> ; <declarations>
+
+<declaration> 		::= <scale>
+			| <musical-element>
+			| <instrument>
+			| { <note-sequence> }
+
+<instrument>		::= [identifiant]
+			| ens <instrument> <instrument>
+
+<note-sequence>	::= <complex-note>
+			| <complex-note> , <note-sequence>			
+			
+<body>		::= begin <instructions> end ;
+
+<instructions>		::= ɛ
+			| <instruction> ; <instructions>
+
+<instruction> 		::= <tempo>
+			| <play>
+
+<tempo> 		::= tempo [number]
+
+<play> 		::= play <scale> <playable-element>
+
+<scale> 		::= [identifiant]
+			| scale <note> <scale-type>
+
+<note> 		::= <note> +
+			| <note> - 
+			| a
+			| b
+			| c
+			| d
+			| e
+			| f
+			| g	
+
+<scale-type> 		::= lydian
+			| myxolydian
+			| dorian
+			| phrygian
+			| aeolian
+			| ionian
+			| locrian
+
+<playable-element>	::=<instrument> <musical-element>
+			| <playable-chord>
+			| <playable-sequence>
+
+<playable-chord>	 ::= chord <playable-element> <playable-element>
+
+<playable-sequence> ::= sequence <playable-element> <playable-element>			
+		
+<musical-element> 	::= [identifiant] 
+			| <complex-note>
+			| <sequence> 
+			| <chord>
+			
+<complex-note> 	::= <role> <octave> <time>
+			| rest <time>
+
+<role>			::= <role> +
+			| <role> -
+			| [number{1,2,3,4,5,6,7}]
+
+<octave>		::= [number{a,b,c,d,e,f}]
+
+<time> 		::= [number]
+
+<chord>		::= chord <musical-element> <musical-element>
+
+<sequence> 		::= sequence <musical-element> <musical-element>

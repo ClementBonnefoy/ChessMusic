@@ -1,12 +1,11 @@
-package stockfish;
+package engine;
 
 import board.Board;
 import board.Color;
 import board.Factory;
 
-public class Engine {
-	
-	
+public class EngineTools {
+
 	/**
 	 * Renvoit l'evaluation de la position actuelle du Board.
 	 * @param b le board

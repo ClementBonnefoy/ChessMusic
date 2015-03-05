@@ -1,4 +1,4 @@
-package stockfish;
+package engine;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class Stockfish {
 	private BufferedReader processReader;
 	private OutputStreamWriter processWriter;
 
-	private static final String PATH = "./engine/Mac/stockfish-6-sse42";
+	private static final String PATH = "./engine/Mac/stockfish";
 
 	/**
 	 * Starts Stockfish engine as a process and initializes it
@@ -161,6 +161,7 @@ public class Stockfish {
 				break;
 				} catch(Exception e) {
 					try{
+					@SuppressWarnings("unused")
 					String mate=dump[i].split("mate ")[1];
 					evalScore=30000;
 					break;
@@ -169,6 +170,45 @@ public class Stockfish {
 			}
 		}
 		return evalScore/100;
+	}
+	
+	/**
+	 * Starting a position evaluation 
+	 * @param fen Position string
+	 */
+	public void startEvalScore(String fen){
+		sendCommand("position fen " + fen);
+		sendCommand("go infinite");
+	}
+	
+	/**
+	 * Get the evaluation score of the currently evaluating position
+	 * @return
+	 */
+	public double getEvalScore(){
+		
+		//sendCommand("stop"); 
+		
+		double evalScore = 0.0f;
+		String[] dump = getOutput(0).split("\n");
+		for (int i = dump.length - 1; i >= 0; i--) {
+			if (dump[i].startsWith("info depth ")) {
+				try {
+				evalScore = Double.parseDouble(dump[i].split("score cp ")[1]
+						.split(" nodes")[0]);
+				break;
+				} catch(Exception e) {
+					try{
+					@SuppressWarnings("unused")
+					String mate=dump[i].split("mate ")[1];
+					evalScore=30000;
+					break;
+					} catch(Exception e2){}
+				}
+			}
+		}
+		return evalScore/100;
+		
 	}
 	
 }
