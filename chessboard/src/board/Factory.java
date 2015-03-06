@@ -1,13 +1,19 @@
 package board;
 
 public class Factory {
+	
+	protected Board board;
+	
+	void setBoard(Board board) {
+		this.board = board;
+	}
 
-	public Square makeSquare(ESquare sq) {
-		return new Square(sq);
+	public Square makeSquare(ESquare eSquare) {
+		return new Square(eSquare);
 	}
 	
-	public Piece makePiece (EPiece piece) {
-		return new Piece (piece);
+	public Piece makePiece (EPiece ePiece) {
+		return new Piece (ePiece);
 	}
 	
 }

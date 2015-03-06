@@ -13,9 +13,8 @@ public class EnPassantCapture extends Move {
 	
 	public EnPassantCapture(ESquare from, ESquare to, Piece movingPiece,
 			Piece captured,
-			boolean check, boolean checkMate,
 			int limit50movesBefore) {
-		super(from, to, movingPiece, check, checkMate, to);
+		super(from, to, movingPiece, to);
 		this.captured = captured;
 		captureSquare = to.nextSquare(movingPiece.getColor().backwards());
 		this.limit50movesBefore = limit50movesBefore;
@@ -39,10 +38,66 @@ public class EnPassantCapture extends Move {
 	
 	@Override
 	public PGNMove makePGNMove(Board board) {
+		boolean check, checkMate;
+		
+		applyTo(board);
+		
+		check = board.isInCheck();
+		
+		if (check)
+			checkMate = board.isMate();
+		else
+			checkMate = false;
+		
+		undo(board);
+		
 		return new PGNMove(movingPiece.getType(), movingPiece.getColor(), to, null, from.getFile(),
 				true, check, checkMate,
 				board.getMoveNumber());
 		
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result
+				+ ((captureSquare == null) ? 0 : captureSquare.hashCode());
+		result = prime * result
+				+ ((captured == null) ? 0 : captured.hashCode());
+		result = prime * result + limit50movesBefore;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EnPassantCapture other = (EnPassantCapture) obj;
+		if (captureSquare != other.captureSquare)
+			return false;
+		if (captured == null) {
+			if (other.captured != null)
+				return false;
+		} else if (!captured.equals(other.captured))
+			return false;
+		if (limit50movesBefore != other.limit50movesBefore)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "EnPassantCapture [captured=" + captured + ", captureSquare="
+				+ captureSquare + ", limit50movesBefore=" + limit50movesBefore
+				+ ", from=" + from + ", to=" + to + ", movingPiece="
+				+ movingPiece + ", enPassantBefore=" + enPassantBefore + "]";
+	}
+
+	
+	
 }

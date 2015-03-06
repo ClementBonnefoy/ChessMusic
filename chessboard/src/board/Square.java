@@ -26,6 +26,14 @@ public class Square implements MoveAction {
 		return eSquare;
 	}
 
+	public Rank getRank() {
+		return eSquare.getRank();
+	}
+	
+	public File getFile() {
+		return eSquare.getFile();
+	}
+	
 	@Override
 	public void onMove(Board board, Move move) {
 		
@@ -36,6 +44,11 @@ public class Square implements MoveAction {
 		
 	}
 
+	public Square clone() {
+		Square newSquare = new Square(eSquare);
+		newSquare.setPiece(piece.clone());
+		return newSquare;
+	}
 	
 	public String toString() {
 		return eSquare.toString();

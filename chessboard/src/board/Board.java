@@ -1,12 +1,49 @@
 package board;
 
+import static board.Color.Black;
+import static board.Color.White;
+import static board.EPiece.BlackBishop;
+import static board.EPiece.BlackKing;
+import static board.EPiece.BlackKnight;
+import static board.EPiece.BlackPawn;
+import static board.EPiece.BlackQueen;
+import static board.EPiece.BlackRook;
+import static board.EPiece.WhiteBishop;
+import static board.EPiece.WhiteKing;
+import static board.EPiece.WhiteKnight;
+import static board.EPiece.WhitePawn;
+import static board.EPiece.WhiteQueen;
+import static board.EPiece.WhiteRook;
+import static board.ESquare.A1;
+import static board.ESquare.A8;
+import static board.ESquare.B1;
+import static board.ESquare.B8;
+import static board.ESquare.C1;
+import static board.ESquare.C8;
+import static board.ESquare.D1;
+import static board.ESquare.D8;
+import static board.ESquare.E1;
+import static board.ESquare.E8;
+import static board.ESquare.F1;
+import static board.ESquare.F8;
+import static board.ESquare.G1;
+import static board.ESquare.G8;
+import static board.ESquare.H1;
+import static board.ESquare.H8;
+import static board.Rank.Rank1;
+import static board.Rank.Rank2;
+import static board.Rank.Rank3;
+import static board.Rank.Rank6;
+import static board.Rank.Rank7;
+import static board.Rank.Rank8;
+import static board.Type.King;
+import static board.Type.Pawn;
+
 import java.util.EnumMap;
 
-import static board.Color.*;
-import static board.EPiece.*;
-import static board.ESquare.*;
-import static board.Rank.*;
-import static board.Type.King;
+import move.Direction;
+import move.Move;
+import move.Movement;
 
 public class Board extends EnumMap<ESquare, Square> {
 
@@ -24,8 +61,6 @@ public class Board extends EnumMap<ESquare, Square> {
 	private int limit50moves;
 	
 	private int moveNumber;
-	
-	private Factory factory;
 	
 	public void putOnSquare(Piece p, ESquare sq) {
 		get(sq).setPiece(p);
@@ -49,6 +84,10 @@ public class Board extends EnumMap<ESquare, Square> {
 
 	public void setCurrentPlayer(Color currentPlayer) {
 		this.currentPlayer = currentPlayer;
+	}
+	
+	public void invertPlayer() {
+		currentPlayer = currentPlayer.getOpponent();
 	}
 
 	public ESquare getEnPassant() {
@@ -75,9 +114,8 @@ public class Board extends EnumMap<ESquare, Square> {
 		this.moveNumber = moveNumber;
 	}
 
-	public Board (Factory factory){
+	public Board (){
 		super(ESquare.class);
-		this.factory = factory;
 		whiteSide = new Side(White);
 		blackSide = new Side(Black);
 	}
@@ -96,7 +134,7 @@ public class Board extends EnumMap<ESquare, Square> {
 	
 	public void reset() {
 		for (ESquare sq : ESquare.values())
-			put(sq,factory.makeSquare(sq));
+			put(sq,makeSquare(sq));
 		
 		setEnPassant(null);
 		setCurrentPlayer(null);
@@ -117,17 +155,17 @@ public class Board extends EnumMap<ESquare, Square> {
 		setLimit50moves(0);
 		setMoveNumber(1);
 
-		putOnSquare(factory.makePiece(WhiteRook),A1);
-		putOnSquare(factory.makePiece(WhiteKnight),B1);
-		putOnSquare(factory.makePiece(WhiteBishop),C1);
-		putOnSquare(factory.makePiece(WhiteQueen),D1);
-		putOnSquare(factory.makePiece(WhiteKing),E1);
-		putOnSquare(factory.makePiece(WhiteBishop),F1);
-		putOnSquare(factory.makePiece(WhiteKnight),G1);
-		putOnSquare(factory.makePiece(WhiteRook),H1);
+		putOnSquare(makePiece(WhiteRook),A1);
+		putOnSquare(makePiece(WhiteKnight),B1);
+		putOnSquare(makePiece(WhiteBishop),C1);
+		putOnSquare(makePiece(WhiteQueen),D1);
+		putOnSquare(makePiece(WhiteKing),E1);
+		putOnSquare(makePiece(WhiteBishop),F1);
+		putOnSquare(makePiece(WhiteKnight),G1);
+		putOnSquare(makePiece(WhiteRook),H1);
 
 		for (ESquare c : Rank2) {
-			putOnSquare(factory.makePiece(WhitePawn),c);
+			putOnSquare(makePiece(WhitePawn),c);
 			currentSide().add(get(c));
 		}
 
@@ -135,17 +173,17 @@ public class Board extends EnumMap<ESquare, Square> {
 			if (c != E1)
 				currentSide().add(get(c));
 
-		putOnSquare(factory.makePiece(BlackRook),A8);
-		putOnSquare(factory.makePiece(BlackKnight),B8);
-		putOnSquare(factory.makePiece(BlackBishop),C8);
-		putOnSquare(factory.makePiece(BlackQueen),D8);
-		putOnSquare(factory.makePiece(BlackKing),E8);
-		putOnSquare(factory.makePiece(BlackBishop),F8);
-		putOnSquare(factory.makePiece(BlackKnight),G8);
-		putOnSquare(factory.makePiece(BlackRook),H8);
+		putOnSquare(makePiece(BlackRook),A8);
+		putOnSquare(makePiece(BlackKnight),B8);
+		putOnSquare(makePiece(BlackBishop),C8);
+		putOnSquare(makePiece(BlackQueen),D8);
+		putOnSquare(makePiece(BlackKing),E8);
+		putOnSquare(makePiece(BlackBishop),F8);
+		putOnSquare(makePiece(BlackKnight),G8);
+		putOnSquare(makePiece(BlackRook),H8);
 
 		for (ESquare c : Rank7) {
-			putOnSquare(factory.makePiece(BlackPawn),c);
+			putOnSquare(makePiece(BlackPawn),c);
 			opponentSide().add(get(c));
 		}
 
@@ -202,7 +240,7 @@ public class Board extends EnumMap<ESquare, Square> {
 					}
 					else
 						currentSide().add(get(c));
-					putOnSquare(factory.makePiece(p), c);
+					putOnSquare(makePiece(p), c);
 					filePos++;
 				}
 				if (j == rankString.length() - 1 && filePos != 8)
@@ -264,10 +302,6 @@ public class Board extends EnumMap<ESquare, Square> {
 		return rankPieces;
 	}
 	
-	public Factory getFactory() {
-		return factory;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -317,16 +351,23 @@ public class Board extends EnumMap<ESquare, Square> {
 	}
 	
 	public Board clone() {
-		Board newBoard = (Board) super.clone();
+		Board newBoard = new Board();
 		
-		newBoard.whiteSide = whiteSide.clone();
-		newBoard.blackSide = blackSide.clone();
-
+		for (ESquare eSquare : keySet())
+			newBoard.put(eSquare, get(eSquare).clone());
+		
+		newBoard.whiteSide = whiteSide.simpleCopy();
+		newBoard.blackSide = blackSide.simpleCopy();
+		
+		for (Square square : whiteSide)
+			newBoard.whiteSide.add(newBoard.get(square.getESquare()));
+		for (Square square : blackSide)
+			newBoard.blackSide.add(newBoard.get(square.getESquare()));
+		
 		newBoard.currentPlayer = currentPlayer;
 		newBoard.enPassant = enPassant;
 		newBoard.limit50moves = limit50moves;
 		newBoard.moveNumber = moveNumber;
-		newBoard.factory = factory;
 		
 		return newBoard;
 	}
@@ -422,6 +463,103 @@ public class Board extends EnumMap<ESquare, Square> {
 			sb.append('\n');
 		}
 		return sb.toString();
+	}
+	
+	public Square makeSquare(ESquare eSquare) {
+		return new Square(eSquare);
+	}
+	
+	public Piece makePiece (EPiece ePiece) {
+		return new Piece (ePiece);
+	}
+
+	public void onMove(Move move) {
+		
+	}
+
+	public void onUndoMove(Move move) {
+		
+	}
+	
+	public boolean isEnPrise(ESquare eSquare) {
+		Piece piece;
+		Movement mvmt;
+		for (Square square : opponentSide()) {
+			piece = square.getPiece();
+			mvmt = Movement.get(piece.getType());
+			
+			if (piece.getType() != Pawn)	{
+				if (mvmt.basicDestinations(this, square.getESquare()).
+					contains(eSquare))
+					return true;
+			}
+			else {
+				Direction dir = currentPlayer.eastPawnThreat();
+				if (eSquare.hasNextSquare(dir))
+					if (square.getESquare() == eSquare.nextSquare(dir))
+						return true;
+				dir = currentPlayer.westPawnThreat();
+				if (eSquare.hasNextSquare(dir))
+					if (square.getESquare() == eSquare.nextSquare(dir))
+						return true;
+			}
+		}
+		mvmt = Movement.get(King);
+		if (mvmt.basicDestinations(this, opponentSide().getKing().getESquare()).
+				contains(eSquare))
+				return true;
+		
+		
+		return false;
+	}
+	
+	public boolean isInCheck() {
+		
+		return isEnPrise(currentSide().getKing().getESquare());
+	}
+	
+	public boolean isMate() {
+		if (!isInCheck())
+			return false;
+		
+		Piece piece;
+		Movement mvmt;
+		
+		for (Square square : currentSide()) {
+			piece = square.getPiece();
+			mvmt = Movement.get(piece.getType());	
+			if (!mvmt.realMoves(this, square.getESquare()).isEmpty())
+				return false;
+		}
+		
+		mvmt = Movement.get(King);
+		if (!mvmt.realMoves(this, currentSide().getKing().getESquare()).isEmpty())
+			return false;
+		
+		return true;
+		
+	}
+	
+	public boolean isStaleMate() {
+		if (isInCheck())
+			return false;
+		
+		Piece piece;
+		Movement mvmt;
+		
+		for (Square square : currentSide()) {
+			piece = square.getPiece();
+			mvmt = Movement.get(piece.getType());	
+			if (!mvmt.realMoves(this, square.getESquare()).isEmpty())
+				return false;
+		}
+		
+		mvmt = Movement.get(King);
+		if (!mvmt.realMoves(this, currentSide().getKing().getESquare()).isEmpty())
+			return false;
+		
+		return true;
+		
 	}
 
 }

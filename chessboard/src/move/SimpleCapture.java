@@ -13,11 +13,10 @@ public class SimpleCapture extends Move {
 	private final int limit50movesBefore;
 
 
-	public SimpleCapture(ESquare from, ESquare to, Piece movingPiece,
-			Piece eaten, boolean check, boolean checkMate,
+	public SimpleCapture(ESquare from, ESquare to,
+			Piece movingPiece, Piece eaten,
 			int limit50movesBefore, ESquare enPassantBefore) {
 		super(from, to, movingPiece,
-				check, checkMate,
 				enPassantBefore);
 		
 		this.eaten = eaten;
@@ -46,6 +45,19 @@ public class SimpleCapture extends Move {
 
 	@Override
 	public PGNMove makePGNMove(Board board) {
+		boolean check, checkMate;
+		
+		applyTo(board);
+		
+		check = board.isInCheck();
+		
+		if (check)
+			checkMate = board.isMate();
+		else
+			checkMate = false;
+		
+		undo(board);
+		
 		PGNMove pm = super.makePGNMove(board);
 		File file = pm.getFromFile();
 		if (movingPiece.getType() == Pawn)
@@ -55,5 +67,35 @@ public class SimpleCapture extends Move {
 				true, check, checkMate,
 				board.getMoveNumber());
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + ((eaten == null) ? 0 : eaten.hashCode());
+		result = prime * result + limit50movesBefore;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (!super.equals(obj))
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SimpleCapture other = (SimpleCapture) obj;
+		if (eaten == null) {
+			if (other.eaten != null)
+				return false;
+		} else if (!eaten.equals(other.eaten))
+			return false;
+		if (limit50movesBefore != other.limit50movesBefore)
+			return false;
+		return true;
+	}
+	
+	
 	
 }

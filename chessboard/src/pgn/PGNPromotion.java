@@ -32,7 +32,6 @@ public class PGNPromotion extends PGNMove {
 			from = ESquare.getSquare(fromFile, from.getRank());
 		Piece pawn = board.getPiece(from);
 		return new Promotion(promotionType, from, to, pawn, eaten,
-				check, checkMate,
 				board.getLimit50moves(), board.getEnPassant());
 	}
 

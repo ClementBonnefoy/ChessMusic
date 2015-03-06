@@ -21,8 +21,8 @@ public class PGNQueenSideCastling extends PGNMove {
 	public Move makeMove(Board board) {
 		Piece king = board.currentSide().getKing().getPiece();
 		Piece rook = board.getPiece(ESquare.getSquare(FileA, to.getRank()));
-		return new QueenSideCastling(king, rook,
-				check, checkMate, board.getEnPassant());
+		return new QueenSideCastling(king, rook, board.getEnPassant(),
+				board.currentSide().canKingSideCastle());
 	}
 
 	@Override

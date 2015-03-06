@@ -31,6 +31,10 @@ public enum Color {
 		return this == White ? C1 : C8;
 	}
 	
+	public Rank firstRank() {
+		return this == White ? Rank1 : Rank8;
+	}
+	
 	public Direction forwards() {
 		return this == White ? North : South;
 	}

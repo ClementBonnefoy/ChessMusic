@@ -9,20 +9,17 @@ public class Move {
 
 	protected final ESquare from, to;
 	protected final Piece movingPiece;
-	protected final boolean check, checkMate;
 	protected final ESquare enPassantBefore;
 
 	public Move(ESquare from, ESquare to, Piece movingPiece,
-			boolean check, boolean checkMate, ESquare enPassantBefore) {
+			ESquare enPassantBefore) {
 		super();
 		this.from = from;
 		this.to = to;
 		this.movingPiece = movingPiece;
-		this.check = check;
-		this.checkMate = checkMate;
 		this.enPassantBefore = enPassantBefore;
 	}
-
+	
 	public ESquare getFrom() {
 		return from;
 	}
@@ -35,16 +32,8 @@ public class Move {
 		return movingPiece;
 	}
 
-	public boolean isCheck() {
-		return check;
-	}
-
-	public boolean isCheckMate() {
-		return checkMate;
-	}
-
 	public final void applyTo (Board board) {
-		checkApplyValidity(board);
+		board.onMove(this);
 		
 		movingPiece.onMove(board, this);
 
@@ -53,14 +42,7 @@ public class Move {
 		
 		specificApply(board);
 		
-		if (checkMate)
-			return;
-		
-		board.setCurrentPlayer(movingPiece.getColor().getOpponent());
-	}
-
-	protected void checkApplyValidity(Board board) {
-		// TODO checkValidity
+		board.invertPlayer();
 	}
 
 	protected static void simpleMove(Board board, ESquare from, ESquare to) {
@@ -85,18 +67,11 @@ public class Move {
 		
 	}
 	
-	public void checkUndoValidity(Board board) {
-		//TODO checkUndoValidity
-		
-		if (board.getMoveNumber() == 0)
-			throw new InvalidUndoMoveException("This is the starting position : "+board);
-	}
-	
 	public final void undo(Board board) {
 		
-		board.setCurrentPlayer(movingPiece.getColor());
+		board.invertPlayer();
 		
-		checkUndoValidity(board);
+		board.onUndoMove(this);
 		
 		movingPiece.onUndoMove(board, this);
 
@@ -104,8 +79,6 @@ public class Move {
 		board.get(to).onUndoMove(board, this);
 		
 		specificUndo(board);
-		
-
 		
 	}
 	
@@ -155,11 +128,69 @@ public class Move {
 			
 		}
 		
+		boolean check, checkMate;
+		
+		applyTo(board);
+		
+		check = board.isInCheck();
+
+		if (check)
+			checkMate = board.isMate();
+		else
+			checkMate = false;
+		
+		undo(board);
 		
 		return new PGNMove(movingPiece.getType(), movingPiece.getColor(),
 				to, pgnRank, pgnFile,
 				false, check, checkMate,
 				board.getMoveNumber());
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((enPassantBefore == null) ? 0 : enPassantBefore.hashCode());
+		result = prime * result + ((from == null) ? 0 : from.hashCode());
+		result = prime * result
+				+ ((movingPiece == null) ? 0 : movingPiece.hashCode());
+		result = prime * result + ((to == null) ? 0 : to.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Move other = (Move) obj;
+		if (enPassantBefore != other.enPassantBefore)
+			return false;
+		if (from != other.from)
+			return false;
+		if (movingPiece == null) {
+			if (other.movingPiece != null)
+				return false;
+		} else if (!movingPiece.equals(other.movingPiece))
+			return false;
+		if (to != other.to)
+			return false;
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Move [from=" + from + ", to=" + to + ", movingPiece="
+				+ movingPiece + ", enPassantBefore=" + enPassantBefore + "]";
+	}
+	
+	
+	
+	
 	
 }

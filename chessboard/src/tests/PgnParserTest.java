@@ -27,7 +27,7 @@ public class PgnParserTest {
 				PGNParser pgn = new PGNParser(f);
 				pgn.parse();
 				PGNGame game = pgn.makePgnGame();
-				Board board = new Board(new Factory());
+				Board board = new Board();
 				board.init(game.getFen());
 //				System.out.println(board);
 				
@@ -39,6 +39,8 @@ public class PgnParserTest {
 				for (int i = 0; i < game.size(); i++) {
 					System.out.println(game.get(i));
 					tab[i] = game.get(i).makeMove(board);
+					if (!tab[i].makePGNMove(board).equals(game.get(i)))
+						throw new RuntimeException();
 					tab[i].applyTo(board);
 					boards[i+1] = board.clone();
 					System.out.println();

@@ -87,8 +87,9 @@ public class Side extends ArrayList <Square>{
 		canKingSideCastle = true;
 	}
 	
-	public Side clone() {
-		Side newSide = (Side) super.clone();
+	public Side simpleCopy() {
+		Side newSide = new Side(color);
+		
 		newSide.canKingSideCastle = canKingSideCastle;
 		newSide.canQueenSideCastle = canQueenSideCastle;
 		newSide.king = king;

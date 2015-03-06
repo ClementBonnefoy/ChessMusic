@@ -74,7 +74,7 @@ public class PGNMove {
 			if (board.getEnPassant() == to) {
 				from = ESquare.getSquare(fromFile, beforeTo.getRank());
 				piece = board.getPiece(from);
-				return new EnPassantCapture(from, to, piece, eaten, check, checkMate,
+				return new EnPassantCapture(from, to, piece, board.getPiece(beforeTo),
 						board.getLimit50moves());
 			}
 
@@ -82,7 +82,7 @@ public class PGNMove {
 				from = ESquare.getSquare(fromFile, beforeTo.getRank());
 				piece = board.getPiece(from);
 				return new SimpleCapture(from, to, piece, 
-						eaten, check, checkMate,
+						eaten,
 						board.getLimit50moves(), board.getEnPassant());
 			}
 
@@ -91,31 +91,29 @@ public class PGNMove {
 				from = beforeTo.nextSquare(color.backwards());
 				return new JumpPawnMove(from,to,
 						board.getPiece(from),
-						check, checkMate,
 						board.getLimit50moves(), board.getEnPassant());
 			}
 			
 			return new SimplePawnMove(beforeTo, to,
 					board.getPiece(beforeTo),
-					check, checkMate,
 					board.getLimit50moves(), board.getEnPassant());
 		}
 
 		if (fromFile != null && fromRank != null) {
 			ESquare fromSquare = ESquare.getSquare(fromFile, fromRank);
-			if (isDisablingCastlingMove(board))
+			if (isDisablingCastlingMove(board, fromSquare))
 				return new DisablingCastlingMove(fromSquare, to,
-						board.getPiece(fromSquare), eaten, check, checkMate,
+						board.getPiece(fromSquare), eaten,
 						board.currentSide().canKingSideCastle(),
 						board.currentSide().canQueenSideCastle(),
 						board.getLimit50moves(), board.getEnPassant());
 			if (capture)
 				return new SimpleCapture(fromSquare, to,
-						board.getPiece(fromSquare), eaten, check, checkMate,
+						board.getPiece(fromSquare), eaten,
 						board.getLimit50moves(), board.getEnPassant());
 			else
 				return new Move(fromSquare, to, board.getPiece(fromSquare),
-						check, checkMate, board.getEnPassant());
+						board.getEnPassant());
 		}
 
 		Movement mvmt = Movement.get(type);
@@ -127,18 +125,17 @@ public class PGNMove {
 					continue;
 				if (fromRank != null && c.getRank() != fromRank)
 					continue;
-				if (isDisablingCastlingMove(board))
+				if (isDisablingCastlingMove(board,c))
 					return new DisablingCastlingMove(c, to,
-							board.getPiece(c), eaten, check, checkMate,
+							board.getPiece(c), eaten,
 							board.currentSide().canKingSideCastle(),
 							board.currentSide().canQueenSideCastle(),
 							board.getLimit50moves(), board.getEnPassant());
 
 				if (capture)
 					return new SimpleCapture(c, to, board.getPiece(c), eaten,
-							check, checkMate,
 							board.getLimit50moves(), board.getEnPassant());
-				return new Move(c, to, board.getPiece(c), check, checkMate,
+				return new Move(c, to, board.getPiece(c),
 						board.getEnPassant());
 			}
 		}
@@ -147,13 +144,13 @@ public class PGNMove {
 
 	}
 
-	public boolean isDisablingCastlingMove(Board board) {
+	private boolean isDisablingCastlingMove(Board board, ESquare eSquare) {
 		if (type == Rook) {
 			if (board.currentSide().canKingSideCastle()
-					&& fromFile == FileH)
+					&& eSquare.getFile() == FileH)
 				return true;
 			if (board.currentSide().canQueenSideCastle()
-					&& fromFile == FileA)
+					&& eSquare.getFile() == FileA)
 				return true;
 		}
 		else if (type == King) {
