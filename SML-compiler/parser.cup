@@ -1,0 +1,167 @@
+/* ----------------------Preliminary Declarations Section--------------------*/
+
+/*import java_cup.runtime.*;
+import music.*;
+*/
+package sml.compiler;
+
+import sml.instructions.*;
+import sml.instruments.*;
+import sml.musicalelements.*;
+import sml.playableelements.*;
+import sml.roles.*;
+import sml.various.*;
+import sml.interfaces.*;
+
+
+parser code {:
+
+public void report_error(String message, Object info) {
+
+    StringBuilder m = new StringBuilder("Error");
+    if (info instanceof java_cup.runtime.Symbol) {
+        java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+        if (s.left >= 0) {
+            m.append(" in line "+(s.left+1));
+            if (s.right >= 0)
+                m.append(", column "+(s.right+1));
+        }
+    }
+    m.append(" : "+message);
+    System.err.println(m);
+}
+
+public void report_fatal_error(String message, Object info) {
+    report_error(message, info);
+    System.exit(1);
+}
+
+:};
+
+/* ------------Declaration of Terminals and Non Terminals Section----------- */
+
+
+terminal           SEMI, PLUS, MINUS,LPAREN, RPAREN,LACCOL, RACCOL, EQUAL, COMA;
+terminal           LET, ENS, BEGIN, END, TEMPO, PLAY, SCALE, CHORD, SEQUENCE, REST;
+terminal String    LETTER, COMPLEXNOTE;
+terminal Integer   NUMBER;
+terminal String    IDENTIFIANT,SCALENAME;
+
+non terminal Object     music, declarations, body, declaration, scale, musical_element;
+non terminal Object     instrument, note_sequence, complex_note, instructions, tempo, instruction;
+non terminal Object     play, playable_element, note, playable_chord, playable_sequence;
+non terminal Object     sequence, chord, role, octave, time;
+non terminal Object     identifiant;
+non terminal Object     scale_definition, musical_element_definition, instrument_definition;
+
+
+/* -------------Precedence and Associatively of Terminals Section----------- */
+
+
+/* ----------------------------Grammar Section-------------------- */
+
+music ::= declarations:d body:b {: RESULT = new Music((Declarations)d,(Body)b); :}
+;
+
+declarations ::= {: RESULT = null ; :}
+    | LET identifiant:i EQUAL declaration:d SEMI declarations:ds {: RESULT = new Declarations(new Declaration((Variable)i,(IDeclarable)d),(Declarations)ds) ; :}
+;
+
+declaration ::= identifiant:i {: RESULT = i ; :}
+    | LPAREN declaration:d RPAREN {: RESULT = d ; :}
+    | scale_definition:s {: RESULT = s ; :}
+    | musical_element_definition:m {: RESULT = m ; :}
+    | instrument_definition:i {: RESULT = i ; :}
+    | LACCOL note_sequence:n RACCOL {: RESULT = n ; :}
+;
+
+instrument ::= identifiant:i {: RESULT = i ; :}
+    | LPAREN instrument:i RPAREN {: RESULT = i ; :}
+    | instrument_definition:i {: RESULT = i ; :}
+;
+
+instrument_definition ::= ENS instrument:i1 instrument:i2 {: RESULT = new Ens((IInstrument)i1,(IInstrument)i2) ; :}
+;
+
+note_sequence ::= complex_note:c {: RESULT = c ; :}
+| complex_note:c COMA note_sequence:n {: RESULT = new Sequence((IMusicalElement)c,(IMusicalElement)n) ; :}
+;
+
+body ::= BEGIN instructions:i END SEMI {: RESULT = i ; :}
+;
+
+instructions ::= {: RESULT = null ; :}
+    | instruction:i SEMI instructions:is {: RESULT = new Body((IInstruction)i,(Body)is) ; :}
+;
+
+instruction ::= tempo:t {: RESULT = t ; :}
+    | play:p {: RESULT = p ; :}
+;
+
+tempo ::= TEMPO NUMBER:n {: RESULT = new Tempo((int)n); :}
+;
+
+play ::= PLAY scale:s playable_element:p {: RESULT = new Play((Scale)s,(IPlayableElement)p) ; :}
+;
+
+scale ::= identifiant:i {: RESULT = i ; :}
+    | LPAREN scale:s RPAREN {: RESULT = s ; :}
+    | scale_definition:s  {: RESULT = s ; :}
+;
+
+scale_definition ::= SCALE note:n SCALENAME:s {: RESULT = new Scale((Note)n,(ScaleName)(ScaleName.scaleName(s))) ; :}
+;
+
+note ::= note:n PLUS {: RESULT = ((Note)n).incr(1) ; :}
+    | note:n MINUS {: RESULT = ((Note)n).decr(2) ; :}
+    | LETTER:l {: RESULT = Note.note(l) ; :}
+;
+
+playable_element ::= instrument:i musical_element:m {: RESULT = new PlayableElement((IInstrument)i,(IMusicalElement)m) ; :}
+    | LPAREN playable_element:p RPAREN {: RESULT = p ; :}
+    | playable_chord:p {: RESULT = p ; :}
+    | playable_sequence:p {: RESULT = p ; :}
+;
+
+playable_chord ::= CHORD playable_element:e1 playable_element:e2 {: RESULT = new PlayableChord((IPlayableElement)e1,(IPlayableElement)e2) ; :}
+;
+
+playable_sequence ::= SEQUENCE playable_element:e1 playable_element:e2 {: RESULT = new PlayableSequence((IPlayableElement)e1,(IPlayableElement)e2) ; :}
+;
+
+musical_element ::= identifiant:i {: RESULT = i ; :}
+    | LPAREN musical_element:m RPAREN {: RESULT = m ; :}
+    | musical_element_definition:m {: RESULT = m ; :}
+;
+
+musical_element_definition ::= complex_note:c {: RESULT = c ; :}
+    | sequence:s {: RESULT = s ; :}
+    | chord:c {: RESULT = c ; :}
+;
+
+complex_note ::= COMPLEXNOTE:c {: RESULT = ComplexNote.parse(c) ; :}
+    | REST time:t {: RESULT = new Rest((Time)t) ; :}
+;
+
+role ::= role:r PLUS {: RESULT = new AlterableRole((IRole)r,true) ; :}
+    | role:r MINUS {: RESULT = new AlterableRole((IRole)r,false) ; :}
+    | NUMBER:n {: RESULT = Role.role(n) ; :}
+;
+
+octave ::= LETTER:l {: RESULT = new Octave(l) ; :}
+;
+
+time ::= NUMBER:n {: RESULT = new Time((int)n) ; :}
+;
+
+chord ::= CHORD musical_element:e1 musical_element:e2 {: RESULT = new Chord((IMusicalElement)e1,(IMusicalElement)e2) ; :}
+;
+
+sequence ::= SEQUENCE musical_element:e1 musical_element:e2 {: RESULT = new Sequence((IMusicalElement)e1,(IMusicalElement)e2) ; :}
+;
+
+identifiant ::= IDENTIFIANT:i {: RESULT = new Variable((String)i); :}
+;
+
+
+
