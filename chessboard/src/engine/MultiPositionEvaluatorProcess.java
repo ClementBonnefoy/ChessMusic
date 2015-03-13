@@ -9,18 +9,18 @@ public class MultiPositionEvaluatorProcess {
 	
 	public MultiPositionEvaluatorProcess(Board initialBoard,PGNGame moves){
 		
-		Board b=initialBoard.clone();
+		Board b=initialBoard;
 		int nbmoves=moves.size();
 		
 		evaluators= new PositionEvaluatorProcess[nbmoves+1]; 
 		//+1 car pour n coups, n+1 positions
 		
-		evaluators[0]=new PositionEvaluatorProcess(b.clone());
+		evaluators[0]=new PositionEvaluatorProcess(b);
 		
 		for(int i=0;i<nbmoves;i++){
 			
 			moves.get(i).makeMove(b).applyTo(b);
-			evaluators[i+1]=new PositionEvaluatorProcess(b.clone());
+			evaluators[i+1]=new PositionEvaluatorProcess(b);
 			
 		}
 	}

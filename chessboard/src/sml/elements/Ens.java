@@ -1,4 +1,4 @@
-package sml.instruments;
+package sml.elements;
 
 import sml.interfaces.IInstrument;
 

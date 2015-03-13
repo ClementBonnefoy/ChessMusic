@@ -36,10 +36,10 @@ letter = [a-g]
 
 scale = "ionian" | "dorian" | "myxolydian" | "phrygian" | "aeolian" | "locrian" | "lydian"
 
-identifiant = [A-Za-z_][A-Za-z_0-9]*
+string = [A-Za-z_][A-Za-z_0-9]*
 
 complexnote = {number}[\+\-]*{letter}{number} |
-{number}[\+\-]*{letter}{identifiant}
+{number}[\+\-]*{letter}{string}
 
 
 
@@ -78,7 +78,7 @@ complexnote = {number}[\+\-]*{letter}{number} |
 
 {scale}     { return symbol(sym.SCALENAME, yytext()); }
 
-{identifiant}       { return symbol(sym.IDENTIFIANT, yytext());}
+{string}       { return symbol(sym.STRING, yytext());}
 
 {WhiteSpace}       {}
 

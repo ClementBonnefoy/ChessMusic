@@ -18,7 +18,7 @@ public class MultiPositionEvaluatorProcessTest {
 
 		PGNGame pgnGame = null;
 		
-		Board board=new Board(new Factory());
+		Board board=new Board();
 		board.init();
 
 		try {

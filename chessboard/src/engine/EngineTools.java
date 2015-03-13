@@ -27,7 +27,7 @@ public class EngineTools {
 	}
 	
 	public static void main(String [] args){
-		Board b=new Board(new Factory());
+		Board b=new Board();
 		b.init();
 		System.out.println(getEvaluation(b,4000));
 	}

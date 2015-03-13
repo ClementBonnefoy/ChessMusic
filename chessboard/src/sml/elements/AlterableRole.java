@@ -1,4 +1,4 @@
-package sml.roles;
+package sml.elements;
 
 import sml.interfaces.IRole;
 

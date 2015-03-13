@@ -1,10 +1,8 @@
-package sml.musicalelements;
+package sml.elements;
 
 import sml.interfaces.IMusicalElement;
 import sml.interfaces.IRole;
 import sml.interfaces.ITime;
-import sml.various.Octave;
-import sml.various.Time;
 
 public class ComplexNote implements IMusicalElement {
 	

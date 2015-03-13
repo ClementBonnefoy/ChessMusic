@@ -1,4 +1,4 @@
-package sml.various;
+package sml.elements;
 
 public class Music {
 	

@@ -1,4 +1,4 @@
-package sml.instructions;
+package sml.elements;
 
 import sml.interfaces.IInstruction;
 

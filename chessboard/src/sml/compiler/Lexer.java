@@ -705,7 +705,7 @@ return new Symbol(type, yyline, yycolumn, value);
           }
         case 30: break;
         case 5: 
-          { return symbol(sym.IDENTIFIANT, yytext());
+          { return symbol(sym.STRING, yytext());
           }
         case 31: break;
         case 6: 
@@ -745,8 +745,7 @@ return new Symbol(type, yyline, yycolumn, value);
           }
         case 40: break;
         case 15: 
-          { System.out.println("complex note: "+yytext());
-        return symbol(sym.COMPLEXNOTE, yytext());
+          { return symbol(sym.COMPLEXNOTE, yytext());
           }
         case 41: break;
         case 16: 

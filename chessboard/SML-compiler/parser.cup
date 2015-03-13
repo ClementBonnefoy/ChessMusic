@@ -5,12 +5,7 @@ import music.*;
 */
 package sml.compiler;
 
-import sml.instructions.*;
-import sml.instruments.*;
-import sml.musicalelements.*;
-import sml.playableelements.*;
-import sml.roles.*;
-import sml.various.*;
+import sml.elements.*;
 import sml.interfaces.*;
 
 
@@ -45,9 +40,9 @@ terminal           SEMI, PLUS, MINUS,LPAREN, RPAREN,LACCOL, RACCOL, EQUAL, COMA;
 terminal           LET, ENS, BEGIN, END, TEMPO, PLAY, SCALE, CHORD, SEQUENCE, REST;
 terminal String    LETTER, COMPLEXNOTE;
 terminal Integer   NUMBER;
-terminal String    IDENTIFIANT,SCALENAME;
+terminal String    STRING,SCALENAME;
 
-non terminal Object     music, declarations, body, declaration, scale, musical_element;
+non terminal Object     music, declarations,nedeclarations, body, declaration, scale, musical_element;
 non terminal Object     instrument, note_sequence, complex_note, instructions, tempo, instruction;
 non terminal Object     play, playable_element, note, playable_chord, playable_sequence;
 non terminal Object     sequence, chord, time;
@@ -64,7 +59,11 @@ music ::= declarations:d body:b {: RESULT = new Music((Declarations)d,(Body)b); 
 ;
 
 declarations ::= {: RESULT = null ; :}
-    | LET identifiant:i EQUAL declaration:d SEMI declarations:ds {: RESULT = new Declarations(new Declaration((Variable)i,(IDeclarable)d),(Declarations)ds) ; :}
+    | nedeclarations : n {: RESULT = n ; :}
+;
+
+nedeclarations ::=  LET identifiant:i EQUAL declaration:d SEMI {: RESULT = new Declarations(new Declaration((Variable)i,(IDeclarable)d),null) ; :}
+    | nedeclarations:ds LET identifiant:i EQUAL declaration:d SEMI {: RESULT = new Declarations(new Declaration((Variable)i,(IDeclarable)d),(Declarations)ds) ; :}
 ;
 
 declaration ::= identifiant:i {: RESULT = i ; :}
@@ -162,7 +161,7 @@ chord ::= CHORD musical_element:e1 musical_element:e2 {: RESULT = new Chord((IMu
 sequence ::= SEQUENCE musical_element:e1 musical_element:e2 {: RESULT = new Sequence((IMusicalElement)e1,(IMusicalElement)e2) ; :}
 ;
 
-identifiant ::= IDENTIFIANT:i {: RESULT = new Variable((String)i); :}
+identifiant ::= STRING:s {: RESULT = new Variable((String)s); :}
 ;
 
 

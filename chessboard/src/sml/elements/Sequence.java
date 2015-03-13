@@ -1,4 +1,4 @@
-package sml.musicalelements;
+package sml.elements;
 
 import sml.interfaces.IMusicalElement;
 

@@ -1,8 +1,7 @@
-package sml.instructions;
+package sml.elements;
 
 import sml.interfaces.IInstruction;
 import sml.interfaces.IPlayableElement;
-import sml.various.Scale;
 
 public class Play implements IInstruction {
 	

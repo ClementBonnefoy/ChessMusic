@@ -1,4 +1,4 @@
-package sml.playableelements;
+package sml.elements;
 
 import sml.interfaces.IPlayableElement;
 

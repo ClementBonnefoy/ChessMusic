@@ -1,7 +1,6 @@
-package sml.musicalelements;
+package sml.elements;
 
 import sml.interfaces.IMusicalElement;
-import sml.various.Time;
 
 public class Rest implements IMusicalElement{
 	
