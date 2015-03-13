@@ -50,9 +50,9 @@ terminal String    IDENTIFIANT,SCALENAME;
 non terminal Object     music, declarations, body, declaration, scale, musical_element;
 non terminal Object     instrument, note_sequence, complex_note, instructions, tempo, instruction;
 non terminal Object     play, playable_element, note, playable_chord, playable_sequence;
-non terminal Object     sequence, chord, role, octave, time;
+non terminal Object     sequence, chord, time;
 non terminal Object     identifiant;
-non terminal Object     scale_definition, musical_element_definition, instrument_definition;
+non terminal Object     scale_definition, musical_element_definition, instrument_definition, time_definition;
 
 
 /* -------------Precedence and Associatively of Terminals Section----------- */
@@ -73,6 +73,7 @@ declaration ::= identifiant:i {: RESULT = i ; :}
     | musical_element_definition:m {: RESULT = m ; :}
     | instrument_definition:i {: RESULT = i ; :}
     | LACCOL note_sequence:n RACCOL {: RESULT = n ; :}
+    | time_definition:t {: RESULT = t ; :}
 ;
 
 instrument ::= identifiant:i {: RESULT = i ; :}
@@ -84,7 +85,7 @@ instrument_definition ::= ENS instrument:i1 instrument:i2 {: RESULT = new Ens((I
 ;
 
 note_sequence ::= complex_note:c {: RESULT = c ; :}
-| complex_note:c COMA note_sequence:n {: RESULT = new Sequence((IMusicalElement)c,(IMusicalElement)n) ; :}
+    | complex_note:c COMA note_sequence:n {: RESULT = new Sequence((IMusicalElement)c,(IMusicalElement)n) ; :}
 ;
 
 body ::= BEGIN instructions:i END SEMI {: RESULT = i ; :}
@@ -143,15 +144,16 @@ complex_note ::= COMPLEXNOTE:c {: RESULT = ComplexNote.parse(c) ; :}
     | REST time:t {: RESULT = new Rest((Time)t) ; :}
 ;
 
-role ::= role:r PLUS {: RESULT = new AlterableRole((IRole)r,true) ; :}
+/*role ::= role:r PLUS {: RESULT = new AlterableRole((IRole)r,true) ; :}
     | role:r MINUS {: RESULT = new AlterableRole((IRole)r,false) ; :}
     | NUMBER:n {: RESULT = Role.role(n) ; :}
+;*/
+
+time_definition ::= NUMBER:n {: RESULT = new Time((int)n) ; :}
 ;
 
-octave ::= LETTER:l {: RESULT = new Octave(l) ; :}
-;
-
-time ::= NUMBER:n {: RESULT = new Time((int)n) ; :}
+time ::= identifiant:i {: RESULT = i ; :}
+    | time_definition:t {: RESULT = t ; :}
 ;
 
 chord ::= CHORD musical_element:e1 musical_element:e2 {: RESULT = new Chord((IMusicalElement)e1,(IMusicalElement)e2) ; :}

@@ -34,11 +34,13 @@ number = 0 | [1-9][0-9]*
 
 letter = [a-g]
 
-complexnote = {number}[\+\-]*{letter}{number}
-
 scale = "ionian" | "dorian" | "myxolydian" | "phrygian" | "aeolian" | "locrian" | "lydian"
 
 identifiant = [A-Za-z_][A-Za-z_0-9]*
+
+complexnote = {number}[\+\-]*{letter}{number} |
+{number}[\+\-]*{letter}{identifiant}
+
 
 
 
@@ -70,8 +72,7 @@ identifiant = [A-Za-z_][A-Za-z_0-9]*
 
 {number}      { return symbol(sym.NUMBER, new Integer(yytext())); }
 
-{complexnote} { System.out.println("complex note: "+yytext());
-        return symbol(sym.COMPLEXNOTE, yytext()); }
+{complexnote} { return symbol(sym.COMPLEXNOTE, yytext()); }
 
 {letter}      { return symbol(sym.LETTER, yytext()); }
 

@@ -22,6 +22,20 @@ public class Declarations {
 		throw new IllegalArgumentException("Error: undefined variable "+
 			variable.getName());
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder b=new StringBuilder();
+		b.append(declaration.getVariable());
+		if(next!=null){
+			b.append(",");
+			b.append(next.toString());
+		}
+		return b.toString();
+		
+	}
+	
+	
 	
 	
 

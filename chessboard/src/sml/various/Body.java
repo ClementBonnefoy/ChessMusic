@@ -12,12 +12,6 @@ public class Body {
 		this.instruction = instruction;
 		this.next = next;
 	}
-
-	@Override
-	public String toString() {
-		return "Body [instruction=" + instruction + ", next=" + next + "]";
-	}
-	
 	
 	
 	

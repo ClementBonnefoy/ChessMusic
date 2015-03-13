@@ -13,7 +13,7 @@ public class Music {
 
 	@Override
 	public String toString() {
-		return "Music [declarations=" + declarations + ", body=" + body + "]";
+		return "Music [declarations=[" + declarations + "], body=" + body + "]";
 	}
 	
 	

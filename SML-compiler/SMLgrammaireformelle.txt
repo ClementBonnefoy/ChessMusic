@@ -10,6 +10,7 @@ Grammaire Formelle
 <declaration> 		::= <scale>
 			| <musical-element>
 			| <instrument>
+			| <time>
 			| { <note-sequence> }
 
 <instrument>		::= [identifiant]
@@ -74,6 +75,7 @@ Grammaire Formelle
 <octave>		::= [char{a,b,c,d,e,f}]
 
 <time> 		::= [number]
+			| [identifiant]
 
 <chord>		::= chord <musical-element> <musical-element>
 

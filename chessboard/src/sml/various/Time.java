@@ -1,6 +1,8 @@
 package sml.various;
 
-public class Time {
+import sml.interfaces.IDeclarable;
+
+public class Time implements IDeclarable{
 	
 	private int time;
 	

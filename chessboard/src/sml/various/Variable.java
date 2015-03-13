@@ -4,9 +4,10 @@ import sml.interfaces.IDeclarable;
 import sml.interfaces.IInstrument;
 import sml.interfaces.IMusicalElement;
 import sml.interfaces.IPlayableElement;
+import sml.interfaces.ITime;
 
 public class Variable implements IDeclarable, IMusicalElement,
-	IPlayableElement, IInstrument{
+	IPlayableElement, IInstrument, ITime{
 	
 	private String name;
 	
@@ -39,6 +40,13 @@ public class Variable implements IDeclarable, IMusicalElement,
 	public String getName() {
 		return name;
 	}
+
+	@Override
+	public String toString() {
+		return "var("+name+")";
+	}
+	
+	
 	
 	
 
