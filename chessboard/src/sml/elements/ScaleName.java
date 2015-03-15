@@ -1,6 +1,8 @@
 package sml.elements;
 
-public enum ScaleName {
+import sml.interfaces.ISMLElement;
+
+public enum ScaleName implements ISMLElement{
 	
 	locrian,phrygian,aeolian,dorian,myxolydian,ionian,lydian;
 	

@@ -9,15 +9,17 @@ import sml.interfaces.ITime;
 public class Variable implements IDeclarable, IMusicalElement,
 	IPlayableElement, IInstrument, ITime{
 	
-	private String name;
+	private final String name;
 	
 	public Variable(String name){
 		super();
+		if(name=="b")
+		System.out.println("OMG");
 		this.name=name;
 	}
 	
-	public IDeclarable getValue(Declarations env){
-		return env.getValue(this);
+	public IDeclarable getValue(Declarations environnement){
+		return environnement.getValue(this);
 	}
 
 	@Override
@@ -44,6 +46,16 @@ public class Variable implements IDeclarable, IMusicalElement,
 	@Override
 	public String toString() {
 		return "var("+name+")";
+	}
+
+	@Override
+	public int getTime(Declarations environnement) {
+		IDeclarable value=getValue(environnement);
+		if(value instanceof ITime)
+			return ((ITime)value).getTime(environnement);
+		if(value instanceof IMusicalElement)
+			return ((IMusicalElement)value).getTime(environnement);
+		throw new RuntimeException("not a time mesurable value");
 	}
 	
 	

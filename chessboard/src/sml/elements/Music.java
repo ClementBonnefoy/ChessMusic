@@ -1,6 +1,8 @@
 package sml.elements;
 
-public class Music {
+import sml.interfaces.ISMLElement;
+
+public class Music implements ISMLElement{
 	
 	private Declarations declarations;
 	private Body body;
@@ -13,7 +15,14 @@ public class Music {
 
 	@Override
 	public String toString() {
-		return "Music [declarations=[" + declarations + "], body=" + body + "]";
+		return "Music [declarations=\n\t[" + declarations + "], \nbody=\n\t" + body + "]";
+	}
+	
+	/**
+	 * renvoit la durée totale du morceau en unité de temps
+	 */
+	public int getTime(){
+		return body.getTime(declarations);
 	}
 	
 	

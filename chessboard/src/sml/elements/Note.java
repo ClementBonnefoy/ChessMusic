@@ -1,6 +1,8 @@
 package sml.elements;
 
-public enum Note {
+import sml.interfaces.ISMLElement;
+
+public enum Note implements ISMLElement {
 
 	A,AS,B,C,CS,D,DS,E,F,FS,G,GS; //en notation anglo-saxone, S=sharp
 	

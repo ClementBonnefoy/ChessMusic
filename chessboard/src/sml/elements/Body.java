@@ -1,8 +1,9 @@
 package sml.elements;
 
 import sml.interfaces.IInstruction;
+import sml.interfaces.ISMLElement;
 
-public class Body {
+public class Body implements ISMLElement {
 	
 	private IInstruction instruction;
 	private Body next;
@@ -11,6 +12,12 @@ public class Body {
 		super();
 		this.instruction = instruction;
 		this.next = next;
+	}
+
+	public int getTime(Declarations environnement) {
+		int res=instruction.getTime(environnement);
+		res+=(next!=null)?next.getTime(environnement):0;
+		return res;
 	}
 	
 	

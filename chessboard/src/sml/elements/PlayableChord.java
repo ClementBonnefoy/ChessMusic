@@ -13,4 +13,9 @@ public class PlayableChord implements IPlayableElement{
 		this.e2 = e2;
 	}
 
+	@Override
+	public int getTime(Declarations environnement) {
+		return Math.max(e1.getTime(environnement), e2.getTime(environnement));
+	}
+
 }

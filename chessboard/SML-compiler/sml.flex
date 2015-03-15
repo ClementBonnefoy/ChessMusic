@@ -58,6 +58,7 @@ complexnote = {number}[\+\-]*{letter}{number} |
 "}"                { return symbol(sym.RACCOL); }
 "="                { return symbol(sym.EQUAL); }
 ","                { return symbol(sym.COMA); }
+"\?"                { return symbol(sym.REST); }
 
 "let" { return symbol(sym.LET); }
 "ens" { return symbol(sym.ENS); }
@@ -67,8 +68,8 @@ complexnote = {number}[\+\-]*{letter}{number} |
 "play" { return symbol(sym.PLAY); }
 "chord" { return symbol(sym.CHORD); }
 "sequence" { return symbol(sym.SEQUENCE); }
-"rest" { return symbol(sym.REST); }
 "scale" { return symbol(sym.SCALE); }
+"rest"  { return symbol(sym.REST); }
 
 {number}      { return symbol(sym.NUMBER, new Integer(yytext())); }
 

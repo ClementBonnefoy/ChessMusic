@@ -10,6 +10,11 @@ public class Tempo implements IInstruction {
 		super();
 		this.tempo = tempo;
 	}
+
+	@Override
+	public int getTime(Declarations environnement) {
+		return 0;
+	}
 	
 	
 

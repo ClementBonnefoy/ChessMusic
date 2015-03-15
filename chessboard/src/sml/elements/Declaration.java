@@ -1,8 +1,9 @@
 package sml.elements;
 
 import sml.interfaces.IDeclarable;
+import sml.interfaces.ISMLElement;
 
-public class Declaration {
+public class Declaration implements ISMLElement{
 	
 	private Variable variable;
 	private IDeclarable value;

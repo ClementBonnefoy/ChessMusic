@@ -13,4 +13,9 @@ public class PlayableSequence implements IPlayableElement {
 		this.e2 = e2;
 	}
 
+	@Override
+	public int getTime(Declarations environnement) {
+		return e1.getTime(environnement)+e2.getTime(environnement);
+	}
+
 }

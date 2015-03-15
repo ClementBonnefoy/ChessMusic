@@ -13,6 +13,11 @@ public class Play implements IInstruction {
 		this.scale = scale;
 		this.playableElement = playableElement;
 	}
+
+	@Override
+	public int getTime(Declarations environnement) {
+		return playableElement.getTime(environnement);
+	}
 	
 	
 

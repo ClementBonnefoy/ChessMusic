@@ -2,7 +2,7 @@ package sml.elements;
 
 import sml.interfaces.IDeclarable;
 
-public class Scale implements IDeclarable{
+public class Scale implements IDeclarable {
 	
 	private Note note;
 	private ScaleName scale;

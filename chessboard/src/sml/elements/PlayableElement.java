@@ -15,6 +15,11 @@ public class PlayableElement implements IPlayableElement {
 		this.instrument = instrument;
 		this.musicalElement = musicalElement;
 	}
+
+	@Override
+	public int getTime(Declarations environnement) {
+		return musicalElement.getTime(environnement);
+	}
 	
 	
 

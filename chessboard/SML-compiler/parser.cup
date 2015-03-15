@@ -62,8 +62,10 @@ declarations ::= {: RESULT = null ; :}
     | nedeclarations : n {: RESULT = n ; :}
 ;
 
-nedeclarations ::=  LET identifiant:i EQUAL declaration:d SEMI {: RESULT = new Declarations(new Declaration((Variable)i,(IDeclarable)d),null) ; :}
-    | nedeclarations:ds LET identifiant:i EQUAL declaration:d SEMI {: RESULT = new Declarations(new Declaration((Variable)i,(IDeclarable)d),(Declarations)ds) ; :}
+nedeclarations ::=  LET identifiant:i EQUAL declaration:d SEMI {: Declarations env = new Declarations(new                       Declaration((Variable)i,(IDeclarable)d),null) ;
+        RESULT = env ;:}
+    | nedeclarations:ds LET identifiant:i EQUAL declaration:d SEMI {: Declarations env = new Declarations(new   Declaration((Variable)i,(IDeclarable)d),(Declarations)ds) ;
+        RESULT = env ;:}
 ;
 
 declaration ::= identifiant:i {: RESULT = i ; :}
@@ -140,7 +142,7 @@ musical_element_definition ::= complex_note:c {: RESULT = c ; :}
 ;
 
 complex_note ::= COMPLEXNOTE:c {: RESULT = ComplexNote.parse(c) ; :}
-    | REST time:t {: RESULT = new Rest((Time)t) ; :}
+    | REST time:t {: RESULT = new Rest((ITime)t) ; :}
 ;
 
 /*role ::= role:r PLUS {: RESULT = new AlterableRole((IRole)r,true) ; :}
@@ -162,6 +164,7 @@ sequence ::= SEQUENCE musical_element:e1 musical_element:e2 {: RESULT = new Sequ
 ;
 
 identifiant ::= STRING:s {: RESULT = new Variable((String)s); :}
+| LETTER:l {: RESULT = new Variable((String)l); :}
 ;
 
 

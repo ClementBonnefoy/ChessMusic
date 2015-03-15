@@ -1,5 +1,7 @@
 package sml.interfaces;
 
+import sml.elements.Declarations;
+
 
 
 /**
@@ -7,5 +9,11 @@ package sml.interfaces;
  *
  */
 public interface IMusicalElement extends IDeclarable{
+	
+	/**
+	 * retourne la durée en unité de temps de l'élement. 
+	 * @return
+	 */
+	public int getTime(Declarations environnement);
 
 }

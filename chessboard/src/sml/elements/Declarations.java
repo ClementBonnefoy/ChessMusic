@@ -1,8 +1,9 @@
 package sml.elements;
 
 import sml.interfaces.IDeclarable;
+import sml.interfaces.ISMLElement;
 
-public class Declarations {
+public class Declarations implements ISMLElement{
 	
 	private Declaration declaration;
 	private Declarations next;
@@ -20,7 +21,7 @@ public class Declarations {
 		if(next != null)
 			return next.getValue(variable);
 		throw new IllegalArgumentException("Error: undefined variable "+
-			variable.getName());
+			variable);
 	}
 
 	@Override
