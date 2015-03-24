@@ -3,6 +3,7 @@ package sml.elements;
 import sml.interfaces.IInstrument;
 import sml.interfaces.IMusicalElement;
 import sml.interfaces.IPlayableElement;
+import sml.interfaces.IVisitor;
 
 public class PlayableElement implements IPlayableElement {
 	
@@ -19,6 +20,18 @@ public class PlayableElement implements IPlayableElement {
 	@Override
 	public int getTime(Declarations environnement) {
 		return musicalElement.getTime(environnement);
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		instrument.accept(visitor);
+		musicalElement.accept(visitor);
+		
+	}
+	
+	public IInstrument getInstrument(){
+		return instrument;
 	}
 	
 	

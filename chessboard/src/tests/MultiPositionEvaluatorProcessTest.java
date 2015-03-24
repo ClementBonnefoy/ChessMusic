@@ -1,7 +1,6 @@
 package tests;
 
 import board.Board;
-import board.Factory;
 import engine.MultiPositionEvaluatorProcess;
 import move.InvalidMoveException;
 import pgn.InvalidPGNMoveException;

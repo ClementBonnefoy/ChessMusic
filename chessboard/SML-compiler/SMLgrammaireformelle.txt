@@ -15,6 +15,7 @@ Grammaire Formelle
 
 <instrument>		::= [identifiant]
 			| ens <instrument> <instrument>
+			| instr <id-instrument>
 
 <note-sequence>	::= <complex-note>
 			| <complex-note> , <note-sequence>			
@@ -43,6 +44,9 @@ Grammaire Formelle
 			| e
 			| f
 			| g	
+			
+<instrument-id> ::= flute
+			| piano
 
 <scale-type> 		::= lydian
 			| myxolydian

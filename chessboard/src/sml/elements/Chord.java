@@ -1,6 +1,7 @@
 package sml.elements;
 
 import sml.interfaces.IMusicalElement;
+import sml.interfaces.IVisitor;
 
 public class Chord implements IMusicalElement{
 	
@@ -16,6 +17,14 @@ public class Chord implements IMusicalElement{
 	@Override
 	public int getTime(Declarations environnement) {
 		return Math.max(e1.getTime(environnement), e2.getTime(environnement));
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		e1.accept(visitor);
+		e2.accept(visitor);
+		
 	}
 
 }

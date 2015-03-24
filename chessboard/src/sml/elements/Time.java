@@ -2,6 +2,7 @@ package sml.elements;
 
 import sml.interfaces.IDeclarable;
 import sml.interfaces.ITime;
+import sml.interfaces.IVisitor;
 
 public class Time implements IDeclarable, ITime{
 	
@@ -14,6 +15,12 @@ public class Time implements IDeclarable, ITime{
 	@Override
 	public int getTime(Declarations environnement) {
 		return time;
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		
 	}
 	
 }

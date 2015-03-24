@@ -1,6 +1,7 @@
 package sml.elements;
 
 import sml.interfaces.IPlayableElement;
+import sml.interfaces.IVisitor;
 
 public class PlayableChord implements IPlayableElement{
 	
@@ -17,5 +18,15 @@ public class PlayableChord implements IPlayableElement{
 	public int getTime(Declarations environnement) {
 		return Math.max(e1.getTime(environnement), e2.getTime(environnement));
 	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		e1.accept(visitor);
+		e2.accept(visitor);
+		
+	}
+	
+	
 
 }

@@ -2,6 +2,7 @@ package sml.elements;
 
 import sml.interfaces.IDeclarable;
 import sml.interfaces.ISMLElement;
+import sml.interfaces.IVisitor;
 
 public class Declaration implements ISMLElement{
 	
@@ -20,6 +21,14 @@ public class Declaration implements ISMLElement{
 
 	public Variable getVariable() {
 		return variable;
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		variable.accept(visitor);
+		value.accept(visitor);
+		
 	}
 	
 	

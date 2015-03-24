@@ -1,8 +1,8 @@
-package music.scale;
+package chesstube.music.scale;
 
-import music.Note;
-import music.NoteName;
-import music.Scale;
+import chesstube.music.Note;
+import chesstube.music.NoteName;
+import chesstube.music.Scale;
 
 public class Dorian extends Scale {
 

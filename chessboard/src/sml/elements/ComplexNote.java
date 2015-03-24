@@ -3,6 +3,7 @@ package sml.elements;
 import sml.interfaces.IMusicalElement;
 import sml.interfaces.IRole;
 import sml.interfaces.ITime;
+import sml.interfaces.IVisitor;
 
 public class ComplexNote implements IMusicalElement {
 	
@@ -51,6 +52,27 @@ public class ComplexNote implements IMusicalElement {
 	@Override
 	public int getTime(Declarations environnement) {
 		return time.getTime(environnement);
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		role.accept(visitor);
+		octave.accept(visitor);
+		time.accept(visitor);
+		
+	}
+
+	public IRole getRole() {
+		return role;
+	}
+
+	public Octave getOctave() {
+		return octave;
+	}
+
+	public ITime getTime() {
+		return time;
 	}
 	
 	

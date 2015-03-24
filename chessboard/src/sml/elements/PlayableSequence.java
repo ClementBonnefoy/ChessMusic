@@ -1,6 +1,7 @@
 package sml.elements;
 
 import sml.interfaces.IPlayableElement;
+import sml.interfaces.IVisitor;
 
 public class PlayableSequence implements IPlayableElement {
 	
@@ -16,6 +17,14 @@ public class PlayableSequence implements IPlayableElement {
 	@Override
 	public int getTime(Declarations environnement) {
 		return e1.getTime(environnement)+e2.getTime(environnement);
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		e1.accept(visitor);
+		e2.accept(visitor);
+		
 	}
 
 }

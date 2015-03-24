@@ -2,6 +2,7 @@ package sml.elements;
 
 import sml.interfaces.IInstruction;
 import sml.interfaces.ISMLElement;
+import sml.interfaces.IVisitor;
 
 public class Body implements ISMLElement {
 	
@@ -18,6 +19,28 @@ public class Body implements ISMLElement {
 		int res=instruction.getTime(environnement);
 		res+=(next!=null)?next.getTime(environnement):0;
 		return res;
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		instruction.accept(visitor);
+		if(next!=null)
+			next.accept(visitor);
+		
+	}
+	
+	@Override
+	public String toString(){
+		StringBuilder bd=new StringBuilder();
+		
+		bd.append(instruction.toString());
+		if(next!=null){
+			bd.append(";");
+			bd.append(next.toString());
+		}
+		
+		return bd.toString();
 	}
 	
 	

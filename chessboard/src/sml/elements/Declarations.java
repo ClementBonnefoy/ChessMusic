@@ -2,6 +2,7 @@ package sml.elements;
 
 import sml.interfaces.IDeclarable;
 import sml.interfaces.ISMLElement;
+import sml.interfaces.IVisitor;
 
 public class Declarations implements ISMLElement{
 	
@@ -33,6 +34,15 @@ public class Declarations implements ISMLElement{
 			b.append(next.toString());
 		}
 		return b.toString();
+		
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		declaration.accept(visitor);
+		if(next!=null)
+			next.accept(visitor);
 		
 	}
 	

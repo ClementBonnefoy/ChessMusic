@@ -5,6 +5,7 @@ import sml.interfaces.IInstrument;
 import sml.interfaces.IMusicalElement;
 import sml.interfaces.IPlayableElement;
 import sml.interfaces.ITime;
+import sml.interfaces.IVisitor;
 
 public class Variable implements IDeclarable, IMusicalElement,
 	IPlayableElement, IInstrument, ITime{
@@ -56,6 +57,12 @@ public class Variable implements IDeclarable, IMusicalElement,
 		if(value instanceof IMusicalElement)
 			return ((IMusicalElement)value).getTime(environnement);
 		throw new RuntimeException("not a time mesurable value");
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+	
 	}
 	
 	

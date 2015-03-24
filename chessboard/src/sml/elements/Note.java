@@ -1,35 +1,36 @@
 package sml.elements;
 
 import sml.interfaces.ISMLElement;
+import sml.interfaces.IVisitor;
 
 public enum Note implements ISMLElement {
 
-	A,AS,B,C,CS,D,DS,E,F,FS,G,GS; //en notation anglo-saxone, S=sharp
+	a,as,b,c,cs,d,ds,e,f,fs,g,gs; //en notation anglo-saxone, S=sharp
 	
 	public static Note note(String note){
 		char n=note.charAt(0);
 		switch(n){
 		case 'a':
 		case 'A':
-			return A;
+			return a;
 		case 'b':
 		case 'B':
-			return B;
+			return b;
 		case 'c':
 		case 'C':
-			return C;
+			return c;
 		case 'd':
 		case 'D':
-			return D;
+			return d;
 		case 'e':
 		case 'E':
-			return E;
+			return e;
 		case 'f':
 		case 'F':
-			return F;
+			return f;
 		case 'g':
 		case 'G':
-			return G;
+			return g;
 		default:
 			throw new IllegalArgumentException("The String"+note+" is not"
 					+ " a valid letter for a note");
@@ -42,6 +43,12 @@ public enum Note implements ISMLElement {
 
 	public Note decr(int i) {
 		return Note.values()[(this.ordinal()-i+12)%12];
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		
 	}
 
 

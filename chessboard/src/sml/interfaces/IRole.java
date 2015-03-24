@@ -6,5 +6,9 @@ package sml.interfaces;
  *
  */
 public interface IRole extends ISMLElement {
+	
+	public int getRole();
+	
+	public int getAlteration();
 
 }

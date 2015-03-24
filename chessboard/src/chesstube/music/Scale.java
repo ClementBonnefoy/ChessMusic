@@ -1,10 +1,13 @@
-package music;
+package chesstube.music;
 
 import java.util.ArrayList;
+
+import sml.elements.ComplexNote;
 
 public abstract class Scale {
 	
 	protected NoteName fundamental;
+	@Deprecated
 	protected ArrayList<Note> notes;
 	
 	public Scale(NoteName fundamental){
@@ -12,7 +15,7 @@ public abstract class Scale {
 		this.notes=this.getAllNotes();
 	}
 	
-	
+	@Deprecated
 	private ArrayList<Note> getAllNotes() {
 
 		Note fund=new Note(fundamental,0);
@@ -41,10 +44,12 @@ public abstract class Scale {
 
 	}
 	
+	@Deprecated
 	public boolean isInTheScale(Note note){
 		return notes.contains(note);
 	}
 	
+	@Deprecated
 	public Note[] getNNotes(Note starting_note,int n){
 		
 		Note [] res = new Note[n];
@@ -71,5 +76,28 @@ public abstract class Scale {
 	}
 	
 	protected abstract int [] getScale();
+
+
+	public Note getNote(ComplexNote n) {
+		int octave=n.getOctave().getValue();
+		int role=n.getRole().getRole();
+		int alteration=n.getRole().getAlteration();
+		
+		Note note=new Note(fundamental,0);
+		while(role>7){
+			role-=7;
+			octave--;
+		}
+		note=note.incr(this.getScale()[role-1]);
+		note=note.incr(alteration);
+		while(octave>0){
+			note=note.nextOctave();
+			octave--;
+		}
+			
+		return note;
+		
+		
+	}
 
 }

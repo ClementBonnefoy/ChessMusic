@@ -70,6 +70,7 @@ complexnote = {number}[\+\-]*{letter}{number} |
 "sequence" { return symbol(sym.SEQUENCE); }
 "scale" { return symbol(sym.SCALE); }
 "rest"  { return symbol(sym.REST); }
+"instru"  { return symbol(sym.INSTRU); }
 
 {number}      { return symbol(sym.NUMBER, new Integer(yytext())); }
 

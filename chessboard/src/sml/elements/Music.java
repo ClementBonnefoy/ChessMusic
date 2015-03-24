@@ -1,6 +1,7 @@
 package sml.elements;
 
 import sml.interfaces.ISMLElement;
+import sml.interfaces.IVisitor;
 
 public class Music implements ISMLElement{
 	
@@ -15,7 +16,14 @@ public class Music implements ISMLElement{
 
 	@Override
 	public String toString() {
-		return "Music [declarations=\n\t[" + declarations + "], \nbody=\n\t" + body + "]";
+		return "variables=\n\t" + declarations + "\nbody=\n\t" + body;
+	}
+	
+	/**
+	 * renvoit l'ensemble des variables du morceau
+	 */
+	public Declarations getEnvironnement(){
+		return declarations;
 	}
 	
 	/**
@@ -23,6 +31,14 @@ public class Music implements ISMLElement{
 	 */
 	public int getTime(){
 		return body.getTime(declarations);
+	}
+
+	@Override
+	public void accept(IVisitor visitor) {
+		visitor.visit(this);
+		declarations.accept(visitor);
+		body.accept(visitor);
+		
 	}
 	
 	

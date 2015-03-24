@@ -2,7 +2,6 @@ package engine;
 
 import board.Board;
 import board.Color;
-import board.Factory;
 
 public class EngineTools {
 
