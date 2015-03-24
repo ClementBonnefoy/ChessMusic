@@ -6,9 +6,9 @@ import move.MoveAction;
 public class Square implements MoveAction {
 
 	protected final ESquare eSquare;
-	
+
 	protected Piece piece;
-	
+
 	public Piece getPiece() {
 		return piece;
 	}
@@ -29,29 +29,30 @@ public class Square implements MoveAction {
 	public Rank getRank() {
 		return eSquare.getRank();
 	}
-	
+
 	public File getFile() {
 		return eSquare.getFile();
 	}
-	
+
 	@Override
 	public void onMove(Board board, Move move) {
-		
+
 	}
 
 	@Override
 	public void onUndoMove(Board board, Move move) {
-		
+
 	}
 
 	public Square clone() {
 		Square newSquare = new Square(eSquare);
-		newSquare.setPiece(piece.clone());
+		if (piece != null)
+			newSquare.setPiece(piece.clone());
 		return newSquare;
 	}
-	
+
 	public String toString() {
 		return eSquare.toString();
 	}
-	
+
 }
