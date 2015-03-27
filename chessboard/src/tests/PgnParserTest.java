@@ -7,9 +7,8 @@ import move.Move;
 import pgn.InvalidPGNMoveException;
 import pgn.PGNGame;
 import pgn.PGNParser;
-import board.Color;
 import board.Board;
-import board.Factory;
+import board.Color;
 import board.InvalidFenException;
 
 public class PgnParserTest {

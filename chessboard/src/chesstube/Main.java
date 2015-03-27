@@ -9,11 +9,9 @@ public class Main {
 		
 		Music result = SMLCompiler.compile("sml/auclairdelalune.sml");
 		
-		System.out.println(result);
-		
 		ChessTube ct = new ChessTube(result);
 		
-		ct.createMidiFromPGN("games/Game1.pgn", "game1.mid");
+		ct.createMidiFromPGN("games/Game1.pgn", "game1-chesstube.mid");
 		
 	}
 	

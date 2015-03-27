@@ -40,6 +40,10 @@ public class Music implements ISMLElement{
 		body.accept(visitor);
 		
 	}
+
+	public Body getBody() {
+		return body;
+	}
 	
 	
 

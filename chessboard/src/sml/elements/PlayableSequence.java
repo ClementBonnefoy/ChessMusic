@@ -27,4 +27,12 @@ public class PlayableSequence implements IPlayableElement {
 		
 	}
 
+	public IPlayableElement getFirstElement() {
+		return e1;
+	}
+
+	public IPlayableElement getSecondElement() {
+		return e2;
+	}
+
 }

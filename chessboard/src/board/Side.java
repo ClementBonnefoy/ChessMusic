@@ -80,7 +80,7 @@ public class Side extends ArrayList <Square>{
 		return canKingSideCastle;
 	}
 
-	public void reset() {
+	public void init() {
 		clear();
 		setKing(null);
 		canQueenSideCastle = true;

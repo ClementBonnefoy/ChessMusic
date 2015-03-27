@@ -25,12 +25,6 @@ public class Promotion extends Move {
 		this.limit50movesBefore = limit50movesBefore;
 	}
 
-	public Move copyMoveWithType(Type type) {
-		return new Promotion(type, from, to,
-				movingPiece, eaten,
-				limit50movesBefore, enPassantBefore);
-	}
-
 	@Override
 	protected void specificApply(Board board) {
 		super.specificApply(board);

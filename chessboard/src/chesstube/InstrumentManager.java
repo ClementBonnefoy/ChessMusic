@@ -2,9 +2,12 @@ package chesstube;
 
 import java.util.ArrayList;
 
+import javax.sound.midi.Track;
+
+import midi.MidiTools;
+import chesstube.music.Instrument;
 import sml.compiler.SMLCompiler;
 import sml.elements.Declarations;
-import sml.elements.Instrument;
 import sml.elements.Ens;
 import sml.elements.Music;
 import sml.elements.Variable;
@@ -24,9 +27,11 @@ public class InstrumentManager implements IVisitor {
 
 	@Override
 	public void visit(IVisitable obj) {
-		if(obj instanceof Instrument){
-			if(!instruments.contains(obj))
-				instruments.add((Instrument) obj);
+		if(obj instanceof sml.elements.Instrument){
+			Instrument instr=SMLConverter.convertInstrument(
+					(sml.elements.Instrument) obj);
+			if(!instruments.contains(instr))
+				instruments.add(instr);
 		}
 
 	}
@@ -58,8 +63,9 @@ public class InstrumentManager implements IVisitor {
 			res1.addAll(res2);
 			return res1;
 		}
-		if(instr instanceof Instrument){
-			Instrument i=(Instrument) instr;
+		if(instr instanceof sml.elements.Instrument){
+			Instrument i=SMLConverter.convertInstrument(
+					(sml.elements.Instrument) instr);
 			ArrayList<Integer> res=new ArrayList<Integer>();
 			res.add(getChannel(i));
 			return res;	
@@ -68,7 +74,7 @@ public class InstrumentManager implements IVisitor {
 			IInstrument i=(IInstrument) ((Variable)instr).getValue(env);
 			return getChannels(i, env);
 		}
-		return null;
+		return new ArrayList<Integer>();
 
 	}
 
@@ -76,15 +82,24 @@ public class InstrumentManager implements IVisitor {
 		Music music=SMLCompiler.getExample();
 		InstrumentManager im=new InstrumentManager(music);
 		System.out.println("nombre d'instruments :"+im.getSize());
-		im.setCurrentInstrument(Instrument.flute);
+		im.setCurrentInstrument(sml.elements.Instrument.flute);
 		System.out.println("channel de la flute:" +
 				im.getCurrentChannels(music.getEnvironnement()));
-		im.setCurrentInstrument(Instrument.piano);
+		im.setCurrentInstrument(sml.elements.Instrument.piano);
 		System.out.println("channel du piano:" 
 				+im.getCurrentChannels(music.getEnvironnement()));
-		im.setCurrentInstrument(new Ens(Instrument.flute,Instrument.piano));
+		im.setCurrentInstrument(new Ens(sml.elements.Instrument.flute,
+				sml.elements.Instrument.piano));
 		System.out.println("channel de la flute et du piano:"
 				+im.getCurrentChannels(music.getEnvironnement()));
+	}
+
+	public void configureTracks(Track[] tracks) {
+		for(int i=0;i<tracks.length;i++){
+			MidiTools.setInstrument(tracks[i],
+					instruments.get(i).getMidiNumber() , i+1);
+		}
+		
 	}
 
 

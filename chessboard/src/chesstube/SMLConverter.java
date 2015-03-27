@@ -1,5 +1,6 @@
 package chesstube;
 
+import chesstube.music.Instrument;
 import chesstube.music.NoteName;
 import chesstube.music.Scale;
 import chesstube.music.scale.Aeolian;
@@ -47,6 +48,19 @@ public class SMLConverter {
 			break;
 		}
 		return res;
+	}
+	
+	public static Instrument convertInstrument(
+			sml.elements.Instrument instrument){
+		switch(instrument){
+		case flute:
+			return Instrument.flute;
+		case piano:
+			return Instrument.piano;
+		default:
+			return null;
+		
+		}
 	}
 	
 	public static NoteName convertNote(sml.elements.Note note){

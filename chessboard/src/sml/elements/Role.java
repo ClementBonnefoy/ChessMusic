@@ -8,7 +8,7 @@ public enum Role implements IRole {
 	fundamental,second,third,fourth,fifth,sixth,seventh;
 	
 	public static Role role(int n){
-		n=n%7-1;
+		n=(n-1)%7;
 		return Role.values()[n];
 	}
 
@@ -20,7 +20,7 @@ public enum Role implements IRole {
 
 	@Override
 	public int getRole() {
-		return this.ordinal();
+		return this.ordinal()+1;
 	}
 
 	@Override

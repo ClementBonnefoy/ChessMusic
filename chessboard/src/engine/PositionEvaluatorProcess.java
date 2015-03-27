@@ -40,6 +40,11 @@ public class PositionEvaluatorProcess implements Runnable {
 				}
 			}
 		}
+		
+		Double d=result;
+		if(d.isNaN()){
+			return 0;
+		}
 
 		if(currentPlayer==Color.Black)
 			return -result;

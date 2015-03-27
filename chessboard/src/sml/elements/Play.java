@@ -36,6 +36,10 @@ public class Play implements IInstruction {
 	public Scale getScale() {
 		return scale;
 	}
+
+	public IPlayableElement getElement() {
+		return playableElement;
+	}
 	
 	
 	

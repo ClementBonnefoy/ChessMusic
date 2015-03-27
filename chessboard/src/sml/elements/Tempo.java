@@ -31,6 +31,10 @@ public class Tempo implements IInstruction {
 	public String toString(){
 		return "tempo "+tempo;
 	}
+
+	public int getValue() {
+		return tempo;
+	}
 	
 	
 

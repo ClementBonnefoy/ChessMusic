@@ -46,6 +46,9 @@ public class MultiPositionEvaluatorProcessTest {
 			System.out.println("Position "+i+" "+mpep.getEvaluation(i));
 		}
 		
+		System.out.println("MOYENNE="+mpep.getMoyenne());
+		System.out.println("ECART TYPE="+mpep.getEcartType());
+		
 		
 	}
 

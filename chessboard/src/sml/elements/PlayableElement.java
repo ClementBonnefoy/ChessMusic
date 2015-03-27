@@ -33,6 +33,10 @@ public class PlayableElement implements IPlayableElement {
 	public IInstrument getInstrument(){
 		return instrument;
 	}
+
+	public IMusicalElement getMusicalElement() {
+		return musicalElement;
+	}
 	
 	
 

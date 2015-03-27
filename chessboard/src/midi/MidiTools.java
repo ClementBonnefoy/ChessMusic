@@ -1,4 +1,4 @@
-package chesstube;
+package midi;
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MetaMessage;
 import javax.sound.midi.MidiEvent;

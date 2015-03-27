@@ -2,27 +2,55 @@ package chesstube;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequence;
+import javax.sound.midi.Track;
+
+import midi.MidiTools;
+import sml.elements.Body;
+import sml.elements.Chord;
+import sml.elements.ComplexNote;
+import sml.elements.Declarations;
 import sml.elements.Music;
 import sml.elements.Play;
+import sml.elements.PlayableChord;
 import sml.elements.PlayableElement;
-import sml.interfaces.IVisitable;
-import sml.interfaces.IVisitor;
+import sml.elements.PlayableSequence;
+import sml.elements.Rest;
+import sml.elements.Tempo;
+import sml.elements.Variable;
+import sml.interfaces.IDeclarable;
+import sml.interfaces.IInstruction;
+import sml.interfaces.IMusicalElement;
+import sml.interfaces.IPlayableElement;
 
 
-public class ChessTubeMidi implements IVisitor {
+public class ChessTubeMidi{
 
+	private final static int QUARTER=6;//nombre de "tick" dans une noire
+	
 	private Sequence sequence;
+	private Track[] tracks;
+	
 	private InstrumentManager im;
 	private ScaleManager sm;
+	private TimeManager tm;
+	
+	private Music music;
+	private Declarations env;
+	
 
 	public ChessTubeMidi(Music smlMusic){
 		
 		im=new InstrumentManager(smlMusic);
 		sm=new ScaleManager();
+		tm=new TimeManager();
+		
+		music=smlMusic;
+		env=smlMusic.getEnvironnement();
 	
 		try {
 			sequence=new Sequence(Sequence.PPQ,1,im.getSize()); 
@@ -31,14 +59,20 @@ public class ChessTubeMidi implements IVisitor {
 			System.exit(1);
 		}
 		
+		tracks=new Track[im.getSize()];
+		for(int i=0;i<im.getSize();i++){
+			tracks[i]=sequence.createTrack();
+		}
 		setInstruments();
 		
-		smlMusic.accept(this);
 		
 	}
 	
 
 	public void saveMidi(String fileName){
+		
+		convert(music);
+
 		File outputFile = new File(fileName);
 
 		try
@@ -52,21 +86,111 @@ public class ChessTubeMidi implements IVisitor {
 		}
 	}
 	
-	private void setInstruments() {
-		//TODO
+	private void convert(Music sml) {
+		Body body=sml.getBody();
+		while(body!=null){
+			writeInstruction(body.getInstruction());
+			body=body.getNext();
+		}
+		
 	}
 
 
-	@Override
-	public void visit(IVisitable obj) {
-		if(obj instanceof Play){
-			Play p=(Play) obj;
+	private void writeInstruction(IInstruction instruction) {
+		if(instruction instanceof Play){
+			Play p=(Play) instruction;
 			sm.setCurrentScale(SMLConverter.convertScale(p.getScale()));
+			writePlayableElement(p.getElement());
 		}
-		if(obj instanceof PlayableElement){
-			PlayableElement pe=(PlayableElement) obj;
-			im.setCurrentInstrument(pe.getInstrument());
+		else if(instruction instanceof Tempo){
+			Tempo t=(Tempo) instruction;
+			setTempo(t.getValue());
 		}
 		
+	}
+
+
+	private void setTempo(int value) {
+		for(Track t: tracks)
+			MidiTools.setTempo(t, value, tm.getTime()*QUARTER);
+		
+	}
+
+
+	private void writePlayableElement(IPlayableElement element) {
+		if(element instanceof PlayableElement){
+			PlayableElement e=(PlayableElement)element;
+			im.setCurrentInstrument(e.getInstrument());
+			writeMusicalElement(e.getMusicalElement());
+		}
+		else if(element instanceof PlayableSequence){
+			PlayableSequence s=(PlayableSequence)element;
+			writePlayableElement(s.getFirstElement());
+			writePlayableElement(s.getSecondElement());
+		}
+		else if(element instanceof PlayableChord){
+			PlayableChord c=(PlayableChord)element;
+			tm.saveTime();
+			writePlayableElement(c.getFirstElement());
+			tm.reload();
+			writePlayableElement(c.getSecondElement());
+			tm.reloadMax();
+		}
+		
+	}
+
+
+	private void writeMusicalElement(IMusicalElement musicalElement) {
+		if(musicalElement instanceof ComplexNote){
+			ComplexNote cn=(ComplexNote) musicalElement;
+			writeNote(cn);
+		}
+		else if(musicalElement instanceof Rest){
+			Rest r=(Rest)musicalElement;
+			writeRest(r);
+		}
+		else if(musicalElement instanceof sml.elements.Sequence){
+			sml.elements.Sequence s=(sml.elements.Sequence)musicalElement;
+			writeMusicalElement(s.getFirstElement());
+			writeMusicalElement(s.getSecondElement());
+		}
+		else if(musicalElement instanceof Chord){
+			Chord c=(Chord)musicalElement;
+			tm.saveTime();
+			writeMusicalElement(c.getFirstElement());
+			tm.reload();
+			writeMusicalElement(c.getSecondElement());
+			tm.reloadMax();
+		}
+		else if(musicalElement instanceof Variable){
+			IDeclarable value=((Variable)musicalElement).getValue(env);
+			writeMusicalElement((IMusicalElement)value);
+		}
+		
+	}
+	
+	private void writeNote(ComplexNote cn) {
+		ArrayList<Integer> channels=im.getCurrentChannels(env);
+		int time=cn.getTime(env);
+		int note=sm.getNote(cn).getMidiValue();
+		//System.out.println("Note("+note+","+time+")-->"+tm.getTime());
+		for(int channel:channels){
+			tracks[channel-1].add(MidiTools.createNoteOnEvent(note, tm.getTime(), channel));
+		}
+		tm.incrTime(time);
+		for(int channel:channels){
+			tracks[channel-1].add(MidiTools.createNoteOffEvent(note, tm.getTime(), channel));
+		}
+	}
+
+
+	private void writeRest(Rest r) {
+		tm.incrTime(r.getTime(env));
+		
+	}
+
+
+	private void setInstruments() {
+		im.configureTracks(tracks);
 	}
 }

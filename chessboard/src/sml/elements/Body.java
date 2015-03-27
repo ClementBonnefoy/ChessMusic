@@ -42,6 +42,14 @@ public class Body implements ISMLElement {
 		
 		return bd.toString();
 	}
+
+	public IInstruction getInstruction() {
+		return instruction;
+	}
+
+	public Body getNext() {
+		return next;
+	}
 	
 	
 	

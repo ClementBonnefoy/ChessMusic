@@ -6,6 +6,8 @@ import pgn.PGNGame;
 public class MultiPositionEvaluatorProcess {
 	
 	PositionEvaluatorProcess [] evaluators;
+	double moyenne=0;
+	double ecartType=0;
 	
 	public MultiPositionEvaluatorProcess(Board initialBoard,PGNGame moves){
 		
@@ -29,6 +31,39 @@ public class MultiPositionEvaluatorProcess {
 		for(PositionEvaluatorProcess t: evaluators){
 			t.run();
 		}
+	}
+	
+	public void checkMoyenne(){
+		double somme=0;
+		for(int i=0;i<evaluators.length;i++){
+			double score=evaluators[i].getScore();
+			somme+=score;
+		}
+		moyenne=somme/evaluators.length;
+	}
+	
+	public void checkEcartType(){
+		checkMoyenne();
+		double somme=0;
+		for(int i=0;i<evaluators.length;i++){
+			double score=evaluators[i].getScore()-moyenne;
+			somme+=score*score;
+		}
+		ecartType=Math.sqrt(somme/evaluators.length);
+	}
+	
+	/**
+	 * Retourne l'ecart type (checkEcartType pour calculer)
+	 */
+	public double getEcartType(){
+		return ecartType;
+	}
+	
+	/**
+	 * Retourne la moyenne (checkMoyenne pour calculer)
+	 */
+	public double getMoyenne(){
+		return moyenne;
 	}
 	
 	/**
@@ -55,6 +90,12 @@ public class MultiPositionEvaluatorProcess {
 	public double getEvaluation(int moveNumber){
 		double res = evaluators[moveNumber].getScore();
 		return res;
+	}
+
+	public void stop() {
+		for(PositionEvaluatorProcess p:evaluators)
+			p.stop();
+		
 	}
 	
 	

@@ -10,7 +10,7 @@ public class Note{
 		this.note=note;
 	}
 
-	public int getMidiNumber(){
+	public int getMidiValue(){
 		return 21+octave*12+note.getNumber();
 	}
 

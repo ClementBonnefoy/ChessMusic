@@ -1,81 +1,54 @@
 package chesstube.music;
 
-import java.util.ArrayList;
-
 import sml.elements.ComplexNote;
 
-public abstract class Scale {
+/*
+ * Definit des gammes à 7 notes
+ */
+public class Scale {
 	
 	protected NoteName fundamental;
-	@Deprecated
-	protected ArrayList<Note> notes;
+	private int[] scale;
 	
-	public Scale(NoteName fundamental){
+	
+	/**
+	 * constructeur de gammes
+	 * @param fundamental
+	 * @param scale : un tableau de 6 boolean pour déterminer la gamme
+	 * true=demi ton, false=ton
+	 */
+	public Scale(NoteName fundamental, boolean[] scale){
 		this.fundamental=fundamental;
-		this.notes=this.getAllNotes();
+		readScale(scale);
 	}
-	
-	@Deprecated
-	private ArrayList<Note> getAllNotes() {
 
-		Note fund=new Note(fundamental,0);
-		Note current=fund.prevOctave();
-		ArrayList<Note> res=new ArrayList<Note>();
-		res.add(current);
-		while(fund.getMidiNumber()<109){ //108 = note MIDI max
 
-			for (int i:this.getScale()){
-				current=fund.incr(i);
-				res.add(current);
-			}
-
-			fund=fund.nextOctave();
-
+	private void readScale(boolean[] s) {
+		scale=new int[7];
+		scale[0]=0;
+		for(int i=1;i<7;i++){
+			scale[i]=scale[i-1]+(s[i-1]?1:2);
 		}
-
-		ArrayList<Note> filterRes=new ArrayList<Note>();
 		
-		for(Note n: res){
-			if(n.getMidiNumber()>20 && n.getMidiNumber()<109)
-				filterRes.add(n);
-		}
-
-		return filterRes;
-
 	}
 	
-	@Deprecated
-	public boolean isInTheScale(Note note){
-		return notes.contains(note);
+	private int[] getScale(){
+		return scale;
 	}
 	
-	@Deprecated
-	public Note[] getNNotes(Note starting_note,int n){
-		
-		Note [] res = new Note[n];
-		boolean add=false;
-		int j=0;
-		
-		for(int i=0;i<notes.size() && n>0;i++){
-			Note current=notes.get(i);
-			if(current.equals(starting_note)){
-				add=true;
-			}
-			if(add){
-				res[j++]=current;
-				n--;
-			}
-			else if(current.getMidiNumber()>starting_note.getMidiNumber())
-				throw new IllegalArgumentException("Error: "+starting_note+
-						"is not in the scale");
+	public String toString(){
+		StringBuffer sb=new StringBuffer();
+		sb.append("Notes:");
+		NoteName note=fundamental;
+		int i=0;
+		do{
+			sb.append(" "+note.incr(getScale()[i]));
+			i++;
+		}while(i<7);
+		return sb.toString();
 			
-		}
-		return res;
-		
-		
+			
 	}
-	
-	protected abstract int [] getScale();
 
 
 	public Note getNote(ComplexNote n) {

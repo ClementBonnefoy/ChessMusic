@@ -139,8 +139,8 @@ public class Board extends EnumMap<ESquare, Square> {
 		setEnPassant(null);
 		setCurrentPlayer(null);
 		
-		currentSide().reset();
-		opponentSide().reset();
+		currentSide().init();
+		opponentSide().init();
 	}
 	
 	public void init () {

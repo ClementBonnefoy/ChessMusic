@@ -26,6 +26,14 @@ public class PlayableChord implements IPlayableElement{
 		e2.accept(visitor);
 		
 	}
+
+	public IPlayableElement getFirstElement() {
+		return e1;
+	}
+
+	public IPlayableElement getSecondElement() {
+		return e2;
+	}
 	
 	
 

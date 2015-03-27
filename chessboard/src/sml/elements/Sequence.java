@@ -26,5 +26,13 @@ public class Sequence implements IMusicalElement {
 		e2.accept(visitor);
 		
 	}
+	
+	public IMusicalElement getFirstElement(){
+		return e1;
+	}
+	
+	public IMusicalElement getSecondElement(){
+		return e2;
+	}
 
 }
