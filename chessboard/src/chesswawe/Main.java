@@ -6,7 +6,7 @@ public class Main {
 		
 		ChessWave cw = new ChessWave();
 		
-		cw.createMidiFromPGN("games/clement92_1.pgn", "clement92_1-chesswave.mid");
+		cw.createMidiFromPGN("games/modern.pgn", "modern-chesswave.mid");
 		
 	}
 	

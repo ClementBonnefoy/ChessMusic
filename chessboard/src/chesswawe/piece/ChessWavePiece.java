@@ -1,5 +1,6 @@
 package chesswawe.piece;
 
+import music.Scale;
 import board.Color;
 import board.Piece;
 import board.Rank;
@@ -38,20 +39,20 @@ public abstract class ChessWavePiece{
 
 	public abstract int getChannel();
 
-	public static ChessWavePiece fromPiece(Piece piece) {
+	public static ChessWavePiece fromPiece(Piece piece,Scale scale) {
 		switch(piece.getType()){
 		case Pawn:
 			return new Pawn(piece);
 		case Bishop:
-			return new Bishop(piece);
+			return new Bishop(piece,scale);
 		case King:
-			return new King(piece);
+			return new King(piece,scale);
 		case Knight:
-			return new Knight(piece);
+			return new Knight(piece,scale);
 		case Queen:
-			return new Queen(piece);
+			return new Queen(piece,scale);
 		case Rook:
-			return new Rook(piece);
+			return new Rook(piece,scale);
 		}
 		return null;
 	}

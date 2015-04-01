@@ -74,6 +74,11 @@ public class ComplexNote implements IMusicalElement {
 	public ITime getTime() {
 		return time;
 	}
+
+	public String toString(Declarations env) {
+		return "ComplexNote [role=" + role.getRole() + ", octave=" + octave.getValue() + ", time="
+				+ time.getTime(env) + "]";
+	}
 	
 	
 	

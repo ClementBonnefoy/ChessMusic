@@ -1,20 +1,22 @@
 package chesswawe.piece;
 
+import chesswawe.InstrumentConfiguration;
+import music.Instrument;
+import music.Scale;
 import board.Piece;
 
-public class Knight extends BasicPiece {
+public class Knight extends BassPiece {
 
-	public final static int INSTRUMENT=34;//Electric Bass(finger)
+	public final static Instrument INSTRUMENT=InstrumentConfiguration.knight;
 	public final static int CHANNEL=2;
 
-	public Knight(Piece piece) {
-		super(piece);
+	public Knight(Piece piece, Scale scale) {
+		super(piece,scale);
 	}
 
 	@Override
 	public int getChannel() {
 		return CHANNEL;
 	}
-	
 
 }

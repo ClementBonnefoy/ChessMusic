@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.sound.midi.Track;
 
 import midi.MidiTools;
-import chesstube.music.Instrument;
+import music.Instrument;
 import sml.compiler.SMLCompiler;
 import sml.elements.Declarations;
 import sml.elements.Ens;
@@ -97,7 +97,7 @@ public class InstrumentManager implements IVisitor {
 	public void configureTracks(Track[] tracks) {
 		for(int i=0;i<tracks.length;i++){
 			MidiTools.setInstrument(tracks[i],
-					instruments.get(i).getMidiNumber() , i+1);
+					instruments.get(i) , i+1);
 		}
 		
 	}

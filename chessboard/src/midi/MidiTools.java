@@ -5,6 +5,8 @@ import javax.sound.midi.MidiEvent;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Track;
 
+import music.Instrument;
+
 /**
  * Classe outils pour le format midi
  *
@@ -87,10 +89,11 @@ public class MidiTools {
 				channel);
 	}
 	
-	public static void setInstrument(Track t, int instrument,int channel){
+	public static void setInstrument(Track t, Instrument instrument,int channel){
 		ShortMessage sm = new ShortMessage( );
 		try {
-			sm.setMessage(ShortMessage.PROGRAM_CHANGE, channel, instrument, 0);
+			sm.setMessage(ShortMessage.PROGRAM_CHANGE, channel,
+					instrument.getMidiNumber(), 0);
 		} catch (InvalidMidiDataException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

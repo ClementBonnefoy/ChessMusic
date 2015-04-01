@@ -66,6 +66,9 @@ import static board.ESquare.H7;
 import static board.ESquare.H8;
 import move.InvalidMoveException;
 import move.Move;
+import music.NoteName;
+import music.Scale;
+import music.scale.PentatoniqueMajeur;
 import pgn.InvalidPGNMoveException;
 import pgn.PGNGame;
 import pgn.PGNMove;
@@ -77,6 +80,8 @@ import board.Piece;
 import chesswawe.piece.ChessWavePiece;
 
 public class ChessWave {
+	
+	Scale scale;
 	
 	public class MovedPiece extends Piece {
 		public MovedPiece(EPiece ePiece) {
@@ -126,6 +131,7 @@ public class ChessWave {
 	public void createMidiFromPGN(String pgnFileName,String midiFileName){
 
 		ChessWaveMidi md=new ChessWaveMidi();
+		
 
 		PGNParser parser=new PGNParser(pgnFileName);
 
@@ -138,6 +144,8 @@ public class ChessWave {
 			e.printStackTrace();
 			System.exit(0);
 		}
+		
+		initScale(pgnGame);
 
 		int time=0;
 
@@ -149,7 +157,7 @@ public class ChessWave {
 				for(ESquare c: plage[j]){
 					if(!board.isEmpty(c)){
 						if(((MovedPiece) board.getPiece(c)).hasAlreadyMoved())
-							md.addKey(time, ChessWavePiece.fromPiece(board.getPiece(c)), c);
+							md.addKey(time, ChessWavePiece.fromPiece(board.getPiece(c),scale), c);
 					}
 				}
 
@@ -158,6 +166,12 @@ public class ChessWave {
 		}
 
 		md.saveMidi(midiFileName);
+	}
+
+
+	private void initScale(PGNGame pgnGame) {
+		scale=new PentatoniqueMajeur(NoteName.C);
+		
 	}
 
 

@@ -47,7 +47,9 @@ non terminal Object     instrument, note_sequence, complex_note, instructions, t
 non terminal Object     play, playable_element, note, playable_chord, playable_sequence;
 non terminal Object     sequence, chord, time;
 non terminal Object     identifiant;
+non terminal Object     scale_type, alteration ;
 non terminal Object     scale_definition, musical_element_definition, instrument_definition, time_definition;
+non terminal Object     scale_redefinition ;
 
 
 /* -------------Precedence and Associatively of Terminals Section----------- */
@@ -71,6 +73,7 @@ nedeclarations ::=  LET identifiant:i EQUAL declaration:d SEMI {: Declarations e
 declaration ::= identifiant:i {: RESULT = i ; :}
     | LPAREN declaration:d RPAREN {: RESULT = d ; :}
     | scale_definition:s {: RESULT = s ; :}
+    | scale_redefinition:s {: RESULT = s ; :}
     | musical_element_definition:m {: RESULT = m ; :}
     | instrument_definition:i {: RESULT = i ; :}
     | LACCOL note_sequence:n RACCOL {: RESULT = n ; :}
@@ -83,7 +86,7 @@ instrument ::= identifiant:i {: RESULT = i ; :}
 ;
 
 instrument_definition ::= ENS instrument:i1 instrument:i2 {: RESULT = new Ens((IInstrument)i1,(IInstrument)i2) ; :}
-| INSTRU STRING:s {: RESULT = Instrument.instrument(s); :}
+    | INSTRU STRING:s {: RESULT = Instrument.instrument(s); :}
 ;
 
 note_sequence ::= complex_note:c {: RESULT = c ; :}
@@ -104,7 +107,7 @@ instruction ::= tempo:t {: RESULT = t ; :}
 tempo ::= TEMPO NUMBER:n {: RESULT = new Tempo((int)n); :}
 ;
 
-play ::= PLAY scale:s playable_element:p {: RESULT = new Play((Scale)s,(IPlayableElement)p) ; :}
+play ::= PLAY scale:s playable_element:p {: RESULT = new Play((IPlayableScale)s,(IPlayableElement)p) ; :}
 ;
 
 scale ::= identifiant:i {: RESULT = i ; :}
@@ -112,7 +115,23 @@ scale ::= identifiant:i {: RESULT = i ; :}
     | scale_definition:s  {: RESULT = s ; :}
 ;
 
-scale_definition ::= SCALE note:n SCALENAME:s {: RESULT = new Scale((Note)n,(ScaleName)(ScaleName.scaleName(s))) ; :}
+scale_definition ::= SCALE note:n scale_type:s {: RESULT = new Scale((Note)n,(IScale)s) ; :}
+;
+
+scale_type ::=  LPAREN scale_type:s RPAREN {: RESULT = s ; :}
+    | SCALENAME:s {: RESULT = ScaleName.scaleName(s); :}
+    | identifiant:i {: RESULT=i ; :}
+    | scale_redefinition:s {: RESULT = s; :}
+;
+
+scale_redefinition ::= SCALE scale_type:s LACCOL alteration:a1 COMA alteration:a2 COMA alteration:a3 COMA
+                    alteration:a4 COMA alteration:a5 COMA alteration:a6 COMA alteration:a7 RACCOL
+    {: RESULT = new AlterableScale((IScale)s,(Boolean)a1,(Boolean)a2,(Boolean)a3,(Boolean)a4,(Boolean)a5,(Boolean)a6,(Boolean)a7); :}
+;
+
+alteration ::= {: RESULT = null ; :}
+    | PLUS {: RESULT = new Boolean(true); :}
+    | MINUS {: RESULT = new Boolean(false); :}
 ;
 
 note ::= note:n PLUS {: RESULT = ((Note)n).incr(1) ; :}
@@ -160,7 +179,7 @@ sequence ::= SEQUENCE musical_element:e1 musical_element:e2 {: RESULT = new Sequ
 ;
 
 identifiant ::= STRING:s {: RESULT = new Variable((String)s); :}
-| LETTER:l {: RESULT = new Variable((String)l); :}
+    | LETTER:l {: RESULT = new Variable((String)l); :}
 ;
 
 

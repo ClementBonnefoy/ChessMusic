@@ -8,6 +8,7 @@ Grammaire Formelle
 			| let [identifiant] = <declaration> ; <declarations>
 
 <declaration> 		::= <scale>
+			| <scale-type>
 			| <musical-element>
 			| <instrument>
 			| <time>
@@ -45,17 +46,25 @@ Grammaire Formelle
 			| f
 			| g	
 			
-<instrument-id> ::= flute
-			| piano
+<instrument-id> ::= [instrument-name]
+			
 
-<scale-type> 		::= lydian
+<scale-type> 		::= [identifiant]
+			| lydian
 			| myxolydian
 			| dorian
 			| phrygian
 			| aeolian
 			| ionian
 			| locrian
+			| <scale-definition>
+			
+<scale-definition> ::= scale <scale-type> { <alteration> , ... , <alteration> }
 
+<alteration> ::= ɛ
+			| +
+			| -
+			
 <playable-element>	::=<instrument> <musical-element>
 			| <playable-chord>
 			| <playable-sequence>
@@ -72,8 +81,8 @@ Grammaire Formelle
 <complex-note> 	::= <role> <octave> <time>
 			| <rest> <time>
 
-<rest> ::= rest
-		| ?
+<rest> ::= ?
+
 <role>			::= <role> +
 			| <role> -
 			| [number{1,2,3,4,5,6,7}]

@@ -1,7 +1,8 @@
 package chesstube;
 
-import chesstube.music.Note;
-import chesstube.music.Scale;
+import music.Note;
+import music.NoteName;
+import music.Scale;
 import sml.elements.ComplexNote;
 import sml.elements.ScaleName;
 
@@ -47,6 +48,10 @@ public class ScaleManager{
 		return ScaleName.locrian;
 		
 		
+	}
+
+	public NoteName getCurrentFundamental() {
+		return current.getFundamental();
 	}
 	
 	

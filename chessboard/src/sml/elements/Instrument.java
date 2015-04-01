@@ -5,7 +5,13 @@ import sml.interfaces.IVisitor;
 
 public enum Instrument implements IInstrument{
 	
-	piano,flute;
+	piano,
+	flute,
+	harpsichord,
+	vibraphone,
+	marimaba,
+	xylophone,
+	electricBass;
 	
 	public static Instrument instrument(String s){
 		return valueOf(s);

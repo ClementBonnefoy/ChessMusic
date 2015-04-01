@@ -1,11 +1,11 @@
-package chesstube.music;
+package music;
 
 public enum NoteName {
 
 	A,AS,B,C,CS,D,DS,E,F,FS,G,GS; //en notation anglo-saxone, S=sharp
 
-	public int getNumber(){
-		return this.ordinal();
+	public int getNumber(NoteName fundamental){
+		return (12+this.ordinal()-fundamental.ordinal())%12;
 	}
 
 	public NoteName incr(int i) {

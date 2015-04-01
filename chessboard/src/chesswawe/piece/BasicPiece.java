@@ -1,20 +1,21 @@
 package chesswawe.piece;
 
+import music.Scale;
 import board.Piece;
 import board.Rank;
 
 public abstract class BasicPiece extends ChessWavePiece {
 
-	private static int[] scale = 
-		{ 64 , 66 , 69 , 71 , 73 , 76 , 78 , 81 }; //gamme pentatonique (chinese style!)
+	protected Scale scale;
 
-	public BasicPiece(Piece piece) {
+	public BasicPiece(Piece piece,Scale scale) {
 		super(piece);
+		this.scale=scale;
 	}
 
 	@Override
 	protected int keyOfRankForWhite(Rank rank){
-		return scale[rank.getNum()];
+		return scale.getNote(rank,4).getMidiValue(scale.getFundamental());
 	}
 
 

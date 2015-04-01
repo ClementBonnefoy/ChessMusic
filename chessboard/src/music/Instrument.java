@@ -1,8 +1,14 @@
-package chesstube.music;
+package music;
 
 public enum Instrument {
 	
-	piano(1),
+	piano(0),
+	harpsichord(6),
+	vibraphone(11),
+	marimba(12),
+	xylophone(13),
+	electricBassFinger(33),
+	electricBassPick(35),
 	flute(73);
 	
 	

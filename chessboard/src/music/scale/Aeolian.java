@@ -1,7 +1,7 @@
-package chesstube.music.scale;
+package music.scale;
 
-import chesstube.music.NoteName;
-import chesstube.music.Scale;
+import music.NoteName;
+import music.Scale;
 
 public class Aeolian extends Scale {
 

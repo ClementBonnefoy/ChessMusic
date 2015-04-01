@@ -1,12 +1,12 @@
 Compilateur SML:
--Définir des gammes (let gamme1 = SCALE myxolydian {,,,+,-,,};)
 -Ajout des commentaires ("à la C")
--Résoudre le problème de tempo (correspondance BPM)
+-Résoudre le problème de rythme MIDI
 -Ajouter des instruments
 
 ChessWave:
 -Déterminer le code ECO d'une partie
 -Associer ce code à une gamme et une tonalité
+-Déterminer les meilleurs instruments possible
 
 Site Internet:
 -Obtenir une image correspondant à une position

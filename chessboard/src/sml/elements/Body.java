@@ -42,6 +42,10 @@ public class Body implements ISMLElement {
 		
 		return bd.toString();
 	}
+	
+	public boolean isATempoInstruction(){
+		return instruction instanceof Tempo;
+	}
 
 	public IInstruction getInstruction() {
 		return instruction;

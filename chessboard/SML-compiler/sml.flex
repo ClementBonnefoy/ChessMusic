@@ -34,20 +34,25 @@ number = 0 | [1-9][0-9]*
 
 letter = [a-g]
 
-scale = "ionian" | "dorian" | "myxolydian" | "phrygian" | "aeolian" | "locrian" | "lydian"
-
 string = [A-Za-z_][A-Za-z_0-9]*
 
 complexnote = {number}[\+\-]*{letter}{number} |
 {number}[\+\-]*{letter}{string}
 
+/* comments */
+Comment = {TraditionalComment} | {EndOfLineComment}
 
+TraditionalComment = "/*" [^*] ~"*/" | "/*" "*"+ "/"
+EndOfLineComment = "//" [^]* {LineTerminator}?
 
 
 %%
 
 
 <YYINITIAL> {
+
+
+
 
 ";"                { return symbol(sym.SEMI); }
 "+"                { return symbol(sym.PLUS); }
@@ -69,8 +74,15 @@ complexnote = {number}[\+\-]*{letter}{number} |
 "chord" { return symbol(sym.CHORD); }
 "sequence" { return symbol(sym.SEQUENCE); }
 "scale" { return symbol(sym.SCALE); }
-"rest"  { return symbol(sym.REST); }
 "instru"  { return symbol(sym.INSTRU); }
+
+"ionian" { return symbol(sym.SCALENAME, yytext()); }
+"dorian" { return symbol(sym.SCALENAME, yytext()); }
+"myxolydian" { return symbol(sym.SCALENAME, yytext()); }
+"phrygian" { return symbol(sym.SCALENAME, yytext()); }
+"lydian" { return symbol(sym.SCALENAME, yytext()); }
+"aeolian" { return symbol(sym.SCALENAME, yytext()); }
+"locrian" { return symbol(sym.SCALENAME, yytext()); }
 
 {number}      { return symbol(sym.NUMBER, new Integer(yytext())); }
 
@@ -78,12 +90,13 @@ complexnote = {number}[\+\-]*{letter}{number} |
 
 {letter}      { return symbol(sym.LETTER, yytext()); }
 
-{scale}     { return symbol(sym.SCALENAME, yytext()); }
-
 {string}       { return symbol(sym.STRING, yytext());}
+
+{Comment} { System.out.println("commentaire"); }
 
 {WhiteSpace}       {}
 
 }
+
 
 [^]                    { throw new Error("Illegal character <"+yytext()+">"); }

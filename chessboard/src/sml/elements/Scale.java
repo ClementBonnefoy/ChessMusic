@@ -1,14 +1,15 @@
 package sml.elements;
 
-import sml.interfaces.IDeclarable;
+import sml.interfaces.IPlayableScale;
+import sml.interfaces.IScale;
 import sml.interfaces.IVisitor;
 
-public class Scale implements IDeclarable {
+public class Scale implements IPlayableScale {
 	
 	private Note note;
-	private ScaleName scale;
+	private IScale scale;
 	
-	public Scale(Note note, ScaleName scale) {
+	public Scale(Note note, IScale scale) {
 		super();
 		this.note = note;
 		this.scale = scale;
@@ -27,15 +28,16 @@ public class Scale implements IDeclarable {
 		return note+" "+scale;
 	}
 	
-	public void setScale(ScaleName scale){
+	public void setScale(IScale scale){
 		this.scale=scale;
 	}
 
-	public ScaleName getScale() {
+	@Override
+	public IScale getScale(Declarations env) {
 		return scale;
 	}
-	
-	public Note getNote(){
+	@Override
+	public Note getScaleFundamental(Declarations env) {
 		return note;
 	}
 	

@@ -2,14 +2,15 @@ package sml.elements;
 
 import sml.interfaces.IInstruction;
 import sml.interfaces.IPlayableElement;
+import sml.interfaces.IPlayableScale;
 import sml.interfaces.IVisitor;
 
 public class Play implements IInstruction {
 	
-	private Scale scale;
+	private IPlayableScale scale;
 	private IPlayableElement playableElement;
 	
-	public Play(Scale scale, IPlayableElement playableElement) {
+	public Play(IPlayableScale scale, IPlayableElement playableElement) {
 		super();
 		this.scale = scale;
 		this.playableElement = playableElement;
@@ -33,7 +34,7 @@ public class Play implements IInstruction {
 		
 	}
 
-	public Scale getScale() {
+	public IPlayableScale getScale() {
 		return scale;
 	}
 

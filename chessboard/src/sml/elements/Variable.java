@@ -4,18 +4,18 @@ import sml.interfaces.IDeclarable;
 import sml.interfaces.IInstrument;
 import sml.interfaces.IMusicalElement;
 import sml.interfaces.IPlayableElement;
+import sml.interfaces.IPlayableScale;
+import sml.interfaces.IScale;
 import sml.interfaces.ITime;
 import sml.interfaces.IVisitor;
 
 public class Variable implements IDeclarable, IMusicalElement,
-	IPlayableElement, IInstrument, ITime{
+	IPlayableElement, IInstrument, ITime, IScale, IPlayableScale{
 	
 	private final String name;
 	
 	public Variable(String name){
 		super();
-		if(name=="b")
-		System.out.println("OMG");
 		this.name=name;
 	}
 	
@@ -63,6 +63,24 @@ public class Variable implements IDeclarable, IMusicalElement,
 	public void accept(IVisitor visitor) {
 		visitor.visit(this);
 	
+	}
+
+	@Override
+	public IScale getScale(Declarations env) {
+		IDeclarable value=getValue(env);
+		if(value instanceof IScale)
+			return ((IScale)value);
+		if(value instanceof IPlayableScale)
+			return ((IPlayableScale)value).getScale(env);
+		throw new RuntimeException("not a scale value");
+	}
+
+	@Override
+	public Note getScaleFundamental(Declarations env) {
+		IDeclarable value=getValue(env);
+		if(value instanceof IPlayableScale)
+			return ((IPlayableScale)value).getScaleFundamental(env);
+		throw new RuntimeException("not a playablescale value");
 	}
 	
 	

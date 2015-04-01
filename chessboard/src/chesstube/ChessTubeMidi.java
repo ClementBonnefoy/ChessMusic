@@ -30,6 +30,7 @@ import sml.interfaces.IPlayableElement;
 
 public class ChessTubeMidi{
 
+	private final static int DEFAULT_TEMPO=120; //bpm
 	private final static int QUARTER=6;//nombre de "tick" dans une noire
 	
 	private Sequence sequence;
@@ -75,19 +76,23 @@ public class ChessTubeMidi{
 
 		File outputFile = new File(fileName);
 
-		try
-		{
-			MidiSystem.write(sequence, 1, outputFile);
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-			System.exit(1);
-		}
+		int[] allowedTypes = MidiSystem.getMidiFileTypes(sequence);
+	      if (allowedTypes.length == 0) {
+	        System.err.println("No supported MIDI file types.");
+	      } else {
+	        try {
+				MidiSystem.write(sequence, allowedTypes[0], outputFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	      }
 	}
 	
 	private void convert(Music sml) {
 		Body body=sml.getBody();
+		if(!body.isATempoInstruction())
+			setTempo(DEFAULT_TEMPO);
 		while(body!=null){
 			writeInstruction(body.getInstruction());
 			body=body.getNext();
@@ -99,7 +104,7 @@ public class ChessTubeMidi{
 	private void writeInstruction(IInstruction instruction) {
 		if(instruction instanceof Play){
 			Play p=(Play) instruction;
-			sm.setCurrentScale(SMLConverter.convertScale(p.getScale()));
+			sm.setCurrentScale(SMLConverter.convertScale(p.getScale(),env));
 			writePlayableElement(p.getElement());
 		}
 		else if(instruction instanceof Tempo){
@@ -112,7 +117,7 @@ public class ChessTubeMidi{
 
 	private void setTempo(int value) {
 		for(Track t: tracks)
-			MidiTools.setTempo(t, value, tm.getTime()*QUARTER);
+			MidiTools.setTempo(t, value*QUARTER, tm.getTime());
 		
 	}
 
@@ -172,8 +177,9 @@ public class ChessTubeMidi{
 	private void writeNote(ComplexNote cn) {
 		ArrayList<Integer> channels=im.getCurrentChannels(env);
 		int time=cn.getTime(env);
-		int note=sm.getNote(cn).getMidiValue();
+		int note=sm.getNote(cn).getMidiValue(sm.getCurrentFundamental());
 		//System.out.println("Note("+note+","+time+")-->"+tm.getTime());
+		
 		for(int channel:channels){
 			tracks[channel-1].add(MidiTools.createNoteOnEvent(note, tm.getTime(), channel));
 		}
@@ -181,6 +187,7 @@ public class ChessTubeMidi{
 		for(int channel:channels){
 			tracks[channel-1].add(MidiTools.createNoteOffEvent(note, tm.getTime(), channel));
 		}
+		
 	}
 
 

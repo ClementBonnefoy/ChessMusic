@@ -1,14 +1,17 @@
 package chesswawe.piece;
 
+import music.Instrument;
+import music.Scale;
 import board.Piece;
+import chesswawe.InstrumentConfiguration;
 
-public class Bishop extends BasicPiece {
+public class Bishop extends BassPiece {
 
-	public final static int INSTRUMENT=35;//Electric Bass(pick)
+	public final static Instrument INSTRUMENT=InstrumentConfiguration.bishop;
 	public final static int CHANNEL=4;
 	
-	public Bishop(Piece piece) {
-		super(piece);
+	public Bishop(Piece piece, Scale scale) {
+		super(piece, scale);
 	}
 
 	

@@ -1,4 +1,4 @@
-package chesstube.music;
+package music;
 
 public class Note{
 
@@ -10,8 +10,8 @@ public class Note{
 		this.note=note;
 	}
 
-	public int getMidiValue(){
-		return 21+octave*12+note.getNumber();
+	public int getMidiValue(NoteName fundamental){
+		return fundamental.ordinal()+21+octave*12+note.getNumber(fundamental);
 	}
 
 	public Note nextOctave() {
@@ -77,9 +77,15 @@ public class Note{
 	
 	public static void main(String[] args){
 		Note n=new Note(NoteName.C,3);
+		System.out.println(n.getMidiValue(NoteName.C));
+		System.out.println(NoteName.C.getNumber(NoteName.C));
 		System.out.println(n.incr(12));
 		System.out.println(n.incr(1));
 		System.out.println(n.incr(25));
+	}
+
+	public NoteName getName() {
+		return this.note;
 	}
 
 	
