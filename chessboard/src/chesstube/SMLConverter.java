@@ -94,7 +94,7 @@ public class SMLConverter {
 			return Instrument.electricBassFinger;
 		case harpsichord:
 			return Instrument.harpsichord;
-		case marimaba:
+		case marimba:
 			return Instrument.marimba;
 		case vibraphone:
 			return Instrument.vibraphone;

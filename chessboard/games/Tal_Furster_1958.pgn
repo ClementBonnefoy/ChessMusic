@@ -1,0 +1,65 @@
+
+[Event "?"]
+[White "Tal"]
+[Black "Furster"]
+[Date "1958.??.??"]
+[Result "1-0"]
+
+{Caro-Kann Defense, 30 moves. Tal is known for his willingness to sacrifice material for an attack with unclear complications. In this game, Tal sacrifices a bishop to keep Fuster from castling. Tal was world champion from 1960-1961.}
+1. e4 {Tal's favorite opening.}
+1... c6 {The Caro-Kann defense.}
+2. d4 {Controlling the center.}
+2... d5 {Fighting back in the center.}
+3. Nc3 {Developing a piece and protecting the pawn on e4.}
+3... dxe4
+4. Nxe4
+4... Nd7 {So that after 5. Nf3 Ngf6 6. Nxf6 Black can recapture with 6... Nxf6 rather than gxf6. 4... Bf5 is more usual.}
+5. Nf3 {A natural developing move.}
+5... Ngf6
+6. Nxf6 {Better to exchange than retreat.}
+6... Nxf6 {as planned.}
+7. Bc4 {The bishop is placed in an aggressive position.}
+7... Bf5 {Developing the bishop before it is blocked by a pawn on e6.}
+8. Qe2 {White plans to castle queenside in the near future.}
+8... e6 {Blocking White's bishop and preparing to develop his own.}
+9. Bg5 {Pinning the knight and preparing to castle.}
+9... Be7 {Breaking the pin.}
+10. 0-0-0
+10... h6 {10... Nd5 may have turned out better.}
+11. Bh4
+11... Ne4 {Hoping to exchange the bishops and castle.}
+12. g4 $1 {Now if 12... Bxh4 then 13. gxf5 Nxf2 14. fxe6 fxe6 15. Nxh4 Qxh4 16. Rhe1 Nxd1 17. Qxe6+ Kd8 18. Qd6+ Kc8 19. Be6#.}
+12... Bh7
+13. Bg3
+13... Nxg3 {So as to be able to play 14... Qc7 and 15... 0-0-0 getting the king to safety.}
+14. fxg3 {It is normally better to capture toward the center (hxg3) but White wants the f file open.}
+14... Qc7 {Black would like to castle queenside next move.}
+15. Ne5 {Now if 15... 0-0-0 then 16. Nxf7}
+15... Bd6 {Protecting f7 with the queen.}
+16. h4 {Making 16... 0-0 dangerous. Black still can't play 16... 0-0-0 because17. Nxf7 Qxf7 18. Bxe6+ wins the queen. If 16... Bxe5 17. dxe5 Black cannot play 0-0-0 because of the rook on the open d file.}
+16... f6 {Once the knight is chased away Black will finally be able to castle.}
+17. Bxe6 $1 {Easier said then done! White gives up the knight to keep the Black king in the center.}
+17... fxe5
+18. dxe5 {If Black plays 18... Bxe5 then 19. Rhe1 Bxg3 20. Bd7+ Kf8 (20... Kd8 21. Qe8+ Rxe8 22. Rxe8#.) 21. Qe7+ Kg8 22. Be6#.}
+18... Be7
+19. Rhf1 {Threatening 10. Bf7+. Did Tal see this position when he captured the knight with the f pawn?}
+19... Rf8
+20. Rxf8+
+20... Bxf8
+21. Qf3 {Threatening 22. Rd7.}
+23... Qe7 {So if 24. Rd7 then 24... Qxe6.}
+24. Qb3 {Threatening 25. Bd7+ Qxd7 26. Rxd7 Kxd7 27. Qxb7+ Ke8 28. Qxh8+}
+24... Rb8
+25. Bd7+
+25... Qxd7 {Black will have a rook and 2 bishops for the queen. This is normally more than enough for the queen but Black's position is too shaky to survive.}
+26. Rxd7
+26... Kxd7
+27. Qf7+ {Black will not be able to protect all his pieces.}
+27... Be7
+28. e6+ {If 28... Kd6 then Qf4+ wins the rook.}
+28... Kd8
+29. Qxg7 {Black's position is crumbling.}
+29... Be4
+30. Qe5 {forking the rook and bishop. Black resigned last move.}
+1-0
+

@@ -1,13 +1,15 @@
 Compilateur SML:
 -Ajout des commentaires ("à la C")
--Résoudre le problème de rythme MIDI
 -Ajouter des instruments
 
+Parser PGN:
+-Résoudre les problèmes de parsing qui survienne lors du lancement de la classe ChessWaveTest
+
 ChessWave:
--Déterminer le code ECO d'une partie
--Associer ce code à une gamme et une tonalité
 -Déterminer les meilleurs instruments possible
 
 Site Internet:
 -Obtenir une image correspondant à une position
--Définir correctement les technologies à employer.
+-Générer un fichier midi depuis une partie envoyé par le client
+-Permettre la lecture de ce fichier midi
+-Faire défiler des images correspondant à la position par rapport à la lecture du midi.

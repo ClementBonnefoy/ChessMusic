@@ -1,0 +1,88 @@
+
+[Event "?"] 
+[White "Lehman"]
+[Black "Smyslov"]
+[Date "1966.??.??"]
+[Result "0-1"]
+
+{After refusing Lehmann's gambit on move 2, Smyslov accepts a pawn sacrifice on move 15 and conducts the defense and endgame masterfully. Smyslov was world champion from 1957-1958.}
+1. d4
+1... f5 {The Dutch Defense. Black accepts a somewhat weakened pawn position for kingside attacking chances.}
+2. e4 {The Staunton Gambit. White gives up a pawn for strong attacking possibilities.}
+2... fxe4
+3. Nc3
+3... Nf6
+4. f3 {The main idea of the gambit: If 4... exf3 5. Nxf3 White has strong pressure on the center and a lead in development while Black has weaknesses due to the missing f pawn. Nonetheless, it is sound to accept the gambit.}
+4... Nc6 {Black prefers to give back the pawn to playing a defensive game.}
+5. fxe4 {White is controlling the center. Black must find a way to contest it.}
+5... e5
+6. dxe5
+6... Nxe5
+7. Nf3
+7... Bd6 {It is very unusual to block the d pawn in this way. However, it is the only active move in this position. }
+8. Bg5 {Pinning the knight and planning Nd5.}
+8... h6
+9. Bh4
+9... 0-0
+10. Nd5
+10... Nxf3+
+11. gxf3 {White hopes to be able to use the open g file to attack the Black king.}
+11... Be7 {Breaking the pin and threatening 12... Nxd5 13. Bxe7 Nxe7 winning a piece.}
+12. Nxe7+
+12... Qxe7
+13. Qd2 {If Black plays passively, White will gain a huge advantage by castling queenside and using the open g file for an attack.}
+13... d5 $1 {Taking advantage of the fact that White hasn't yet castled and that the e pawn is pinned.}
+14. 0-0-0 {White was faced with the choice of a passive defense and sacrificing a pawn for an attack. He chose the latter.}
+14... dxe4
+15. fxe4
+15... Qxe4
+16. Bxf6 {If now 16... Qxh1 then 17. Bc4+ wins the queen.}
+16... Rxf6
+17. Bg2 {White gains time attacking Black's exposed queen. }
+17... Qe8 {To prevent 18. Qd8+}
+18. Rhe1 {White controls most of the board now.}
+18... Qf8 {Black now threatens 19... Bg4 trapping White's rook on d1 and freeing his own rook on a8 to defend the back rank.}
+19. Qd5+
+19... Kh8
+20. Qd8 {Threatening Re8 winning the queen. If 20... Qxd8 21. Rxd8+ Kh2 22. Ree8 winning the bishop.}
+20... Bg4 $1 {At last Black's queen rook and queen bishop are in the game.}
+21. Qxf8+
+21... Raf8
+22. Rd4 {White is threatening 23. Rxg4 and 23. Bxb7}
+22... Bc8 {Holding onto the material. Once the queen rook is developed, c8 is not such a bad place for the bishop.}
+23. Re7 {Rooks on the seventh rank are very powerful.}
+23... c6 {To save the pawn.}
+24. h4 
+24... Kg8 $1 {Black can sense the end game is near and is bringing his king into the action!}
+25. h5 {White wouldn't mind posting a bishop on g6. However, this pawn is going to be weak and attacked by the Black king.}
+25... R6f7 {Black must retain control of his own second rank.}
+26. Rxf7
+26... Kxf7 {To bring the king closer to the pawn on h5.}
+27. Kd2
+27... Kf6
+28. Ke3
+28... Kg5
+29. Bf3 {White is now on the defensive.}
+29... Bf5 {Threatening 30... Bxc2}
+30. c3
+30... Re8+ {White's most active piece is his rook. Black plans to play 31... Re7 and 32... Rd7 exchanging rooks. With the more active pieces and extra pawn, Black would win easily.}
+31. Kf2
+31... Re7
+32. b4 {Desperately seeking counterplay.}
+32... Rd7
+33. Rc4 {This leads to the loss of the a pawn. But White cannot afford to trade rooks.}
+33... Be6
+34. Re4
+34... Bxa2
+35. Re5+
+35... Kf4
+36. Ra5 {Attacking the bishop and the pawn.}
+36... Rd2+ 
+37. Ke1
+37... Rh2
+38. Be2
+38... Be6 {If 39. Rxa7 then 39... Ke3 40. Bf1 (Not 40. Bd1 Rh1#.) 40... Rh1 followed by 41. Bc4 winning the bishop.}
+39. Bf1
+39... Ra2 {White resigned. White has no hope in the ending after 40. Rxa2 Bxa2 If 40. Rc5 then 40... Bd5 41. Bc4 Ra1+ 42. Kd2 b6 trapping the rook}
+0-1
+

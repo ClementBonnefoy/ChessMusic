@@ -1,0 +1,69 @@
+
+[Event "?"]
+[White "Spielmann"]
+[Black "Johner"]
+[Date "1908.??.??"]
+[Result "1-0"]
+
+{Bishop's Opening, 30 moves. Spielmann's kingside attack was effectively countered by Johner's queenside attack. As Spielmann advanced a passed pawn, Johner opened up the center and caught Spielmann's king.}
+1. e4 {An aggressive first move.}
+1... e5
+2. Bc4 {Bishop's Opening.}
+2... Nf6 {If 3. Nc3 then 3... Nxe4 4. Nxe4 d5 and Black has an equal game or better.}
+3. d3
+3... Nc6 {Also good is 3... c6 preparing for ... d5.}
+4. Nc3 {Developing and keeping open the option of 5. f4 which would be impossible after 4. Nf3.}
+4... Bc5 {A good developing move. Also playable was 4... Bb4.}
+5. f4 
+5... d6
+6. f5 {This move cramps Black who cannot immediately play the natural rejoinder d5. White can proceed with a kingside attack while Black can pursue a queenside counterattack and strive to play ...d5. A major disadvantage of 6. f5 is that it takes the pressure off of Black's center.}
+6... Nd4 {Black prepares his counterattack which consists of ...c6, ...b5, and ... a5.}
+7. Bg5 {Pinning the knight and threatening to break up Black's kingside pawn formation with 8. Nd5 and 9. Nxf6+.}
+7... c6 {Preparing for the queenside attack and preventing 8. Nd5. Black threatens 8... b5 9. Bb3 a5 (Threatening 9... a4 trapping the biship) 10. a3 Nxb3 and White has a weakend pawn position and has exchanged his powerful bishop for a knight.}
+8. a3
+8... b5
+9. Ba2
+9... Qb6 {Supporting the queenside attack and creating threats on the a7-g1 diagonal.}
+10. Nf3
+10... a5 {White would like to castle now but that would allow Black to move the knight on d4 checking with the bishop. For example, 11. 0-0 Nxf3+ 12. Kh1 Nxg5.}
+11. Rf1 {Developing the rook for a kingside attack and protecting f2. If now 11... b4 then 12. Na4 and White can trade his knight for Black's powerful bishop.}
+11... a4 {Now Black is prepared for ... b4.}
+12. Nxd4
+12... Bxd4 {White should now play 13. Bd2 to help defend the dark squares on the queenside.}13. Bxf6 {Instead he begins an attack on the kingside.}
+13... gxf6
+14. Qh5 {Threatening 15. Qxf7+. If Black now plays passively by defending the pawn with 14... Qc7 then his queenside attack would dissipate. If 14... Ra7 the rook would be tied to the defending the pawn of f7 and would be unable to support the queenside attack.}
+14... Rf8 $1 {If 15. Qxh7 then 15... b4 16. axb4 Qxb4 threatening 17... Bxc3+, 17... Qxb2, as well as 17... a3 undermining the protection of the pinned knight.}
+15. Nd1 {Passive but necessary.}
+15... b4 $1 {If 16. axb4 a3 $1 17. Rb1 (Not 17. Bb3 axb2 18. Rxa8 b1=Q) 17... axb2 18. Bb3 Qxb4+. }
+16. Rc1
+16... bxa3
+17. bxa3
+17... Qc5 {Planning 18... Qxa3.}
+18. c3
+18... Qxa3
+19. Rc2
+19... Bb6
+20. Qxh7
+20... Qc5 {Bringing the queen back into play.}
+21. Qg7 {Threatening 22. Qxf6.}
+21... Ba6 {Threatening 22. Bxd3 forking the rooks.}
+22. Rf3
+22... Bd8 {Black wisely takes time out from the attack to defend his own kingside.}
+23. h4 {The pawn is threatening to queen in four moves. Is there any way for Black to stop it.}
+23... d5 $1 {The classic counter to play on a wing is to open the center. If 24. exd5 cxd5 Black will break open the position with ... e4. Was it mere luck that Black had this stroke available? No, it was inherent in the logic of the position. When White played 6. f5 it left Black with the latent possibility of d5.}
+24. h5
+24... dxe4
+25. dxe4
+25... Qg1+
+26. Kd2 
+26... Be7 {Clearing the file for the rook.}
+27. Rc1
+27... Rd8+
+28. Kc2
+28... Qe1 {Threatening 29. Qd2+ 30. Kb1 Rg8+ 31. Kh1 Qxc1#.}
+29. Rf2
+29... Ba3 {The White king is surrounded.}
+30. Qg4 {Returning to protect the king, but it is too late.}
+30... Bd3# 
+0-1
+

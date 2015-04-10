@@ -9,7 +9,7 @@ public enum Instrument implements IInstrument{
 	flute,
 	harpsichord,
 	vibraphone,
-	marimaba,
+	marimba,
 	xylophone,
 	electricBass;
 	

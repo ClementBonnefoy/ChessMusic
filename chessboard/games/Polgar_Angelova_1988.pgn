@@ -1,0 +1,47 @@
+
+[Event "?"]
+[White "Polgar"]
+[Black "Angelova"]
+[Date "1988.??.??"]
+[Result "1-0"]
+
+{Sicilian Defense, 18 moves. Judit Polgar was only 12 years old when she played this game. Two years later became the youngest player ever to achieve the title of Grandmaster. She is probably the strongest woman player in history. In this game she quickly overwhelms her opponent.}
+1. e4 {Polgar prefers this move which often leads to games with many tactical rather than postional possibilities.}
+1... c5 {The Sicilian Defense.}
+2. Nf3
+2... Nc6
+3. Bb5 {More usual here is 3. d4.}
+3... g6 {Black plans to develop the bishop on g7.}
+4. 0-0
+4... Bg7
+5. c3 {White plans to play 6. d4 with a strong center.}
+5... e5 {To prevent 6. d4 5... d6 would have been better.}
+6. d4 $1 {The pawn sacrifice is justified on the basis of White's lead in development and Black's weaknesses on the dark squares.}
+6... cxd4
+7. cxd4
+7... Nxd4
+8. Nxd4
+8... exd4
+9. e5 $1 {This move keeps Black from developing normally. If 9... Bxe5 then 10. Re1 f6 11. f4 would win the bishop.}
+9... Ne7 {Black want to castle to safety as soon as possible.}
+10. Bg5 {Putting pressure on the weak dark squares.}
+10... 0-0
+11. Qxd4 {White has her pawn back and is still in an excellent position.}
+11... Nc6 {If now 12. Bxd8 then 12... Nxd4. Or, if 12. Bxc6 then 12... Qxg5. }
+13. Qh4
+13... Qb6 {Attacking the bishop and threatening 14... Bxe5. }
+14. Nc3 $1 {White is delighted to sacrifice the pawn for the attack.}
+14... Bxe5 {It is dangerous to grab a pawn when behind in development, but the pawn on e5 kept Black's queen bishop hemmed in. Besides, Black now threatens 15... Bxc3 16. bxc3 17. Qxb5}
+15. Rae1 {White ignores Black's threats and continues with her development. If Black refuses the piece and plays 15... Bg7 the following is a possible continuation: 16. Bc4 d6 17. Nd5 Qxb2 18. Nf6+ Bxf6 19. Bxf6 (Threatening Qh6) 19... Qd2 20. Re3 h5 21. Qg5 Kh7 22. Bd3 Ne5 23. Qxh5+ Kg8 24. Qh8#.}
+15... Bxc3 {The dark squares now belong to White.}
+16. bxc3
+16... Qxb5
+17. Qh6 {Threatening 18. Bf6 and 19. Qg7#.}
+17... Qf5
+18. Qxf8+ $1 
+18... Kxf8
+19. Bh6+
+19... Kg8
+20. Re8# {Black resigned after White's 18th move}
+1-0
+

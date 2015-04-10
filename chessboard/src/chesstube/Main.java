@@ -7,7 +7,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		
-		Music result = SMLCompiler.compile("sml/auclairdelalune.sml");
+		Music result = SMLCompiler.compile("sml/bolero.sml");
 		
 		ChessTube ct = new ChessTube(result);
 		

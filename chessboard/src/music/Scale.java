@@ -1,5 +1,9 @@
 package music;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import music.scale.Myxolydian;
 import board.Rank;
 import sml.elements.ComplexNote;
@@ -23,10 +27,15 @@ public class Scale {
 		this.fundamental=fundamental;
 		readScale(scale);
 	}
-	
+
 	public Scale(NoteName fundamental,int[] scale){
 		this.fundamental=fundamental;
 		this.scale=scale;
+	}
+
+	public Scale(NoteName fundamental,int number){
+		this.fundamental=fundamental;
+		readScale(number);
 	}
 
 	public Scale(Scale scale,Boolean[] alterations){
@@ -52,6 +61,33 @@ public class Scale {
 
 	}
 
+	private void readScale(int n){
+		ArrayList<Integer> scale = new ArrayList<>();
+		scale.add(0);
+
+		int number = n;
+		int tmp=0;
+
+		do{
+			number=n;
+			while (number != 0) {
+				tmp += 2;
+				tmp += number & 1;
+				if (tmp >= 12)
+					break;
+				scale.add(tmp);
+				number >>= 1;
+			}
+		}while(tmp<12);
+
+			int[] tab=new int[scale.size()];
+		for(int i=0;i<scale.size();i++){
+			tab[i]=scale.get(i);
+		}
+		this.scale=tab;
+
+	}
+
 	private int[] getScale(){
 		return scale;
 	}
@@ -64,7 +100,7 @@ public class Scale {
 		do{
 			sb.append(" "+note.incr(getScale()[i]));
 			i++;
-		}while(i<7);
+		}while(i<scale.length);
 		return sb.toString();
 
 
@@ -100,7 +136,7 @@ public class Scale {
 	public NoteName getFundamental() {
 		return fundamental;
 	}
-	
+
 	public Note getNote(Rank rank,int octave) {
 		Note note=new Note(fundamental,octave);
 		int rankNumber=rank.getNum();
@@ -108,12 +144,12 @@ public class Scale {
 			rankNumber-=scale.length;
 			note=note.nextOctave();
 		}
-			
+
 		note=note.incr(this.getScale()[rankNumber]);
-			
+
 		return note;
 	}
-	
+
 	public static void main(String[] args){
 		Scale ionian=new Myxolydian(NoteName.C);
 		Boolean[] b= new Boolean[7];

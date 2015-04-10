@@ -1,0 +1,18 @@
+
+[Event "?"]
+[White "Gibaud"]
+[Black "Lazard"]
+[Date "1924.??.??"]
+[Result "0-1"]
+
+{Queens Pawn, 4 moves. One of the shortest master-level games ever played. In a seemingly tame position, Lazard shocks Gibaud with a move that wins his queen.}
+1. d4 {Controlling a portion of the center and putting pressure on the queenside.}
+1... Nf6 {Developing a piece and preventing 2. e4.}
+2. Nd2 {Planning 3. e4}
+2... e5 $1 {This frees Black's game.}
+3. dxe5
+3... Ng4 {If 4. Ngf3 then 4... Nc6 will win back the pawn. Not 4. f4 Ne3 trapping the queen.}
+4. h3?? {An innocent looking move. White expects 4... Nxe5 5. Ngf3}
+4... Ne3 $3 {White resigns. If 5. fxe3 then 5. ...Qh4+ 6. g3 Qxg3#}
+0-1
+

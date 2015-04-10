@@ -197,8 +197,9 @@ public class PGNMove {
 				|| fromRank != other.fromRank
 				|| moveNumber != other.moveNumber
 				|| to != other.to
-				|| type != other.type)
+				|| type != other.type) {
 			return false;
+		}
 		return true;
 	}
 
@@ -214,11 +215,10 @@ public class PGNMove {
 			sb.append('x');
 		sb.append(to.toString().toLowerCase());
 
-
-		if (check)
-			sb.append('+');
-		else if (checkMate)
+		if (checkMate)
 			sb.append('#');
+		else if (check)
+			sb.append('+');
 
 		return sb.toString();
 	}

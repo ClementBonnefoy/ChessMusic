@@ -29,9 +29,7 @@ public class ChessTube implements IVisitor{
 	public void createMidiFromPGN(String pgnFileName,String midiFileName){
 
 			ChessTubeMidi md=new ChessTubeMidi(music);
-
 			PGNParser parser=new PGNParser(pgnFileName);
-
 			PGNGame pgnGame = null;
 
 			try {
@@ -43,9 +41,7 @@ public class ChessTube implements IVisitor{
 			}
 			
 			this.analyse(pgnGame);
-			
 			mpep.stop();
-			
 			md.saveMidi(midiFileName);
 
 	}
@@ -70,6 +66,8 @@ public class ChessTube implements IVisitor{
 		music.accept(this);
 		
 	}
+	
+	
 
 
 	@Override

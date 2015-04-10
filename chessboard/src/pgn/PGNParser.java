@@ -56,8 +56,10 @@ public class PGNParser {
 
 		// suppression commentaires et variations
 		string = string.replaceAll("\\{[^}]*\\}|\\([^)]*\\)","");
+		// suppression ? et !
+		string = string.replaceAll("!|\\?","");
 		// suppression des espaces et points en double
-		string = string.replaceAll("\\s+", " ").replaceAll("\\.\\.+", ".");
+		string = string.replaceFirst("^\\s", "").replaceAll("\\s+", " ").replaceAll("\\.\\.+", ".");
 		// insertion d'un espace après le numéro de coup s'il manque
 		string = string.replaceAll("\\.([^ ])","\\. $1");
 		// on ne garde que les coups, séparés par des espaces (plus de "e.p.")
@@ -75,6 +77,17 @@ public class PGNParser {
 			if (!s.matches(moveRegex))
 				throw new InvalidPGNMoveException(s);
 
+	}
+	
+	private PGNParser() {
+		
+	}
+	
+	public static PGNGame makePGNGame(String game) throws InvalidPGNMoveException {
+		PGNParser pgnParser = new PGNParser();
+		pgnParser.string = game;
+		pgnParser.parse();
+		return new PGNGame(null,null,null,pgnParser.moves);
 	}
 
 	public PGNGame makePgnGame() {

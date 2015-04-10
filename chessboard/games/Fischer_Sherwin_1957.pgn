@@ -1,0 +1,75 @@
+
+[Event "?"]
+[White "Fischer"]
+[Black "Sherwin"]
+[Date "1957.??.??"]
+[Result "1-0"]
+
+{Sicilian Defense, 33 moves. The 14 year old Bobby Fischer capitalizes on a few inaccuracies and builds up a strong attack. Sherwin finds several ingenious moves but fails to avert defeat against Fischer's exact play. Fischer was world champion from 1972-1975.}
+1. e4 {Fischer almost always began with this move.}
+1... c5 {The Sicilian Defense.}
+2. Nf3 {Developing.}
+2... e6
+3. d3 {More usual is 3. d4. White's move leads to a closed game called the King's Indian Reversed.}
+3... Nc6 {A good developing move.}
+4. g3 {To place the bishop on g2 where it will reinforce the pawn on e4 and put pressure on d5.}
+4... Nf6
+5. Bg2
+5... Be7
+6. 0-0
+6... 0-0
+7. Nbd2 {This is better than Nc3 which would prevent White from moving a pawn to c3.}
+7... Rb8 {This allows the b pawn to move forward without fear that White's bishop on g2 will threaten the rook. Black is planning a queenside counterattack to White's coming kingside attack.}
+8. Re1 {Placing the rook in the center and leaving f1 available for the knight which often, from there, goes to e3 or even to g4 via h2.}
+8... d6 {This is more passive than the more usual d5.}
+9. c3 {Preparing to play d4.}
+9... b6 {9... b5 would have given Black better chances.}
+10. d4 {White now has a strong positon in the center.}
+10... Qc7? {In a few moves White will have threats based on playing Bf4 and attacking both the queen and the rook.}
+11. e5 $1 {The center pawns are on the move. Black's best is now 11... dxe5 12. dxe5 Nd7 although Black's position would be cramped and his pieces would be in each other's way.}
+11... Nd5 
+12. exd6
+12... Bxd6
+13. Ne4 {If 13... Be7 then 14. c4 Nf6 15. Bf4. If 13... cxd4 then 14. Nxd6 Qxd6 15. c4 Nf6 16. Bf4.}
+13... c4 {This is the only move to avoid the loss of material. However, it takes the pressure off of White's center leaving him free to conduct a kingside attack. Black has no prospects for a counterattack in the center or for a queenside attack.}
+14. Nxd6
+14... Qxd6
+15. Ng5 {Beginning the kingside attack. Although it weakens his kingside, it turns out that Black should have played 15... h6 here.}
+15... Nce7 {Bringing the knight to the defense of the kingside.}
+16. Qc2 {Threatening Qxh7#.}
+16... Ng6
+17. h4 {Threatening h5 and the knight can't move because of the mate threat.}
+17... Nf6
+18. Nxh7 $1 {A stunning surprise. If 18... Kxh7 then 19. Bf4 winning the rook on b8.}
+18... Nxh7
+19. h5 {To drive away the knight and then play Bf4.}
+19... Nh4 $1 {Black finds an ingenious way to counterattack.}
+20. Bf4
+20... Qd8 {If now 21. Bxb8? then 21... Nxg2 22. Kxg2 Bb7+ 23. Kg1 Qxb8 and Black would have a bishop and knight for a rook and would be in a strong position.}
+21. gxh4
+21... Rb7 $1 {Helping in the defense and tempting White to play 22. Bxb7 so that after 22... Bxb7 White would have no piece to defend his white squares. Black's queen and bishop would be very dangerous on the a8-h1 diagonal.}
+22. h6 $1 {Continuing the attack on the king. The best defense is now 22... g6 but White would still have a far superior position.}
+22... Qxh4?
+23. hxg7
+23... Kxg7
+24. Re4 {Threatening 25. Be5+ winning the queen.}
+24... Qh5
+25. Re3 {Threatening 26. Rh3 Qg6 (Or 26... Qa5 27. Qxh7+) 27. Rg3 pinning and winning the queen.}
+25... f5 {Blocking the White queen's attack on h7.}
+26. Rh3
+26... Qe8
+27. Be5+ {If 25... Kg8 26. Rg3+ Kf7 27. Rg7#. 25... Kg6 loses to 26. Qd2.}
+27... Nf6
+28. Qd2 {Threatening 29. Qh6+ Kg8 30. Qh8+ Kf7 31. Qxf6+ Kg8 32. Rh8#.}
+28... Kf7
+29. Qg5 {If 29... Ke7 then 30. Rh7+ Rf7 31. Qxf6+}
+29... Qe7
+30. Bxf6
+30...Qxf6
+31. Rh7+
+31... Ke8
+32. Qxf6 {If 32... Rxf6 then 33. Bxb7 Bxb7 34. Rxb7 and White is a rook ahead.}
+32... Rxh7
+33. Bc6+ {and Black resigned. His position is clearly hopeless. If 33... Bd7 then 34. Qxe6+}
+1-0
+

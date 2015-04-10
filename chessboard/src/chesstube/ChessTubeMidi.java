@@ -6,7 +6,9 @@ import java.util.ArrayList;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
 import javax.sound.midi.Track;
 
 import midi.MidiTools;
@@ -42,6 +44,7 @@ public class ChessTubeMidi{
 	
 	private Music music;
 	private Declarations env;
+	private boolean convert=false;
 	
 
 	public ChessTubeMidi(Music smlMusic){
@@ -72,7 +75,10 @@ public class ChessTubeMidi{
 
 	public void saveMidi(String fileName){
 		
-		convert(music);
+		if(!convert){
+			convert(music);
+			convert=true;
+		}
 
 		File outputFile = new File(fileName);
 
@@ -87,6 +93,28 @@ public class ChessTubeMidi{
 				e.printStackTrace();
 			}
 	      }
+	}
+	
+	public void play(){
+		if(!convert){
+			convert(music);
+			convert=true;
+		}
+		
+		Sequencer seq=null;
+		try {
+			seq=MidiSystem.getSequencer();
+			seq.open();
+			seq.setSequence(sequence);
+			seq.start();
+		} catch (MidiUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvalidMidiDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 	
 	private void convert(Music sml) {
@@ -116,8 +144,7 @@ public class ChessTubeMidi{
 
 
 	private void setTempo(int value) {
-		for(Track t: tracks)
-			MidiTools.setTempo(t, value*QUARTER, tm.getTime());
+			MidiTools.setTempo(tracks[0], value*QUARTER, tm.getTime());
 		
 	}
 

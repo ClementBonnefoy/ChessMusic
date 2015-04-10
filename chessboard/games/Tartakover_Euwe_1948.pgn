@@ -1,0 +1,93 @@
+
+[Event "?"]
+[White "Tartakover"]
+[Black "Euwe"]
+[Date "1948.??.??"]
+[Result "0-1"]
+
+{Giuoco Piano, 42 moves. Tarkatover wins a pawn early in the game but underestimates Euwe's counterattack. Euwe sacrifices both knights and both rooks during the attack. Euwe was world champion from 1935-1937.}
+1. e4 {A move that typically leads to more tactical possibilities than the positional 1. d4.}
+1... e5
+2. Nf3 {Developing the knight and attacking the pawn.}
+2... Nc6 {Developing and protecting the pawn.}
+3. Bc4 {The bishop is more aggressively placed on c4 than on b5. However, 3. Bb5 leads to longer-lasting pressure.}
+3... Bc5 {Also good is 3... Nf6.}
+4. c3 {Planning to play 5. d4. At one time 4. d3 was common leading to a quiet position. That is why the opening is called the Giuoco Piano which means quiet game. Black can now play 4... Nf6 5. d4 exd4 5. cxd4 Bb4+ 6. Nc3 Nxe4 7. 0-0 with a complicated position.}
+4... Bb6 {With this move, Black is able to keep the position closed.}
+5. d4 {Occupying the center. Black should not now play 5... d6 because after 6. dxe5 Nxe5 7. Nxe5 dxe5 8. Bxf7+ Black cannot play Kxf7 because of Qxd8. If 6... dxe5 then 7. Qxd8+ Kxd8 8. Bxf7.}
+5... Qe7 {This would be a poor move in an open postion; here it is effective. }
+6. 0-0 {White does not worry about 6... exd4 7. cxd4 Qxe4 because of 8. Re1 pinning and winning the queen.}
+6... d6 {Black intends to maintain his pawn on e5. If Black were to play 6... exd4 then after 6. cxd4 White's center would be overwhelming.}
+7. h3 {To prevent Bg5 putting indirect pressure on d4.}
+7... Nf6
+8. Re1 {Protecting the pawn.}
+8... 0-0 9. Na3 {The knight is going to c4 where it will put pressure on Black's e pawn or to d5 via c2 and e3. Black cannot now play 9... exd4 10. cxd4 Nxe4 because 11. Ng5 wins the pinned knight on e4.}
+9... Nd8 {To unblock the c pawn so that c6 can be used, if needed, to prevent Nd5. In an open position it would be suicidal to neglect development and move already-developed pieces. In a closed position, both sides can afford positional maneuvering.}
+10. Bf1
+10... Ne8 {This allows Black to play f6 in response to 11. Nc4.}
+11. Nc4 {Attacking the pawn on e5. If 11... exd4 12. cxd4 White's pawn center would cause Black serious trouble.}
+11... f6
+12. a4 {Threatening a5 trapping the bishop. }
+12... c6 {This gives the bishop an escape hatch, but it loses a pawn.}
+13. Nxb6
+13... axb6
+14. Qb3+ {attacking the pawn on b6 and the king at the same time.}
+14... Ne6 {The kinght will eventually move to f4 as part of an attack on the White king.}
+15. Qxb6
+15... g5 {WIth the center securely closed, Black begins a kingside attack. }
+16. Bc4? {The bishop should stay on f1 to provide the king protection.}
+16... h6
+17. h4
+17... Kh7 {This unpins the knight on e6 .}
+18. hxg5? {White opens lines for Black's rook.}
+18... hxg5 {Now the h file is open.}
+19. dxe5
+19... dxe5
+20. Be3 
+20... Rh8 {Placing the rook on the open file.}
+21. g3 {To prevent the knight from moving to f4.}
+21... Kg6 {To get out of the way of the rook.}
+22. Kg2 {White plans to move his own rook to the open h file.}
+22... Nf4+ $1 {Black strikes while the iron is hot!}
+23. gxf4
+23... Bh3+ {If 24. Kg1 then after 24... gxf4 25. Bc5 Qg7 White's king is in a mating net.}
+24. Kg3
+24... exf4+ {White cannot play 25. Kh2 because of 25... Bg4+ 26. Kg1 Bxf3 followed by 27...Rh1#.}
+25. Bxf4
+25... Qd7 $1 {Threatening 26... Qg4+ 27. Kh2 Qg2#.}
+26. Nh2
+26... gxf4+
+27. Kxf4 {Both kings are out in the open. But it is Black's move.}
+27... Rh4+
+28. Ke3
+28... Bg2 {Threatening ...Rxe4+}
+29. Nf3
+29... Rxe4+ $1 {Just when White thought his king would be safe.}
+30. Kxe4
+30... Nd6+ {Attacking the bishop and the king.}
+31. Kd3
+31... Qf5+
+32. Kd4
+32... Qf4+ {If 33. Kc5 then 33... Qxc4+ 34. Kxd6 Qd5+ 35. Ke7 Qf7+ 36. Kd6 Qf8+ 37. Re7 Rd8+ 38. Qxd8 (38. Ke6 Bh3#.) 38... Qxd8+ 39. Rd7 Qb8+ 40. Ke6 Bxf3 and Black should win.}
+33. Kd3
+33... Qxc4+
+34. Kc2
+34... Bxf3 {Material is now equal: Black has a knight and a bishop for a rook and a pawn.}
+35. b3 {This gives the White king a little air.}
+35... Be4+ {Black's pieces are more active than White's.}
+36. Kb2
+36... Qd3
+37. Rg1+
+37... Kf7
+38. Rac1
+38... Qd2+ {The beginning of a winning combination. If 39. Ka1 then 39... Nc4 (threatening Qb2#) 40. Qxb7+ Ke6 41. Rb1 (Not 41. bxc4 Rxa4#.) 41... Qxc3+ 42. Ka2 Rxa4+ 43. bxa4 Qa3#.}
+39. Ka3
+39... Nc4+ {White must capture or lose his queen.}
+40. bxc4
+40... Rxa4+
+41. Kxa4
+41... Qa2+
+42. Kb4
+42... Qb2+ {If 43. Ka5 then 43... Qa3#. If 43. Kc5 then 43... Qxf2+ wins the queen.}
+0-1
+

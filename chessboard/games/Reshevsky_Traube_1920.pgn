@@ -1,0 +1,43 @@
+
+[Event "?"]
+[White "Reshevsky"]
+[Black "Traube"]
+[Date "1920.??.??"]
+[Result "1-0"]
+
+{Bird's Opening, 17 moves. Reshevsky was only eight years old when he played this game in a simultaneous exhibition against 20 players. Traube made too many weakening pawn moves allowing Reshevsky to win with a nice combination.}
+1. f4 {Bird's opening. }
+1... e6 {Opeining lines for the bishop and controlling d5.}
+2. Nf3 
+2... d5 
+3. g3 {The bishop is going to move to g2.}
+3... Nf6 {A logical developing move. }
+4. Bg2
+4... Bd6 {This may be a little too aggressive. 4... Be7 is better.}
+5. d4 {This makes it impossible for Black to play the freeing move ...e5. Moreover, e5 will be an excellent square for White's knight. The only disadvantage of this move is that with so many pawns on dark squares, the bishop on c1 will have little mobility.}
+5... Nc6? {In positions with the d pawns advanced, the Black c pawn should be used to counterattack in the center. This move blocks the c pawn.}
+6. Ne5 {A nicely posted piece. Black cannot play 6... Nxe5 because 7. dxe5 would fork the Black bishop and knight. If 7... Bb4+ then 8. c3 and Black still loses a piece.}
+6... Ne7 {Now the c pawn is unblocked, but the knight is in the way of Black's queen and bishop.}
+7. Be3
+7... c6
+8. a3 {White is planning a queenside attack.}
+8... h6? {This move does nothing other than weaken the Black kingside.}
+9. Nd2
+9... Nd7
+10. c4 {Attacking the center and making room for the queen to develop.}
+10... b6? {Possibly thinking that he should prevent 11. c5, which was not a good move anyway. Black should castle.}
+11. b4
+11... f6? {Attempting to chase away the powerful knight. But Black has made too many weakening pawn moves already. }
+12. Nxc6 $1 {A clever combination.}
+12... Nxc6
+13. cxd5 {If 13... Ne7 then 14. dxe6 and Black's rook and knight are both attacked.}
+13... exd5
+14. Bxd5 {Attacking the knight on c6 and pinning it to the rook.}
+14... Bb7
+15 Qc2 {This is the point of the combination. White attacks the knight on c6 and threatens 16. Qg6+ Kf8 17. Qf7#. Black's best is now 15... Qc7 16. Rc1 Rc8 17. Qg6+ Kd8 18. Qxg7 but White would still have a huge advantage.}
+15... Rc8?
+16. Qg6+
+16... Kf8
+17. Qf7# 
+1-0
+

@@ -1,19 +1,19 @@
 package music.scale;
 
-import board.Rank;
 import music.NoteName;
 import music.Scale;
+import board.Rank;
 
-public class PentatoniqueMajeur extends Scale {
+public class PentatonicMinor extends Scale {
 	
-	private final static int[] scale={0,2,5,7,9};
+	private final static int[] scale={0,3,5,7,10};
 
-	public PentatoniqueMajeur(NoteName fundamental) {
+	public PentatonicMinor(NoteName fundamental) {
 		super(fundamental, scale);
 	}
 	
 	public static void main(String[] args){
-		Scale scale=new PentatoniqueMajeur(NoteName.C);
+		Scale scale=new PentatonicMinor(NoteName.C);
 		for(Rank r:Rank.values()){
 			System.out.println(scale.getNote(r, 3).getMidiValue(NoteName.C));
 		}

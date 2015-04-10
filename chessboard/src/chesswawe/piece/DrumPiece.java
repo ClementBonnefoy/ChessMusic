@@ -6,7 +6,7 @@ import board.Rank;
 public abstract class DrumPiece extends ChessWavePiece {
 
 	private static int[] scale = 
-		{ 0 , 0 , 35 , 43 , 47 , 52 , 59 , 0 };
+		{ 0 , 0 , 35 , 43 , 47 , 65 , 67 , 0 };
 	
 	public DrumPiece(Piece piece) {
 		super(piece);

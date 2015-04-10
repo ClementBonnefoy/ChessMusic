@@ -9,7 +9,9 @@ public enum Instrument {
 	xylophone(13),
 	electricBassFinger(33),
 	electricBassPick(35),
-	flute(73);
+	flute(73),
+	pad1(88),
+	cristal(98);
 	
 	
 	private int midiNumber;

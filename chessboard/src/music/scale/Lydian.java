@@ -21,7 +21,7 @@ public class Lydian extends Scale {
 	}
 	
 	public static void main(String[] args){
-		System.out.println(new Aeolian(NoteName.C));
+		System.out.println(new Lydian(NoteName.C));
 	}
 
 	

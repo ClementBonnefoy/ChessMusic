@@ -1,0 +1,66 @@
+
+[Event "?"] 
+[White "Morphy"]
+[Black "Baucher"]
+[Date "1858.??.??"]
+[Result "1-0"]
+
+{Philidor's defense, 29 moves. Paul Morphy, the chess prodigy from New Orleans, takes control of the center and posts a knight deep in Black's territory before beginining an unstoppable attack on the king. Morphy played this game blindfolded. He was told his opponent's moves but was not allowed to see the board.}
+1. e4 {Controlling the center and preparing to develop the bishop now on f1 eventually.}
+1... e5 {Following suit.}
+2. Nf3 {Developing the knight and attacking the pawn on e5.}
+2... d6 {Philidor's defense. Black will have to contend with a cramped position.}
+3. d4 {White now has an advantage in the center.}
+3... exd4 {White's pawn on e4 controls more space than Black's pawn on d6.}
+4. Qxd4 {The queen is well-placed here. White has two pieces developed to Black's none.}
+4... Nc6 {Developing a piece and attacking White's queen.}
+5. Bb5 {Developing a piece and pinning the knight to the king.}
+5... Bd7 {Now Black threatens to take the queen.}
+6. Bxc6 {So that the queen can remain in a dominating position.}
+6... Bxc6
+7. Bg5 {Threatening the queen.}
+7... f6 {This weakens Black's position. White will eventually post a knight at e6.}
+8. Bh4
+8... Nh6 {Not a good place for the knight but Ne7 blocks the bishop.}
+9. Nc3 {A natural developing move.}
+9... Be7 {Black's position is cramped.}
+10. O-O {Getting the king out of the center and developing the king's rook.}
+10... O-O {Black's king is not safe in the center but it is not safe on the kingside either.}
+11. Qc4+
+11... Kh8
+12. Nd4 {The knight is very well placed in this central square. It now threatens Ne6 forking the rook and queen.}
+12... Qd7
+13. Rad1 {Another developing move that reinforces White's hold on the center.}
+13... Rf7 {Black can think of nothing better to do than wait. Better was 13... Nf7 followed by Nd8 to defend the weak square on e6.}
+14. f4 {White is preparing to control e6.}
+14... a5
+15. f5 {Planning to move the knight to e6.}
+15... Rf8
+16. Ne6 {A knight on the sixth rank is like a tooth in the throat.}
+16... Rg8
+17. a4 {White prevents even the slightest queenside counterplay by Black.}
+17... Ng4 {Threatening Ne3 attacking both rooks and the queen.}
+18. Qe2 {The threat is easily parried.}
+18... Ne5 {This centrally-posted knight is Black's most active piece.}
+19. Bg3 {So White decides to trade a bishop for it.}
+19... Qc8 {So after 20. Bxe5 Black can recapture with the pawn on d6 without allowing 21. Rxd7.}
+20. Bxe5
+20... dxe5 {White has a dominating position.}
+21. Rf3 {The rook is on its way to h3 where it will support the attack on the king. }
+21... Bd7 {If 21... Be8 then 22. Rh3 g6 23. Qg4 gxf5 24. Rxh7+ Kxh7 25. Qh3+ Kg6 26. exf5+ Kf7 27. Qh7+ Rg7 28. Qxg7# is a possible continuation discovered by the great player Steinitz.}
+22. Rh3 {Threatening 23. Rxh7 Kxh7 24. Qh5#.}
+22... h6
+23. Qd2 {Threatening 24. Rxh6 gxh6 25. Qxh6# and 24. Qxd7 at the same time.}
+23... Kh7
+24. Qxd7 {White is now ahead by a bishop.}
+24... Bd6
+25. Rxh6+ $1
+25... Kxh6
+26. Rd3 {Threatening 27. Rh3#.}
+26... Kh5
+27. Qf7+
+27... Kg4
+28. Qg6+
+28... Kh4
+29. Rh3# 1-0
+

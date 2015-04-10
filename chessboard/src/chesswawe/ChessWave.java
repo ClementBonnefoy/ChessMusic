@@ -64,11 +64,17 @@ import static board.ESquare.H5;
 import static board.ESquare.H6;
 import static board.ESquare.H7;
 import static board.ESquare.H8;
+
+import java.io.File;
+
 import move.InvalidMoveException;
+import move.KingSideCastling;
 import move.Move;
+import move.QueenSideCastling;
 import music.NoteName;
 import music.Scale;
-import music.scale.PentatoniqueMajeur;
+import music.scale.PentatonicFake;
+import music.scale.PentatonicMinor;
 import pgn.InvalidPGNMoveException;
 import pgn.PGNGame;
 import pgn.PGNMove;
@@ -77,7 +83,9 @@ import board.Board;
 import board.EPiece;
 import board.ESquare;
 import board.Piece;
+import board.Type;
 import chesswawe.piece.ChessWavePiece;
+import eco.ECOParser;
 
 public class ChessWave {
 	
@@ -97,6 +105,13 @@ public class ChessWave {
 		@Override
 		public void onMove(Board board, Move move) {
 			hasAlreadyMoved = true;
+			if(move instanceof KingSideCastling 
+					|| move instanceof QueenSideCastling){
+				if(this.getType()==Type.King){
+					hasAlreadyMoved=false;
+				}
+			}
+				
 		}
 	}
 
@@ -127,13 +142,19 @@ public class ChessWave {
 	public void playAMove(Move mv){
 		mv.applyTo(board);
 	}
+	
+	
+	public void createMidiFromPGN(String pgnFileName, String midiFileName) {
+		createMidiFromPGN(new File(pgnFileName), midiFileName);
+	}
+	
 
-	public void createMidiFromPGN(String pgnFileName,String midiFileName){
+	public void createMidiFromPGN(File f,String midiFileName){
 
 		ChessWaveMidi md=new ChessWaveMidi();
 		
 
-		PGNParser parser=new PGNParser(pgnFileName);
+		PGNParser parser=new PGNParser(f);
 
 		PGNGame pgnGame = null;
 
@@ -142,7 +163,7 @@ public class ChessWave {
 			pgnGame = parser.makePgnGame();
 		} catch (InvalidMoveException | InvalidPGNMoveException e) {
 			e.printStackTrace();
-			System.exit(0);
+			return;
 		}
 		
 		initScale(pgnGame);
@@ -170,9 +191,18 @@ public class ChessWave {
 
 
 	private void initScale(PGNGame pgnGame) {
-		scale=new PentatoniqueMajeur(NoteName.C);
+		ECOParser parser=new ECOParser("eco.txt");
+		String code=parser.findCode(pgnGame);
+		NoteName note=NoteName.valueOf(code.substring(0, 1));
+		Integer nombre=Integer.valueOf(code.substring(1,code.length()));
+		
+		scale=new Scale(note,nombre);
+		System.out.println(scale);
 		
 	}
+
+
+	
 
 
 

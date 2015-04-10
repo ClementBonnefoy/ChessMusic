@@ -1,0 +1,92 @@
+
+[Event "?"] 
+[White "Karpov"]
+[Black "Hartinov"]
+[Date "1988"]
+[Result "1-0"]
+
+{Queen's Gambit Declined, 42 moves. Karpov demonstrates his excellent technique. On move four Karpov embarks on a plan to weaken Black's queenside; after 35 moves the plan bears fruit and a queenside pawn is won. Karpov was world champion from 1975-1985.}
+1. c4 {This is called the English Opening. It usually leads to a postional struggle.}
+1... e6 {One of many possible replies. Black prepares for ... d5.}
+2. Nc3
+2... d5
+3. d4 {The game has now transposed into a Queen's Gambit Declined. This position could have been arrived at by 1. d4 d5 2. c4 e6 3. Nc3}
+3... Nf6
+4. cxd5 {The exchange variation. White's goal is now to move up his two queenside pawns and exchange them leaving Black with a weak pawn.}
+4... exd5
+5. Bg5 {Pinning the knight and threatening 6. Bxf6 and Black would have to recapture with the pawn because 6... Qxf6 loses to 7. Nxd5.}
+5... Be7 {Breaking the pin.}
+6. e3
+6... Nbd7 {It is important not to play ... Nc6 blocking the c pawn.}
+7. Nf3 {White is continuing normal development.}
+7... c6
+8. Bd3
+8... 0-0
+9. Qc2 {White will soon begin attacking on the queenside.}
+9... Re8 {Black will move the knight on d7 to f8 so that the bishop on c8 can be developed.}
+10. 0-0
+10... Nf8
+11. h3
+11... Be6
+12. Rfc1 {Moving the rook to the half-open file. White plans to place his other rook on b1 to support the pawn advance.}
+12... N6d7 {Black hopes to simplify by exchanging bishops.}
+13. Bf4 {White prefers not to exchange.}
+13... Nb6 {So that Black can play 14... Bd6 and the queen will protect the bishop.}
+14. Rab1 {Preparing for an eventual b4}
+14... Bd6
+15. Ne2
+15... Ng6
+16. Bxd6
+16... Qxd6
+17. a4 {White does not play b4 at once because Black can answer with Nc5 with an equal game.}
+17... Rac8
+18. Qc5 {White would have a positional advantage after 18... Qxc5 19. dxc5 Nd7 (Not 19... Nxa4 20. b3 trapping the knight) 20. b4}
+18... Qb8
+19. Qa3 {Now the a pawn must be protected.}
+19... a6
+20. Rc3 {White is going to double rooks on the c file.}
+20... Qc7
+21. Rbc1
+21... Ra8
+22. Nd2 {The knight will eventually make its way to c5.}
+22... a5 {So that if 23. b4 axb4 24. Qxb4 Rxa4}
+23. Rb1
+23... Nc8 {White's pieces are much more coordinated than Black's.}
+24. b4 {If White can trade this pawn for Black's pawn on a4 and then trade his a pawn for Black's pawn on b7, Black will be left with a weak pawn on c6. This is the plan initiated on move four of the game!}
+24... axb4 25. Qxb4
+25... Nd6
+26. Nb3 {Supports the advance of the a pawn and prepares for an eventual Nc5.}
+26... Bc8
+27. a5 {According to plan.}
+27... Ne7 {Black intends 28... Bf5}
+28. Ng3
+28... g6
+29. Rbc1
+29... h5 {Black is beginning a kingside counterattack. In retrospect, it would have been better to simplify the position with 29... Nef5 since the kingside attack never materializes and the h pawn becomes a target.}
+30. Ra1 {Preparing for a6.}
+30... h4
+31. Nf1
+31... Bf5 {Black has gained some space on the kingside.}
+32. Be2 {The bishop is needed to support the advance of the pawn to a6.}
+32... Ne4 {A nicely posted piece.}
+33. Nc5 {Threatening 34. Qxb7}
+33... Nxc5
+34. Qxc5 {If Black moves his knight on e7 then White can play Qxd5 because the c pawn is pinned.}
+34... Be6 {Protecting the pawn.}
+35. Nd2 {So that every piece participates in the finale.}
+35... Nf5
+36. Nf3
+36... Qd8
+37. a6 {At long last.}
+37... bxa6
+38. Rxa6
+38... Rxa6
+39. Bxa6 {If 39... Bd7 40. Bd3 Ng7 41. Ne5 Black is tied up in knots.}
+39... Qa8? {This is a blunder, probably caused by time pressure. }
+40. Qxc6
+40... Qxc6
+41. Rxc6
+41... Ra8
+42. Bd3 {and Black resigned. There is no way to prevent the threat of 43. Bxf5 and 44. Nxh4 winning a second pawn. If 42... Ra1+ 43. Kh2 Ra2 then White simply plays 44. Rc2 and the pawn on h4 cannot be saved} 
+1-0
+

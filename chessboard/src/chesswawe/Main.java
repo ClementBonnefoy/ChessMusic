@@ -6,7 +6,7 @@ public class Main {
 		
 		ChessWave cw = new ChessWave();
 		
-		cw.createMidiFromPGN("games/modern.pgn", "modern-chesswave.mid");
+		cw.createMidiFromPGN("games/Fisher_Spassky_1992.pgn", "test.mid");
 		
 	}
 	

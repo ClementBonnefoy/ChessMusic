@@ -1,0 +1,78 @@
+
+[Event "?"]
+[White "Gruenfeld"]
+[Black "Alekhine"]
+[Date "1923"]
+[Result "0-1"]
+
+{Queen's Gambit Declined, 34 moves. Alekhine plays a solid defense with Black and gradually improves his position until he obtains a winning advantage -- he exploits it brilliantly. This is the kind of game that makes chess look easy. Alekhine was world champion from 1937-1946.}
+1. d4
+1... Nf6 {To prevent 2. e4}
+2. c4 {Putting pressure on the center. It is important not to block the c pawn in queenside openings.}
+2... e6 {Preparing to develop the bishop and keeping open the possibility of ... d5}
+3. Nf3 
+3... d5 {Also playable is 3... b6 leading to the Queen's Indian Defense. The current position is a Queen's Gambit Declined by transpostion of moves. It could have occurred by 1. d4 d5 2. c4 e6 3. Nf3 Nf6}
+4. Nc3 {Developing and putting pressure on the center.}
+4... Be7
+5. Bg5
+5... Nbd7 {It is important not to block the c pawn by 5... Nc6.}
+6. e3 {A normal developing move.}
+6... 0-0
+7. Rc1 {White anticipates that the c file will be open.}
+7... c6 {Solidifying the defense of the center.}
+8. Qc2
+8. a6 {Black will soon play ... dxc5 followed by ...b5 and ... c5 and eventually ...Bb7.}
+9. a3 {So that after the bishop recaptures on c4 it can retreat to a2.}
+9... h6
+10. Bh4
+10... Re8 {Black is waiting until White develops his bishop before playing ... dxc4}
+11. Bd3
+11... dxc4
+12. Bxc4
+12... b5
+13. Ba2 {From here the bishop can move to b1 supporting the queen in the attack on the king.}
+13... c5
+14. Rd1 {Putting pressure on the soon-to-be opened d file. However, it is usually not a good idea to move a piece twice in the opening and neglect the development of other pieces.}
+14... cxd4
+15. Nxd4
+15... Qb6
+16. Bb1
+16... Bb7 $1 {It looks as if White could now play 17. Ndxb5 axb5 18. Rxd7 Nxd7 19. Qh7+ Kf8 20. Qh8#. However, Black would answer 17. Ndxb5 with 17... Qc6 18. Nd4 Qxg2 with a very good game.}
+18. 0-0
+18... Rac8 {Pinning the knight. Notice how Black has moved each of his pieces only once, but always to the right square.}
+19. Qd2 {Unpinning the knight.}
+19... Ne5 {The knight is headed for c4}
+20. Bxf6 {Now that Black cannot recapture with the knight, White plays for threats on h7.}
+20... Bxf6
+21. Qc2 {Threatening 22. Qh7+ but moving the queen onto the same file as the Black rook.}
+21... g6
+22. Qe2
+22... Nc4 {Threatening 23... Nxa6 24. bxa6 Rxc3. Black's pieces are beautifully placed. The bishop on b7 is very powerful, as is the rook on c8. The knight on c4 puts tremendous pressure on White's position.}
+22. Be4 {So that if 22... Nxa3 then 23. Qf3 Bxe4 24. Nxe4 Bxd4 25. Rxd4 and White is threatening both 24. bxa3 as well as 24. Nf6+ forking the king and rook.}
+22... Bg7 {The bishop is safer here; the threat of ... Nxa3 is renewed.}
+23. Bxb7 
+23... Qxb7
+24. Rc1 {Guarding the knight to prevent 24... Nxa3.}
+24... e5 $1 {The pawn will advance to e4 and support the knight when it moves to d3 via e5.}
+25. Nb3
+25... e4 {The pawn on e4 severely cramps White's game. Black is now threatening 26... Nxa3 27. bxa3 Rxc3 28. Rxc3 Bxc3.}
+26. Nd4
+26... Red8 {Moving the rook to an open file and threatening 27... Bxd4}
+27. Rfd1
+27... Ne5 {On the way to the great outpost d3.}
+28. Na2? {White hopes to reduce the pressure by exchanging rooks. Unfortunately, this move takes the knight too far from the action. Moreover, the fact that the knight is unprotected is the basis of Black's winning 32nd move.}
+28... Nd3
+29. Rxc8
+29... Qxc8
+30. f3 {White attempts to undermine the knight.}
+30... Rxd4 $1 {If 31. exd4 Bxd4+ 32. Kf1 (Not 32.Kh1 Nf2+ 33. Kg1 Nxd1+) 32... Nf4 33. Qxe4 Qc4+ 34. Ke1 Nxg2+ 35. Kd2 Be3+ 36. Qxe3 Nxe3 and Black wins.}
+31. fxe4 {Black has two pieces attacked.}
+31... Nf4 $1
+32. exf4 {White's position looks secure.}
+32... Qc4 $1 {Attacking the queen and the knight. The only way for White to avoid losing a piece is to take the queen.}
+33. Qxc4
+33... Rxd1+ {If 34. Kf2 then 34... bxc4 and Black is ahead by a rook.}
+34. Qf1 {White wins back the rook after 34... Rxf1ch}
+34... Bd4+ {and White resigns. After 35. Kh1 Rxf1#}
+0-1
+

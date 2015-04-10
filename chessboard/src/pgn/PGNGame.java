@@ -57,6 +57,7 @@ public class PGNGame implements Iterable<PGNMove>{
 				current = current.substring(0,current.length()-1);
 			}
 			else if (current.matches(".+#")) {
+				check = true;
 				checkmate = true;
 				current = current.substring(0,current.length()-1);
 			}

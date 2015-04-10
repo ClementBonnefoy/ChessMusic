@@ -1,0 +1,49 @@
+
+[Event "?"]
+[White "Schlecter"]
+[Black "Przepiorka"]
+[Date "1906.??.??"]
+[Result "1-0"]
+
+{Queen's Gambit Declined, 20 moves. Schlecter plays a superior opening and increases the pressure on Przepiorka. When Przepiorka initiates what looks like a simple pawn exchange, Schlecter places a rook on the seventh rank with devastating effect.}
+1. d4 {Controls the center and is usually followed by 2. c4.}
+1... d5
+2. c4 {The Queen's Gambit. It is not a true gambit because White can eventually win back the pawn if Black plays 1... dxc4}
+2... e6 {Declining the gambit and defending the center.}
+3. Nc3 {Developing and putting pressure on the center.}
+3... Nf6 {Defending the center.}
+4. Nf3 {Developing.}
+4... Nbd7
+5. Bg5 {Pinning the knight to the queen.}
+5... Be7 {Breaking the pin.}
+6. e3 {Preparing to develop the bishop.}
+6... b6 {It would have been better to castle first.}
+7. cxd5 {If now 7... exd5 then 8. Bb5 Bb7 9. Ne5 (Threatening 10. Bxf6 Bxf6 11. Bxd7+) 0-0 10. Bc6 Bxc6 11.Nxc6 and White has a strong postion.}
+7... Nxd5
+8. Nxd5 {If 8... Bxg5 then 9. Nxc7+ Qxc7 10.Nxg5 and White is a pawn ahead.}
+8... exd5
+9. Bf4 {White now has the more active pieces and a chance to bring the rook into action on the c file.}
+9... 0-0 {Getting the king out of the center and bringing the rook into play.}
+10. Bd3 {The bishop has designs on the Black king.}
+10... c5 {Attempting to put pressure on the queenside.}
+11. 0-0 {Continuing development.}
+11... Bb7
+12. Rc1 {Rooks work best when not blocked by their own pawns.}
+12... Re8
+13. Ne5 {Centralizing the knight and putting pressure on the Black king.}
+13... Nxe5
+14. Bxe5
+14... cxd4? {The losing move. It lets White's rook slip in.}
+15. Rc7 {Black's days are numbered.}
+15... Bc8 {White controls most of the board.}
+16. Qh5 {Threatening 17. Qxh7+ Kf8 18. Qh8#.}
+16... g6
+17. Bxg6 $1 {If Black plays 17... hxg6 then 18. Qh8#.}
+17... fxg6
+18. Qh6 {Threatening Qg7#.}
+18... Bf6
+19. Qxh7+ {The White rook has made its presence known.}
+19... Kf8
+20. Qf7# {Black actually resigned after White's 17th move.}
+1-0
+
