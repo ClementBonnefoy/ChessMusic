@@ -76,7 +76,7 @@ public class KingSideCastling extends Move {
 		else
 			checkMate = false;
 		
-		undo(board);
+		undoFrom(board);
 		
 		return new PGNKingSideCastling(movingPiece.getColor(), check, checkMate, board.getMoveNumber());
 	}

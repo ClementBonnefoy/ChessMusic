@@ -439,7 +439,7 @@ public enum Movement {
 
 			board.invertPlayer();
 
-			move.undo(board);
+			move.undoFrom(board);
 
 		}
 		

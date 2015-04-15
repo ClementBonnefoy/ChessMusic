@@ -75,7 +75,7 @@ public class DisablingCastlingMove extends Move {
 		else
 			checkMate = false;
 		
-		undo(board);
+		undoFrom(board);
 		
 		if (movingPiece.getType() == Rook) {
 			PGNMove pm = super.makePGNMove(board);

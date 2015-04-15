@@ -1,9 +1,13 @@
 package move;
 
-import static board.Color.*;
-
+import static board.Color.Black;
 import pgn.PGNMove;
-import board.*;
+import board.Board;
+import board.EPiece;
+import board.ESquare;
+import board.File;
+import board.Piece;
+import board.Rank;
 
 public class Move {
 
@@ -43,6 +47,9 @@ public class Move {
 		specificApply(board);
 		
 		board.invertPlayer();
+		
+		board.storeCurrentPosition();
+
 	}
 
 	protected static void simpleMove(Board board, ESquare from, ESquare to) {
@@ -67,7 +74,9 @@ public class Move {
 		
 	}
 	
-	public final void undo(Board board) {
+	public final void undoFrom(Board board) {
+	
+		board.removeCurrentPosition();
 		
 		board.invertPlayer();
 		
@@ -139,7 +148,7 @@ public class Move {
 		else
 			checkMate = false;
 		
-		undo(board);
+		undoFrom(board);
 		
 		return new PGNMove(movingPiece.getType(), movingPiece.getColor(),
 				to, pgnRank, pgnFile,
@@ -188,8 +197,6 @@ public class Move {
 		return "Move [from=" + from + ", to=" + to + ", movingPiece="
 				+ movingPiece + ", enPassantBefore=" + enPassantBefore + "]";
 	}
-	
-	
 	
 	
 	

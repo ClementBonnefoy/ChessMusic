@@ -21,11 +21,21 @@ let themebartok = { 2b18, 3b6, 2b3, 3b3, 4b18, 5b6, 6b6, 4b4, 5b4,
 
 let theme2locrien = { 5a3, 4a3, 5a3, 3a27, 4a3,
                          3a3, 4a3, 2a30, 2a3, 3a3, 2a3, 4a3, 3a3, 2a3, 1a15, ?24 } ;
+                         
+let rythme = { 1a6, 1a2, 1a2, 1a2, 1a6, 1a2, 1a2, 1a2, 1a6, 1a6,
+					1a6, 1a2, 1a2, 1a2, 1a6, 1a2, 1a2, 1a2, 1a2, 1a2, 1a2, 1a2, 1a2, 1a2};
+					
+let harmoBasse1 = { 1b12, ?12, 5a12, 1b12, ?12, 5a6, ?6};
+let harmoBasse2 = { ?24, 5b12, ?24, 5b6, 5b6};
+let harmoAigu1 = { 5b12, 5b12, ?12, 5b12, 5b12, ?12};
+let harmoAigu2 = { ?12, 5c12, ?12, ?12, 5c12, ?12};
 
 let myxob9b13 = scale myxolydian {,-,,,,-,} ;
 let bartokscale = scale myxolydian {,,,,,-,} ;
 
 let instrument1=ens (instru piano) (instru flute);
+
+
 
 begin
 tempo 120;

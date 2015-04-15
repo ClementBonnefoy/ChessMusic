@@ -49,7 +49,7 @@ public class EnPassantCapture extends Move {
 		else
 			checkMate = false;
 		
-		undo(board);
+		undoFrom(board);
 		
 		return new PGNMove(movingPiece.getType(), movingPiece.getColor(), to, null, from.getFile(),
 				true, check, checkMate,

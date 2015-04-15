@@ -71,7 +71,7 @@ public class QueenSideCastling extends Move {
 		else
 			checkMate = false;
 		
-		undo(board);
+		undoFrom(board);
 		return new PGNQueenSideCastling(movingPiece.getColor(), check, checkMate,
 				board.getMoveNumber());
 

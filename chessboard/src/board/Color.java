@@ -11,7 +11,7 @@ import static board.ESquare.C8;
 public enum Color {
 	Black, White;
 	
-	public Color getOpponent() {
+	public Color opponent() {
 		return this == White ? Black : White;
 	}
 	

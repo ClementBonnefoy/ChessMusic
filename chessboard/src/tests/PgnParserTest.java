@@ -18,9 +18,10 @@ public class PgnParserTest {
 
 
 		try (Scanner sc = new Scanner(System.in)) {
-
+			int cpt = 0;
 			for (File f : new File("games").listFiles()) {
 //				File f = new File("games/gameTest.pgn");
+				System.out.println(++cpt);
 				System.out.println("------ "+f.getName()+" -------");
 
 				PGNParser pgn = new PGNParser(f);
@@ -36,23 +37,23 @@ public class PgnParserTest {
 				boards[0] = board.clone();
 				
 				for (int i = 0; i < game.size(); i++) {
-					System.out.println(game.get(i));
+//					System.out.println(game.get(i));
 					tab[i] = game.get(i).makeMove(board);
 					if (!tab[i].makePGNMove(board).equals(game.get(i)))
-						throw new RuntimeException();
+						throw new RuntimeException(tab[i].makePGNMove(board).toString());
 					tab[i].applyTo(board);
 					boards[i+1] = board.clone();
-					System.out.println();
-					System.out.println(board);
-					System.out.println();
+//					System.out.println();
+//					System.out.println(board);
+//					System.out.println();
 				}
 				
 				for (int i = game.size() - 1; i >= 0; i--) {
 //					System.out.println(EnumBoard.TheBoard);
-					System.out.println();
-					System.out.println(game.get(i));
-					System.out.println();
-					tab[i].undo(board);
+//					System.out.println();
+//					System.out.println(game.get(i));
+//					System.out.println();
+					tab[i].undoFrom(board);
 					if (!boards[i].equals(board.clone()))
 						throw new RuntimeException(
 								boards[i]+"\n"
@@ -64,7 +65,7 @@ public class PgnParserTest {
 				}
 //				
 //				
-				sc.nextLine();
+//				sc.nextLine();
 //
 //				//				System.out.println(game);
 

@@ -56,7 +56,7 @@ public class SimpleCapture extends Move {
 		else
 			checkMate = false;
 		
-		undo(board);
+		undoFrom(board);
 		
 		PGNMove pm = super.makePGNMove(board);
 		File file = pm.getFromFile();

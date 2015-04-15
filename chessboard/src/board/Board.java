@@ -40,6 +40,8 @@ import static board.Type.King;
 import static board.Type.Pawn;
 
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 import move.Direction;
 import move.Move;
@@ -51,33 +53,35 @@ public class Board extends EnumMap<ESquare, Square> {
 	 * 
 	 */
 	private static final long serialVersionUID = -4765222647439466591L;
-	
+
 	private Side whiteSide, blackSide;
-	
+
 	private Color currentPlayer;
-	
+
 	private ESquare enPassant;
 
 	private int limit50moves;
-	
+
 	private int moveNumber;
-	
+
+	private Map<String,Integer> previousPositions;
+
 	public void putOnSquare(Piece p, ESquare sq) {
 		get(sq).setPiece(p);
 	}
-	
+
 	public Side currentSide() {
 		return currentPlayer == White ? whiteSide : blackSide;
 	}
-	
+
 	public Side opponentSide() {
 		return currentPlayer == White ? blackSide : whiteSide;
 	}
-	
+
 	public Side getSide(Color color) {
 		return color == White ? whiteSide : blackSide;
 	}
-	
+
 	public Color getCurrentPlayer() {
 		return currentPlayer;
 	}
@@ -85,9 +89,9 @@ public class Board extends EnumMap<ESquare, Square> {
 	public void setCurrentPlayer(Color currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
-	
+
 	public void invertPlayer() {
-		currentPlayer = currentPlayer.getOpponent();
+		currentPlayer = currentPlayer.opponent();
 	}
 
 	public ESquare getEnPassant() {
@@ -114,12 +118,13 @@ public class Board extends EnumMap<ESquare, Square> {
 		this.moveNumber = moveNumber;
 	}
 
-	public Board (){
+	public Board() { 
 		super(ESquare.class);
 		whiteSide = new Side(White);
 		blackSide = new Side(Black);
+		previousPositions = new HashMap<String, Integer>();
 	}
-	
+
 	public Piece getPiece(ESquare c) {
 		return get(c).getPiece();
 	}
@@ -127,28 +132,46 @@ public class Board extends EnumMap<ESquare, Square> {
 	public boolean isEmpty(ESquare c) {
 		return getPiece(c) == null;
 	}
-	
+
 	public boolean isEnemy(ESquare c) {
 		return !isEmpty(c) && currentPlayer != getPiece(c).getColor();
+	}
+
+	public void storeCurrentPosition() {
+		String positionFen = toFEN(true);
+		if (previousPositions.containsKey(positionFen))
+			previousPositions.put(positionFen, previousPositions.get(positionFen) + 1);
+		else
+			previousPositions.put(positionFen,1);
+	}
+
+	public void removeCurrentPosition() {
+		String positionFen = toFEN(true);
+		if (previousPositions.get(positionFen) > 1)
+			previousPositions.put(positionFen, previousPositions.get(positionFen) - 1);
+		else
+			previousPositions.remove(positionFen);
 	}
 	
 	public void reset() {
 		for (ESquare sq : ESquare.values())
 			put(sq,makeSquare(sq));
-		
+
 		setEnPassant(null);
 		setCurrentPlayer(null);
+
+		currentSide().reset();
+		opponentSide().reset();
 		
-		currentSide().init();
-		opponentSide().init();
+		previousPositions.clear();
 	}
-	
+
 	public void init () {
-		
+
 		reset();
-		
+
 		setCurrentPlayer(White);
-		
+
 		currentSide().setKing(get(E1));
 		opponentSide().setKing(get(E8));
 
@@ -190,9 +213,12 @@ public class Board extends EnumMap<ESquare, Square> {
 		for (ESquare c : Rank8)
 			if (c != E8)
 				opponentSide().add(get(c));
+		
+		storeCurrentPosition();
+
 
 	}
-	
+
 	public  void init(String fen) throws InvalidFenException {
 
 		if (fen == null) {
@@ -203,7 +229,7 @@ public class Board extends EnumMap<ESquare, Square> {
 		if (fen.equals(""))
 			throw new InvalidFenException(fen,"FEN is empty");
 
-		
+
 		String[] elems = fen.split(" ");
 
 		if (elems.length != 6)
@@ -280,8 +306,11 @@ public class Board extends EnumMap<ESquare, Square> {
 		setLimit50moves(Integer.valueOf(elems[4]));
 
 		setMoveNumber(Integer.valueOf(elems[5]));
+		
+		storeCurrentPosition();
+
 	}
-	
+
 	public Piece[] getPieces (File f) {
 		Piece[] filePieces = new Piece[8];
 
@@ -291,7 +320,7 @@ public class Board extends EnumMap<ESquare, Square> {
 
 		return filePieces;
 	}
-	
+
 	public Piece[] getPieces (Rank r) {
 		Piece[] rankPieces = new Piece[8];
 
@@ -301,7 +330,7 @@ public class Board extends EnumMap<ESquare, Square> {
 
 		return rankPieces;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -349,30 +378,34 @@ public class Board extends EnumMap<ESquare, Square> {
 			return false;
 		return true;
 	}
-	
+
 	public Board clone() {
 		Board newBoard = new Board();
-		
+
 		for (ESquare eSquare : keySet())
 			newBoard.put(eSquare, get(eSquare).clone());
-		
+
 		newBoard.whiteSide = whiteSide.simpleCopy();
 		newBoard.blackSide = blackSide.simpleCopy();
-		
+
 		for (Square square : whiteSide)
 			newBoard.whiteSide.add(newBoard.get(square.getESquare()));
 		for (Square square : blackSide)
 			newBoard.blackSide.add(newBoard.get(square.getESquare()));
-		
+
 		newBoard.currentPlayer = currentPlayer;
 		newBoard.enPassant = enPassant;
 		newBoard.limit50moves = limit50moves;
 		newBoard.moveNumber = moveNumber;
-		
+
 		return newBoard;
 	}
 
 	public String toFEN() {
+		return toFEN(false);
+	}
+
+	private String toFEN(boolean fenToStore) {
 		StringBuilder sb = new StringBuilder();
 
 		int emptySquares;
@@ -425,6 +458,9 @@ public class Board extends EnumMap<ESquare, Square> {
 		else
 			sb.append(getEnPassant().toString().toLowerCase());
 
+		if (fenToStore)
+			return sb.toString();
+
 		sb.append(' ');
 
 		sb.append(getLimit50moves());
@@ -464,33 +500,33 @@ public class Board extends EnumMap<ESquare, Square> {
 		}
 		return sb.toString();
 	}
-	
+
 	public Square makeSquare(ESquare eSquare) {
 		return new Square(eSquare);
 	}
-	
+
 	public Piece makePiece (EPiece ePiece) {
 		return new Piece (ePiece);
 	}
 
 	public void onMove(Move move) {
-		
+
 	}
 
 	public void onUndoMove(Move move) {
-		
+
 	}
-	
+
 	public boolean isEnPrise(ESquare eSquare) {
 		Piece piece;
 		Movement mvmt;
 		for (Square square : opponentSide()) {
 			piece = square.getPiece();
 			mvmt = Movement.get(piece.getType());
-			
+
 			if (piece.getType() != Pawn)	{
 				if (mvmt.basicDestinations(this, square.getESquare()).
-					contains(eSquare))
+						contains(eSquare))
 					return true;
 			}
 			else {
@@ -507,59 +543,69 @@ public class Board extends EnumMap<ESquare, Square> {
 		mvmt = Movement.get(King);
 		if (mvmt.basicDestinations(this, opponentSide().getKing().getESquare()).
 				contains(eSquare))
-				return true;
-		
-		
+			return true;
+
+
 		return false;
 	}
-	
+
 	public boolean isInCheck() {
-		
+
 		return isEnPrise(currentSide().getKing().getESquare());
 	}
-	
+
 	public boolean isMate() {
 		if (!isInCheck())
 			return false;
-		
+
 		Piece piece;
 		Movement mvmt;
-		
+
 		for (Square square : currentSide()) {
 			piece = square.getPiece();
 			mvmt = Movement.get(piece.getType());	
 			if (!mvmt.realMoves(this, square.getESquare()).isEmpty())
 				return false;
 		}
-		
+
 		mvmt = Movement.get(King);
 		if (!mvmt.realMoves(this, currentSide().getKing().getESquare()).isEmpty())
 			return false;
-		
 		return true;
-		
+
 	}
-	
+
 	public boolean isStaleMate() {
 		if (isInCheck())
 			return false;
-		
+
 		Piece piece;
 		Movement mvmt;
-		
+
 		for (Square square : currentSide()) {
 			piece = square.getPiece();
 			mvmt = Movement.get(piece.getType());	
 			if (!mvmt.realMoves(this, square.getESquare()).isEmpty())
 				return false;
 		}
-		
+
 		mvmt = Movement.get(King);
 		if (!mvmt.realMoves(this, currentSide().getKing().getESquare()).isEmpty())
 			return false;
-		
+
 		return true;
-		
+
+	}
+	
+	public boolean isDrawByRepeating() {
+		Integer timesRepeated = previousPositions.get(toFEN(true));
+		if (timesRepeated != null && timesRepeated >= 3)
+			return true;
+		return false;
+	}
+	
+	public boolean isDrawBy50MovesLimit() {
+		return limit50moves == 50;
 	}
 
 }

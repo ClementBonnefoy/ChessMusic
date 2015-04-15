@@ -55,16 +55,22 @@ public class PGNParser {
 	public void parse() throws InvalidPGNMoveException {
 
 		// suppression commentaires et variations
-		string = string.replaceAll("\\{[^}]*\\}|\\([^)]*\\)","");
+		string = string.replaceAll("\\{[^}]*\\}","");
+		while (string.matches(".*\\(.*\\).*"))
+			string = string.replaceAll("\\([^()]*\\)","");
 		// suppression ? et !
 		string = string.replaceAll("!|\\?","");
 		// suppression des espaces et points en double
 		string = string.replaceFirst("^\\s", "").replaceAll("\\s+", " ").replaceAll("\\.\\.+", ".");
 		// insertion d'un espace après le numéro de coup s'il manque
 		string = string.replaceAll("\\.([^ ])","\\. $1");
+		// remplacement de l'écriture fautive du roque (0 à la place de O)
+		string = string.replaceAll("0-0-0","O-O-O").replaceAll("0-0","O-O");
 		// on ne garde que les coups, séparés par des espaces (plus de "e.p.")
 		string = string.replaceFirst("\\d+\\.(\\.\\.)? ","").replaceAll(" ([^KQRNBa-hO][^ ]* )+"," ");
 
+		
+		
 		moves = string.split(" ");
 
 		String moveRegex =

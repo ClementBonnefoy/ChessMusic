@@ -44,7 +44,7 @@ public class PGNGame implements Iterable<PGNMove>{
 		String current;
 
 		for (int i = 0; i < strings.length; i++, moveNumber += color == White ? 0 : 1,
-												color = color.getOpponent()) {
+												color = color.opponent()) {
 			rank = null;
 			file = null;
 			capture = false;

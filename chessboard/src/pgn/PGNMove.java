@@ -121,6 +121,7 @@ public class PGNMove {
 		for (ESquare c : mvmt.basicDestinations(board, to)) {
 			if (board.getPiece(c) != null && 
 					board.getPiece(c).getEPiece() == ePiece) {
+
 				if (fromFile != null && c.getFile() != fromFile)
 					continue;
 				if (fromRank != null && c.getRank() != fromRank)
