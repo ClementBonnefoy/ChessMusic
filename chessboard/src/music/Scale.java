@@ -107,11 +107,15 @@ public class Scale {
 	}
 
 
-	public Note getNote(ComplexNote n) {
+	public Note getNote(ComplexNote n, int transpose) {
 		int octave=n.getOctave().getValue();
-		int role=n.getRole().getRole();
+		int role=n.getRole().getRole()+transpose;
 		int alteration=n.getRole().getAlteration();
 		Note note=new Note(fundamental,0);
+		while(role<=0){
+			role+=scale.length;
+			octave--;
+		}
 		while(role>scale.length){
 			role-=scale.length;
 			octave++;

@@ -41,6 +41,11 @@ public class Play implements IInstruction {
 	public IPlayableElement getElement() {
 		return playableElement;
 	}
+
+	public void setScale(IPlayableScale scale) {
+		this.scale=scale;
+		
+	}
 	
 	
 	

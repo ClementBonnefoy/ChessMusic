@@ -8,9 +8,9 @@ begin
 tempo 120;
 play (scale c ionian) instrument1 theme;
 play (scale c ionian) (instru flute) theme;
-play (scale c ionian) (ens instru flute instrument1) theme;
+play (scale c ionian) (ens (instru flute 50) instrument1) theme;
 play (scale c ionian) (chord (instrument1 theme) ((instru flute)
-	(sequence ?r theme)));
+	(sequence ?r (transpose 2 theme))));
 play (scale c dorian) (instru flute) theme;
 
 end;

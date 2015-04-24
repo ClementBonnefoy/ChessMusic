@@ -37,7 +37,7 @@ public void report_fatal_error(String message, Object info) {
 
 
 terminal           SEMI, PLUS, MINUS,LPAREN, RPAREN,LACCOL, RACCOL, EQUAL, COMA;
-terminal           LET, ENS, BEGIN, END, TEMPO, PLAY, SCALE, CHORD, SEQUENCE, REST, INSTRU;
+terminal           LET, ENS, BEGIN, END, TEMPO, PLAY, SCALE, CHORD, SEQUENCE, REST, INSTRU, REPEAT, TRANSPOSE;
 terminal String    LETTER, COMPLEXNOTE;
 terminal Integer   NUMBER;
 terminal String    STRING,SCALENAME;
@@ -46,10 +46,12 @@ non terminal Object     music, declarations,nedeclarations, body, declaration, s
 non terminal Object     instrument, note_sequence, complex_note, instructions, tempo, instruction;
 non terminal Object     play, playable_element, note, playable_chord, playable_sequence;
 non terminal Object     sequence, chord, time;
-non terminal Object     identifiant;
+non terminal Object     identifiant, repeat, transpose;
 non terminal Object     scale_type, alteration ;
 non terminal Object     scale_definition, musical_element_definition, instrument_definition, time_definition;
-non terminal Object     scale_redefinition ;
+non terminal Object     scale_redefinition, musical_element_list;
+non terminal Object     musical_element_and_note_sequence;
+non terminal Object     velocity;
 
 
 /* -------------Precedence and Associatively of Terminals Section----------- */
@@ -64,7 +66,7 @@ declarations ::= {: RESULT = null ; :}
     | nedeclarations : n {: RESULT = n ; :}
 ;
 
-nedeclarations ::=  LET identifiant:i EQUAL declaration:d SEMI {: Declarations env = new Declarations(new                       Declaration((Variable)i,(IDeclarable)d),null) ;
+nedeclarations ::=  LET identifiant:i EQUAL declaration:d SEMI {: Declarations env = new Declarations(new Declaration((Variable)i,(IDeclarable)d),null) ;
         RESULT = env ;:}
     | nedeclarations:ds LET identifiant:i EQUAL declaration:d SEMI {: Declarations env = new Declarations(new   Declaration((Variable)i,(IDeclarable)d),(Declarations)ds) ;
         RESULT = env ;:}
@@ -76,21 +78,28 @@ declaration ::= identifiant:i {: RESULT = i ; :}
     | scale_redefinition:s {: RESULT = s ; :}
     | musical_element_definition:m {: RESULT = m ; :}
     | instrument_definition:i {: RESULT = i ; :}
-    | LACCOL note_sequence:n RACCOL {: RESULT = n ; :}
     | time_definition:t {: RESULT = t ; :}
+    | note_sequence:s {: RESULT = s ; :}
 ;
 
 instrument ::= identifiant:i {: RESULT = i ; :}
+    | identifiant:i velocity:v {: RESULT = new InstrumentWithVelocity((IInstrument)i,(int)v); :}
     | LPAREN instrument:i RPAREN {: RESULT = i ; :}
     | instrument_definition:i {: RESULT = i ; :}
 ;
 
 instrument_definition ::= ENS instrument:i1 instrument:i2 {: RESULT = new Ens((IInstrument)i1,(IInstrument)i2) ; :}
     | INSTRU STRING:s {: RESULT = Instrument.instrument(s); :}
+    | INSTRU STRING:s velocity:v {: RESULT = new InstrumentWithVelocity(Instrument.instrument(s),(int)v); :}
 ;
 
-note_sequence ::= complex_note:c {: RESULT = c ; :}
-    | complex_note:c COMA note_sequence:n {: RESULT = new Sequence((IMusicalElement)c,(IMusicalElement)n) ; :}
+musical_element_list ::= musical_element:e {: RESULT=e ; :}
+    | musical_element:e COMA musical_element_list:n {: RESULT = new Sequence((IMusicalElement)e,(IMusicalElement)n) ; :}
+    | note_sequence:s {: RESULT = s ; :}
+    | note_sequence:s COMA musical_element_list:n {: RESULT = new Chord((IMusicalElement)s,(IMusicalElement)n) ; :}
+;
+
+note_sequence ::= LACCOL musical_element_list:m RACCOL {: RESULT = m; :}
 ;
 
 body ::= BEGIN instructions:i END SEMI {: RESULT = i ; :}
@@ -151,6 +160,13 @@ playable_chord ::= CHORD playable_element:e1 playable_element:e2 {: RESULT = new
 playable_sequence ::= SEQUENCE playable_element:e1 playable_element:e2 {: RESULT = new PlayableSequence((IPlayableElement)e1,(IPlayableElement)e2) ; :}
 ;
 
+musical_element_and_note_sequence ::= identifiant:i {: RESULT = i ; :}
+    | LPAREN musical_element:m RPAREN {: RESULT = m ; :}
+    | musical_element_definition:m {: RESULT = m ; :}
+    | note_sequence:s {: RESULT = s ; :}
+;
+
+
 musical_element ::= identifiant:i {: RESULT = i ; :}
     | LPAREN musical_element:m RPAREN {: RESULT = m ; :}
     | musical_element_definition:m {: RESULT = m ; :}
@@ -159,6 +175,15 @@ musical_element ::= identifiant:i {: RESULT = i ; :}
 musical_element_definition ::= complex_note:c {: RESULT = c ; :}
     | sequence:s {: RESULT = s ; :}
     | chord:c {: RESULT = c ; :}
+    | repeat:r {: RESULT = r ; :}
+    | transpose:t {: RESULT = t ; :}
+;
+
+repeat ::= REPEAT NUMBER:n musical_element_and_note_sequence:m {: RESULT = new Repeat((int)n,(IMusicalElement)m); :}
+;
+
+transpose ::= TRANSPOSE NUMBER:n musical_element_and_note_sequence:m {: RESULT = new Transpose((int)n,(IMusicalElement)m); :}
+    | TRANSPOSE MINUS NUMBER:n musical_element_and_note_sequence:m {: RESULT = new Transpose((int)-n,(IMusicalElement)m); :}
 ;
 
 complex_note ::= COMPLEXNOTE:c {: RESULT = ComplexNote.parse(c) ; :}
@@ -172,15 +197,17 @@ time ::= identifiant:i {: RESULT = i ; :}
     | time_definition:t {: RESULT = t ; :}
 ;
 
-chord ::= CHORD musical_element:e1 musical_element:e2 {: RESULT = new Chord((IMusicalElement)e1,(IMusicalElement)e2) ; :}
+chord ::= CHORD musical_element_and_note_sequence:e1 musical_element_and_note_sequence:e2 {: RESULT = new Chord((IMusicalElement)e1,(IMusicalElement)e2) ; :}
 ;
 
-sequence ::= SEQUENCE musical_element:e1 musical_element:e2 {: RESULT = new Sequence((IMusicalElement)e1,(IMusicalElement)e2) ; :}
+sequence ::= SEQUENCE musical_element_and_note_sequence:e1 musical_element_and_note_sequence:e2 {: RESULT = new Sequence((IMusicalElement)e1,(IMusicalElement)e2) ; :}
 ;
 
 identifiant ::= STRING:s {: RESULT = new Variable((String)s); :}
     | LETTER:l {: RESULT = new Variable((String)l); :}
 ;
 
+velocity ::= NUMBER:n {: RESULT = n ; :}
+;
 
 

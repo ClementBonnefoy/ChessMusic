@@ -74,7 +74,6 @@ import move.QueenSideCastling;
 import music.NoteName;
 import music.Scale;
 import music.scale.PentatonicFake;
-import music.scale.PentatonicMinor;
 import pgn.InvalidPGNMoveException;
 import pgn.PGNGame;
 import pgn.PGNMove;
@@ -89,7 +88,11 @@ import eco.ECOParser;
 
 public class ChessWave {
 	
-	Scale scale;
+	private Scale scale;
+	private ChessWaveMidi md;
+	private PGNGame pgnGame;
+	private Board board;
+	private boolean analyse=false;
 	
 	public class MovedPiece extends Piece {
 		public MovedPiece(EPiece ePiece) {
@@ -122,10 +125,10 @@ public class ChessWave {
 		{ E5 , E6 , E7 , E8 } ,	{ F5 , F6 , F7 , F8 } ,	{ G5 , G6 , G7 , G8 } ,	{ H5 , H6 , H7 , H8 }
 		};
 
-	private Board board;
+	
 
 	@SuppressWarnings("serial")
-	public ChessWave(){
+	public ChessWave(File pgnFile){
 		board = new Board(){
 			@Override
 			public Piece makePiece (EPiece ePiece) {
@@ -135,28 +138,9 @@ public class ChessWave {
 			}
 		};
 		board.init();
-
-	}
-
-
-	public void playAMove(Move mv){
-		mv.applyTo(board);
-	}
-	
-	
-	public void createMidiFromPGN(String pgnFileName, String midiFileName) {
-		createMidiFromPGN(new File(pgnFileName), midiFileName);
-	}
-	
-
-	public void createMidiFromPGN(File f,String midiFileName){
-
-		ChessWaveMidi md=new ChessWaveMidi();
 		
 
-		PGNParser parser=new PGNParser(f);
-
-		PGNGame pgnGame = null;
+		PGNParser parser=new PGNParser(pgnFile);
 
 		try {
 			parser.parse();
@@ -168,10 +152,33 @@ public class ChessWave {
 		
 		initScale(pgnGame);
 
+	}
+	
+	public ChessWave(String pgnFileName){
+		this(new File(pgnFileName));
+	}
+
+
+	public void playAMove(Move mv){
+		mv.applyTo(board);
+	}
+	
+	
+	/*public void createMidiFromPGN(String pgnFileName, String midiFileName) {
+		createMidiFromPGN(new File(pgnFileName), midiFileName);
+	}*/
+	
+
+	public void analyse(){
+		if(analyse)
+			return;
+		
+		
+		md=new ChessWaveMidi();
+		
 		int time=0;
 
 		for(PGNMove pm : pgnGame){
-
 			playAMove(pm.makeMove(board));
 
 			for(int j=0;j<plage.length;j++){
@@ -185,18 +192,36 @@ public class ChessWave {
 				time++;
 			}
 		}
-
-		md.saveMidi(midiFileName);
+		analyse=true;
+	}
+	
+	
+	public void saveAsMidi(String fileName){
+		analyse();
+		md.saveMidi(fileName);
+	}
+	
+	public void play(){
+		analyse();
+		md.play();
+		
 	}
 
 
 	private void initScale(PGNGame pgnGame) {
+		if(!Configuration.ECOscale){
+			scale=new PentatonicFake(NoteName.C);
+			return;
+		}
 		ECOParser parser=new ECOParser("eco.txt");
 		String code=parser.findCode(pgnGame);
 		NoteName note=NoteName.valueOf(code.substring(0, 1));
 		Integer nombre=Integer.valueOf(code.substring(1,code.length()));
-		
-		scale=new Scale(note,nombre);
+		if(nombre==0){
+			scale=new PentatonicFake(note);
+		}else{
+			scale=new Scale(note,nombre);
+		}
 		System.out.println(scale);
 		
 	}

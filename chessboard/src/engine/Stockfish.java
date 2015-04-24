@@ -103,9 +103,20 @@ public class Stockfish {
 	public void stopEngine() {
 		try {
 			sendCommand("quit");
-			processReader.close();
-			processWriter.close();
-		} catch (IOException e) {
+
+		} catch(Exception e) {
+			stopEngine();
+		}finally{
+
+			try {
+				processWriter.close();
+				processReader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
 		}
 	}
 
@@ -116,7 +127,7 @@ public class Stockfish {
 	 *            Position string
 	 * @return String of moves
 	 */
-	
+
 	@Deprecated //ne marche pas
 	public String getLegalMoves(String fen) {
 		sendCommand("position fen " + fen);
@@ -156,22 +167,25 @@ public class Stockfish {
 		for (int i = dump.length - 1; i >= 0; i--) {
 			if (dump[i].startsWith("info depth ")) {
 				try {
-				evalScore = Double.parseDouble(dump[i].split("score cp ")[1]
-						.split(" nodes")[0]);
-				break;
+					evalScore = Double.parseDouble(dump[i].split("score cp ")[1]
+							.split(" nodes")[0]);
+					break;
 				} catch(Exception e) {
 					try{
-					@SuppressWarnings("unused")
-					String mate=dump[i].split("mate ")[1];
-					evalScore=30000;
-					break;
+						double mate=Double.parseDouble(
+								dump[i].split("mate ")[1].split("nodes")[0]);
+						if(mate<0)
+							evalScore=-30000;
+						else
+							evalScore=30000;
+						break;
 					} catch(Exception e2){}
 				}
 			}
 		}
 		return evalScore/100;
 	}
-	
+
 	/**
 	 * Starting a position evaluation 
 	 * @param fen Position string
@@ -180,39 +194,42 @@ public class Stockfish {
 		sendCommand("position fen " + fen);
 		sendCommand("go infinite");
 	}
-	
+
 	/**
 	 * Get the evaluation score of the currently evaluating position
 	 * @return
 	 * @throws NoEvaluationException 
 	 */
 	public double getEvalScore() throws NoEvaluationException{
-		
+
 		//sendCommand("stop"); 
-		
+
 		double evalScore=Double.NaN;
 		String[] dump = getOutput(0).split("\n");
 		for (int i = dump.length - 1; i >= 0; i--) {
 			if (dump[i].startsWith("info depth ")) {
 				try {
-				evalScore = Double.parseDouble(dump[i].split("score cp ")[1]
-						.split(" nodes")[0]);
-				break;
+					evalScore = Double.parseDouble(dump[i].split("score cp ")[1]
+							.split(" nodes")[0]);
+					break;
 				} catch(Exception e) {
 					try{
-					@SuppressWarnings("unused")
-					String mate=dump[i].split("mate ")[1];
-					evalScore=30000;
-					break;
+						double mate=Double.parseDouble(
+								dump[i].split("mate ")[1].split("nodes")[0]);
+						if(mate<=0)
+							evalScore=-30000;
+						else
+							evalScore=30000;
+						break;
 					} catch(Exception e2){}
 				}
 			}
 		}
-		
+
 		if(evalScore == Double.NaN)
 			throw new NoEvaluationException();
 		return evalScore/100;
-		
+
 	}
-	
+
 }

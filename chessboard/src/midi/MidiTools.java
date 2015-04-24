@@ -69,7 +69,16 @@ public class MidiTools {
 
 
 
-	public static MidiEvent createNoteOnEvent(int nKey, long lTick,int channel)
+	public static MidiEvent createNoteOnEvent(int nKey,int velocity, long lTick,int channel)
+	{
+		return createNoteEvent(ShortMessage.NOTE_ON,
+				nKey,
+				velocity,
+				lTick,
+				channel);
+	}
+	
+	public static MidiEvent createNoteOnEvent(int nKey,long lTick,int channel)
 	{
 		return createNoteEvent(ShortMessage.NOTE_ON,
 				nKey,
@@ -77,8 +86,6 @@ public class MidiTools {
 				lTick,
 				channel);
 	}
-
-
 
 	public static MidiEvent createNoteOffEvent(int nKey, long lTick,int channel)
 	{

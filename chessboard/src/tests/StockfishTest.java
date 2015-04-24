@@ -38,21 +38,20 @@ public class StockfishTest {
 
 		// starting evaluate a new position
 		client.startEvalScore(FEN);
-		
+
 		try {
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
+
 		//get the evaluation score 
 		try {
 			System.out.println("Evaluation score : " + client.getEvalScore());
-		} catch (NoEvaluationException e) {
-			e.printStackTrace();
-		}
-		
-		
+		} catch (NoEvaluationException e) {}
+
+
+
 
 		// stop the engine
 		System.out.println("Stopping engine..");

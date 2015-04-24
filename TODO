@@ -1,15 +1,9 @@
-Compilateur SML:
--Ajout des commentaires ("à la C")
--Ajouter des instruments
 
-Parser PGN:
--Résoudre les problèmes de parsing qui survienne lors du lancement de la classe ChessWaveTest
+ChessTube:
+-Finir d’écrire le boléro
 
 ChessWave:
 -Déterminer les meilleurs instruments possible
 
-Site Internet:
--Obtenir une image correspondant à une position
--Générer un fichier midi depuis une partie envoyé par le client
--Permettre la lecture de ce fichier midi
--Faire défiler des images correspondant à la position par rapport à la lecture du midi.
+Rapport: 
+-Ecrire un plan

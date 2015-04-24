@@ -8,8 +8,8 @@ public class PositionEvaluatorProcess implements Runnable {
 	private Stockfish engine; //Stockfish est associe a un processus
 	private String fen;
 	private Color currentPlayer;
-	private double result=0;
 	public boolean isAlive=false;
+	public Evaluation evaluation=null;
 
 	public PositionEvaluatorProcess(Board b){
 		this.fen=b.toFEN();
@@ -25,12 +25,21 @@ public class PositionEvaluatorProcess implements Runnable {
 		engine.startEvalScore(fen);
 
 	}
+	
+	public Evaluation getEvaluation(){
+		if(evaluation==null)
+			return checkAndGetEvaluation();
+		return evaluation;
+	}
 
-	public double getScore(){
+	public Evaluation checkAndGetEvaluation(){
+		if(!isAlive)
+			return evaluation;
 		
+		double score=0;
 		while(isAlive){
 			try {
-				result=engine.getEvalScore();
+				score=engine.getEvalScore();
 				break;
 			} catch (NoEvaluationException e) {
 				try {
@@ -40,15 +49,31 @@ public class PositionEvaluatorProcess implements Runnable {
 				}
 			}
 		}
-		
-		Double d=result;
+		Double d=score;
 		if(d.isNaN()){
-			return 0;
+			return evaluation;
+		}
+		if(d>=300){
+			//this.stop();
+			if(currentPlayer==Color.White)
+				evaluation= Evaluation.MATE_FOR_WHITE;
+			else 
+				evaluation=Evaluation.MATE_FOR_BLACK;
+			return evaluation;
+		}
+		if(d<=-300){
+			//this.stop();
+			if(currentPlayer==Color.White)
+				evaluation = Evaluation.MATE_FOR_BLACK;
+			else
+				evaluation = Evaluation.MATE_FOR_WHITE;
+			return evaluation;
 		}
 
 		if(currentPlayer==Color.Black)
-			return -result;
-		return result;
+			evaluation = new Evaluation(-d);
+		else evaluation = new Evaluation(d);
+		return evaluation;
 	}
 
 

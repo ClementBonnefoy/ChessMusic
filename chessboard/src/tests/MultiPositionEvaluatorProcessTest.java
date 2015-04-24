@@ -9,7 +9,7 @@ import pgn.PGNParser;
 
 public class MultiPositionEvaluatorProcessTest {
 	
-	private static String pgnFileName="games/Modern2170.pgn";
+	private static String pgnFileName="games/Napoleon_Bertrand_1820.pgn";
 	
 	public static void main(String[] args){
 		
@@ -37,14 +37,16 @@ public class MultiPositionEvaluatorProcessTest {
 		mpep.startEvaluation();
 		
 		try {
-			Thread.sleep(10000);
+			Thread.sleep(20000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		
 		for(int i=0;i<=pgnGame.size();i++){
-			System.out.println("Position "+i+" "+mpep.getEvaluation(i));
+			System.out.println("Position "+i+" "+mpep.stopAndGetEvaluation(i));
 		}
+		
+		mpep.checkEcartType();
 		
 		System.out.println("MOYENNE="+mpep.getMoyenne());
 		System.out.println("ECART TYPE="+mpep.getEcartType());

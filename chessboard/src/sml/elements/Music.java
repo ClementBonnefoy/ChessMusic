@@ -32,6 +32,14 @@ public class Music implements ISMLElement{
 	public int getTime(){
 		return body.getTime(declarations);
 	}
+	
+	/**
+	 * retourne le nombre d'instructions Play du fichier
+	 * @return
+	 */
+	public int size(){
+		return body.size();
+	}
 
 	@Override
 	public void accept(IVisitor visitor) {

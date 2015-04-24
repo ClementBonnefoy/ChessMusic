@@ -12,14 +12,16 @@ Grammaire Formelle
 			| <musical-element>
 			| <instrument>
 			| <time>
-			| { <note-sequence> }
 
 <instrument>		::= [identifiant]
 			| ens <instrument> <instrument>
-			| instr <id-instrument>
+			| instru <id-instrument> 
+			| instru <id-instrument> <velocity>
+			
+<velocity> ::= [number]
 
-<note-sequence>	::= <complex-note>
-			| <complex-note> , <note-sequence>			
+<note-sequence>	::= <musical-element>
+			| <musical-element> , <note-sequence>	
 			
 <body>		::= begin <instructions> end ;
 
@@ -76,9 +78,19 @@ Grammaire Formelle
 <musical-element> 	::= [identifiant] 
 			| <complex-note>
 			| <sequence> 
+			| { <note-sequence> }
 			| <chord>
+			| <repeat>
+			| <transpose>
+			
+<repeat> ::= repeat [number] <musical-element>
+
+<transpose> ::= transpose [number] <musical-element>
 			
 <complex-note> 	::= <role> <octave> <time>
+			| ... <role> <octave> <time>
+			| <role> <octave> <time> ...
+			| ... <role> <octave> <time> ...
 			| <rest> <time>
 
 <rest> ::= ?

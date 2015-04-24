@@ -34,16 +34,17 @@ number = 0 | [1-9][0-9]*
 
 letter = [a-g]
 
+dotdotdot = "..."
+
 string = [A-Za-z_][A-Za-z_0-9]*
 
-complexnote = {number}[\+\-]*{letter}{number} |
+complexnote = {dotdotdot}?{number}[\+\-]*{letter}{number}{dotdotdot}? |
 {number}[\+\-]*{letter}{string}
 
 /* comments */
-Comment = {TraditionalComment} | {EndOfLineComment}
+Comment = {TraditionalComment}
 
 TraditionalComment = "/*" [^*] ~"*/" | "/*" "*"+ "/"
-EndOfLineComment = "//" [^]* {LineTerminator}?
 
 
 %%
@@ -63,7 +64,7 @@ EndOfLineComment = "//" [^]* {LineTerminator}?
 "}"                { return symbol(sym.RACCOL); }
 "="                { return symbol(sym.EQUAL); }
 ","                { return symbol(sym.COMA); }
-"\?"                { return symbol(sym.REST); }
+"\?"               { return symbol(sym.REST); }
 
 "let" { return symbol(sym.LET); }
 "ens" { return symbol(sym.ENS); }
@@ -75,6 +76,8 @@ EndOfLineComment = "//" [^]* {LineTerminator}?
 "sequence" { return symbol(sym.SEQUENCE); }
 "scale" { return symbol(sym.SCALE); }
 "instru"  { return symbol(sym.INSTRU); }
+"repeat" { return symbol(sym.REPEAT); }
+"transpose" { return symbol(sym.TRANSPOSE); }
 
 "ionian" { return symbol(sym.SCALENAME, yytext()); }
 "dorian" { return symbol(sym.SCALENAME, yytext()); }
@@ -92,11 +95,11 @@ EndOfLineComment = "//" [^]* {LineTerminator}?
 
 {string}       { return symbol(sym.STRING, yytext());}
 
-{Comment} { System.out.println("commentaire"); }
+{Comment} {}
 
 {WhiteSpace}       {}
 
 }
 
 
-[^]                    { throw new Error("Illegal character <"+yytext()+">"); }
+[^]                    { /*throw new Error("Illegal character <"+yytext()+">");*/ }

@@ -11,5 +11,5 @@ let bartokscale = scale lydian {,,,,,-,} ;
 let note = { 1c500 } ;
 begin
 tempo 120;
-play (scale c lydian) (ens instrument1 (instru flute)) note;
+play (scale c lydian) (ens instrument1 (instru flute)) (repeat 3 theme);
 end;

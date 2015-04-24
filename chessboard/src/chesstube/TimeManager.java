@@ -5,7 +5,7 @@ import java.util.Stack;
 public class TimeManager {
 	
 	private int time=0;
-	private int max=0;
+	private Stack<Integer> max=new Stack<Integer>();
 	private Stack<Integer> stack=new Stack<Integer>();
 	
 	public int getTime(){
@@ -18,8 +18,8 @@ public class TimeManager {
 	}
 	
 	private void checkMax() {
-		if(time>max)
-			max=time;
+		/*if(time>max)
+			max=time;*/
 		
 	}
 
@@ -28,11 +28,15 @@ public class TimeManager {
 	}
 	
 	public void reload(){
+		max.push(time);
 		time=stack.pop();
+		
 	}
 
 	public void reloadMax() {
-		time=max;
+		int m=max.pop();
+		if(time<m)
+			time=m;
 		
 	}
 

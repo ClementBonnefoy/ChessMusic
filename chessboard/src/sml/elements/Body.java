@@ -54,6 +54,12 @@ public class Body implements ISMLElement {
 	public Body getNext() {
 		return next;
 	}
+
+	public int size() {
+		if(instruction instanceof Play)
+			return 1+(next==null?0:next.size());
+		return (next==null?0:next.size());
+	}
 	
 	
 	

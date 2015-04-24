@@ -3,13 +3,16 @@ package sml.elements;
 import sml.interfaces.IRole;
 import sml.interfaces.IVisitor;
 
-public enum Role implements IRole {
+public class Role implements IRole {
 	
-	fundamental,second,third,fourth,fifth,sixth,seventh;
+	private int role;
 	
 	public static Role role(int n){
-		n=(n-1)%7;
-		return Role.values()[n];
+		return new Role(n);
+	}
+
+	public Role(int n) {
+		this.role=n;
 	}
 
 	@Override
@@ -20,7 +23,7 @@ public enum Role implements IRole {
 
 	@Override
 	public int getRole() {
-		return this.ordinal()+1;
+		return role;
 	}
 
 	@Override

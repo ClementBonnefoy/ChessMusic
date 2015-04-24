@@ -15,5 +15,6 @@ public interface IMusicalElement extends IDeclarable{
 	 * @return
 	 */
 	public int getTime(Declarations environnement);
+	
 
 }

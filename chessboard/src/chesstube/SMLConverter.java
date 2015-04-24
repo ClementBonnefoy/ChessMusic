@@ -24,6 +24,7 @@ import music.scale.Myxolydian;
 import music.scale.Phrygian;
 import sml.elements.AlterableScale;
 import sml.elements.Declarations;
+import sml.elements.Note;
 import sml.elements.ScaleName;
 import sml.elements.Variable;
 import sml.interfaces.IPlayableScale;
@@ -85,26 +86,54 @@ public class SMLConverter {
 
 	public static Instrument convertInstrument(
 			sml.elements.Instrument instrument){
+		Instrument result=null;
 		switch(instrument){
 		case flute:
-			return Instrument.flute;
+			result = Instrument.flute;
+			break;
 		case piano:
-			return Instrument.piano;
+			result = Instrument.piano;
+			break;
 		case electricBass:
-			return Instrument.electricBassFinger;
+			result = Instrument.electricBassFinger;
+			break;
 		case harpsichord:
-			return Instrument.harpsichord;
+			result = Instrument.harpsichord;
+			break;
 		case marimba:
-			return Instrument.marimba;
+			result = Instrument.marimba;
+			break;
 		case vibraphone:
-			return Instrument.vibraphone;
+			result = Instrument.vibraphone;
+			break;
 		case xylophone:
-			return Instrument.xylophone;
+			result = Instrument.xylophone;
+			break;
+		case alto:
+			result = Instrument.alto;
+			break;
+		case cello:
+			result = Instrument.cello;
+			break;
+		case pizzicato:
+			result = Instrument.pizzicato;
+			break;
+		case churchorgan:
+			result = Instrument.churchorgan;
+			break;
+		case string:
+			result = Instrument.string;
+			break;
+		case drumKit:
+			result = Instrument.drumKit;
+			break;
+		case organ:
+			result = Instrument.organ;
+			break;
 		default:
 			break;
-
 		}
-		return null;
+		return result;
 	}
 
 	public static NoteName convertNote(sml.elements.Note note){
@@ -138,6 +167,28 @@ public class SMLConverter {
 
 		}
 
+	}
+
+	public static Scale convertScale(ScaleName scale, Note scaleFundamental) {
+		switch(scale){
+		case aeolian:
+			return new Aeolian(convertNote(scaleFundamental));
+		case dorian:
+			return new Dorian(convertNote(scaleFundamental));
+		case ionian:
+			return new Ionian(convertNote(scaleFundamental));
+		case locrian:
+			return new Locrian(convertNote(scaleFundamental));
+		case lydian:
+			return new Lydian(convertNote(scaleFundamental));
+		case myxolydian:
+			return new Myxolydian(convertNote(scaleFundamental));
+		case phrygian:
+			return new Phrygian(convertNote(scaleFundamental));
+		default:
+			return null;
+		
+		}
 	}
 
 }

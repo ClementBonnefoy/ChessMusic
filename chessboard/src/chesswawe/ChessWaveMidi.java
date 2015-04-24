@@ -5,7 +5,9 @@ import java.io.IOException;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequence;
+import javax.sound.midi.Sequencer;
 import javax.sound.midi.Track;
 
 import midi.MidiTools;
@@ -106,6 +108,28 @@ public class ChessWaveMidi {
 		MidiTools.setInstrument(queensTrack, Queen.INSTRUMENT, Queen.CHANNEL);
 		MidiTools.setInstrument(kingsTrack, King.INSTRUMENT, King.CHANNEL);
 		MidiTools.setInstrument(knightsTrack, Knight.INSTRUMENT, Knight.CHANNEL);
+		
+	}
+
+
+
+
+
+
+	public void play() {
+		Sequencer seq=null;
+		try {
+			seq=MidiSystem.getSequencer();
+			seq.open();
+			seq.setSequence(sequence);
+			seq.start();
+		} catch (MidiUnavailableException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvalidMidiDataException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 }

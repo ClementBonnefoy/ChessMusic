@@ -13,9 +13,9 @@ public class ChessWaveTest {
 
 				System.out.println("******* "+f.getName()+" *********");
 
-				ChessWave cw=new ChessWave();
+				ChessWave cw=new ChessWave(f);
 				String midiName=f.getName().split("\\.")[0]+".mid";
-				cw.createMidiFromPGN(f, midiName);
+				cw.saveAsMidi(midiName);
 
 			} catch (Exception e) {
 				/* do cleanup here -- possibly rethrow e */
