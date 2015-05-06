@@ -1,9 +1,6 @@
 package music;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import music.scale.Myxolydian;
 import board.Rank;
 import sml.elements.ComplexNote;

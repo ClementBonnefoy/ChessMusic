@@ -10,9 +10,9 @@ import sml.elements.Music;
 
 public class ChessTube{
 	
-	public final static boolean ANALYSE=true;
-	public static final int WAIT_TIME=5000; // temp d'attente pour l'évaluateur(ms)
+	public static final int WAIT_TIME=10000; // temp d'attente pour l'évaluateur(ms)
 	
+	private boolean analyse=true;
 	private Music music;
 	private PGNGame pgnGame;
 	
@@ -22,21 +22,30 @@ public class ChessTube{
 	}
 	
 	public ChessTube(Music smlMusic, File pgnGame){
-		this.music=smlMusic;
-		PGNParser parser=new PGNParser(pgnGame);
-
-		try {
-			parser.parse();
-			this.pgnGame = parser.makePgnGame();
-		} catch (InvalidMoveException | InvalidPGNMoveException e) {
-			e.printStackTrace();
-			return;
-		}
+		this(smlMusic,pgnGame,true);
 	}
 
 
+	public ChessTube(Music smlMusic, File pgnGame, boolean analyse) {
+		this.analyse=analyse;
+		this.music=smlMusic;
+		
+		if(analyse){
+			PGNParser parser=new PGNParser(pgnGame);
+
+			try {
+				parser.parse();
+				this.pgnGame = parser.makePgnGame();
+			} catch (InvalidMoveException | InvalidPGNMoveException e) {
+				e.printStackTrace();
+				return;
+			}
+		}
+		
+	}
+
 	public void saveAsMidi(String midiFileName) {
-		ChessTubeMidi ctm=new ChessTubeMidi(music);
+		ChessTubeMidi ctm=new ChessTubeMidi(music,analyse);
 		ctm.setPGNGame(pgnGame);
 		ctm.saveMidi(midiFileName);
 		

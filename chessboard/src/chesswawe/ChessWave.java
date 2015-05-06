@@ -213,7 +213,7 @@ public class ChessWave {
 			scale=new PentatonicFake(NoteName.C);
 			return;
 		}
-		ECOParser parser=new ECOParser("eco.txt");
+		ECOParser parser=new ECOParser("data/eco.txt");
 		String code=parser.findCode(pgnGame);
 		NoteName note=NoteName.valueOf(code.substring(0, 1));
 		Integer nombre=Integer.valueOf(code.substring(1,code.length()));

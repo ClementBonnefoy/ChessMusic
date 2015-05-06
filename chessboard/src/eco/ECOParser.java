@@ -25,7 +25,6 @@ public class ECOParser {
 		Pattern p = Pattern.compile("([^:]+):[^:]+:([^:]+)");
 		Matcher m;
 		String line, code;
-		PGNGame game;
 		
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			while (br.ready()) {

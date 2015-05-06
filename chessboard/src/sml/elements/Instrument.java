@@ -18,7 +18,15 @@ public enum Instrument implements IInstrument{
 	string,
 	alto,
 	pizzicato,
-	churchorgan;
+	churchorgan,
+	orchestraHit,
+	harp,
+	guitar,
+	oboe,
+	trumpet,
+	frenchHorn,
+	brassSection,
+	clarinet;
 	
 	public static Instrument instrument(String s){
 		return valueOf(s);

@@ -9,7 +9,7 @@ import pgn.PGNParser;
 
 public class MultiPositionEvaluatorProcessTest {
 	
-	private static String pgnFileName="games/Napoleon_Bertrand_1820.pgn";
+	private static String pgnFileName="games/Steinitz_Tchigorin_1892.pgn";
 	
 	public static void main(String[] args){
 		

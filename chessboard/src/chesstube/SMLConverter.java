@@ -130,6 +130,30 @@ public class SMLConverter {
 		case organ:
 			result = Instrument.organ;
 			break;
+		case orchestraHit:
+			result = Instrument.orchestraHit;
+			break;
+		case harp:
+			result = Instrument.harp;
+			break;
+		case guitar:
+			result = Instrument.guitar;
+			break;
+		case brassSection:
+			result = Instrument.brassSection;
+			break;
+		case clarinet:
+			result = Instrument.clarinet;
+			break;
+		case frenchHorn:
+			result = Instrument.frenchHorn;
+			break;
+		case oboe:
+			result = Instrument.oboe;
+			break;
+		case trumpet:
+			result = Instrument.trumpet;
+			break;
 		default:
 			break;
 		}
