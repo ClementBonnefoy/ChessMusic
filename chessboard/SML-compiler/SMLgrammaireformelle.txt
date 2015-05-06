@@ -88,10 +88,7 @@ Grammaire Formelle
 <transpose> ::= transpose [number] <musical-element>
 			
 <complex-note> 	::= <role> <octave> <time>
-			| ... <role> <octave> <time>
 			| <role> <octave> <time> ...
-			| ... <role> <octave> <time> ...
-			| <rest> <time>
 
 <rest> ::= ?
 

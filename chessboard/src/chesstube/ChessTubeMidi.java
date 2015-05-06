@@ -50,6 +50,8 @@ public class ChessTubeMidi{
 	private ScaleManager sm;
 	private TimeManager tm;
 
+	private NoteStack toOff;
+
 	private Music music;
 	private Declarations env;
 
@@ -68,10 +70,11 @@ public class ChessTubeMidi{
 		im=new InstrumentManager(smlMusic);
 		sm=new ScaleManager();
 		tm=new TimeManager();
+		toOff=new NoteStack();
 
 		music=smlMusic;
 		env=smlMusic.getEnvironnement();
-		
+
 		this.analyse=analyse;
 
 		try {
@@ -140,7 +143,7 @@ public class ChessTubeMidi{
 
 	private void convert(Music sml) {
 		if(analyse){
-			
+
 			Board b=new Board();
 			b.init();
 			mpep=new MultiPositionEvaluatorProcess(b, pgnGame);
@@ -152,7 +155,7 @@ public class ChessTubeMidi{
 				e.printStackTrace();
 			}
 			mpep.checkEvaluations();
-			
+
 			System.out.println("Calcul du pas: "+pgnGame.size()+" et "+sml.size());
 			step=((double)pgnGame.size())/sml.size();
 		}
@@ -163,7 +166,7 @@ public class ChessTubeMidi{
 			writeInstruction(body.getInstruction());
 			body=body.getNext();
 		}
-		
+
 		if(mpep!=null){
 			System.out.println("ecarttype= "+mpep.getEcartType());
 			mpep.stop();
@@ -187,7 +190,7 @@ public class ChessTubeMidi{
 				//ScaleName scale=ScaleName.values()[(int)(Math.random()*ScaleName.values().length)];
 				System.out.println("coup "+(int)move+", eval: "+eval+", scale: "+scale.toString());
 				sm.setCurrentScale(SMLConverter.convertScale(scale, p.getScale().getScaleFundamental(env)));
-				
+
 				move+=step;
 			}
 			else{
@@ -214,6 +217,7 @@ public class ChessTubeMidi{
 			PlayableElement e=(PlayableElement)element;
 			im.setCurrentInstrument(e.getInstrument(),env);
 			writeMusicalElement(e.getMusicalElement(),0);
+			offNotes();
 		}
 		else if(element instanceof PlayableSequence){
 			PlayableSequence s=(PlayableSequence)element;
@@ -270,6 +274,20 @@ public class ChessTubeMidi{
 
 	}
 
+	private void offNotes(){
+		ArrayList<Integer> channels=im.getCurrentChannels(env);
+		while(!toOff.isEmpty()){
+			int note=toOff.popNote();
+			int time=toOff.popTime();
+			for(int channel:channels){
+				if(channel==InstrumentManager.DRUM_CHANNEL){
+					drumTrack.add(MidiTools.createNoteOffEvent(note,time, channel));
+				}
+				else
+					tracks[channel].add(MidiTools.createNoteOffEvent(note,time, channel));
+			}	}
+	}
+
 	private void writeNote(ComplexNote cn,int transpose) {
 		ArrayList<Integer> channels=im.getCurrentChannels(env);
 		int time=cn.getTime(env);
@@ -286,8 +304,9 @@ public class ChessTubeMidi{
 					tracks[channel].add(MidiTools.createNoteOnEvent(note,im.getVelocity(channel),tm.getTime(), channel));
 			}
 		}
-		tm.incrTime(time);
+
 		if(cn.shouldEnd()){
+			tm.incrTime(time);
 			//System.out.println("stop -> Note("+note+")-->"+tm.getTime());
 			for(int channel:channels){
 				if(channel==InstrumentManager.DRUM_CHANNEL){
@@ -296,7 +315,8 @@ public class ChessTubeMidi{
 				else
 					tracks[channel].add(MidiTools.createNoteOffEvent(note, tm.getTime(), channel));
 			}
-		}
+		}else
+			toOff.add(note, tm.getTime()+time);
 	}
 
 
